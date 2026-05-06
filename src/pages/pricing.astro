@@ -1,0 +1,602 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import PricingSnapshot from '../components/sections/PricingSnapshot.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+
+const autoTiers = [
+  {
+    name:     'Single Flow',
+    price:    '$750',
+    desc:     'For businesses that want to automate one high-impact workflow.',
+    features: [
+      '1 custom automation workflow',
+      'Full build + testing',
+      '30-day post-launch support',
+      'Full documentation included',
+    ],
+    cta:      { href: '/contact/', label: 'Get Started' },
+    featured: false,
+  },
+  {
+    name:     'Automation Stack',
+    price:    '$1,500',
+    desc:     'The most popular choice — three automations that change how your business runs.',
+    features: [
+      '3 custom automation workflows',
+      'CRM integration',
+      'Full build + testing',
+      '60-day post-launch support',
+      'Full documentation included',
+    ],
+    cta:      { href: '/contact/', label: 'Get Started' },
+    featured: true,
+  },
+  {
+    name:     'Full System',
+    price:    '$3,000+',
+    desc:     'For businesses that want their entire operation running on autopilot.',
+    features: [
+      'Unlimited automation workflows',
+      'Custom AI integration',
+      'Ongoing monitoring included',
+      'Priority support',
+      'Full documentation',
+    ],
+    cta:      { href: '/contact/', label: 'Get a Quote' },
+    featured: false,
+  },
+];
+
+const seoTiers = [
+  {
+    name:     'Local Presence',
+    price:    '$750',
+    monthly:  '+$300/mo',
+    desc:     'For businesses that need to show up locally and start getting found.',
+    features: [
+      'Google Business Profile optimization',
+      'On-page SEO (all existing pages)',
+      'GAIO content structure setup',
+      'LocalBusiness schema markup',
+      'Monthly ranking report',
+    ],
+    cta:      { href: '/contact/', label: 'Get Started' },
+    featured: false,
+  },
+  {
+    name:     'Visibility Stack',
+    price:    '$1,500',
+    monthly:  '+$500/mo',
+    desc:     'The most popular choice — built to rank in Google and get cited by AI.',
+    features: [
+      'Everything in Local Presence',
+      'Local citation building',
+      'FAQ schema + AI citation optimization',
+      'Content strategy roadmap',
+      'Competitor gap analysis',
+      'Monthly strategy call',
+    ],
+    cta:      { href: '/contact/', label: 'Get Started' },
+    featured: true,
+  },
+  {
+    name:     'Full Authority',
+    price:    '$3,000+',
+    monthly:  '+$800/mo',
+    desc:     'For businesses serious about owning their category online and in AI.',
+    features: [
+      'Everything in Visibility Stack',
+      'Monthly blog content (2 posts)',
+      'Ongoing GAIO monitoring + adjustments',
+      'Priority support',
+      'Quarterly strategy reviews',
+    ],
+    cta:      { href: '/contact/', label: 'Get a Quote' },
+    featured: false,
+  },
+];
+
+const websiteFaqs = [
+  { q: 'What does "flat-rate" mean?', a: 'You pay the quoted price — no hourly overages, no scope creep charges. Everything is agreed before we start.' },
+  { q: 'Can I upgrade tiers later?', a: 'Yes. You can start with Hatch and add features over time. Additional pages, automations, and SEO work are available as add-ons.' },
+  { q: 'What payment schedule?', a: '50% deposit to begin, 50% on launch day. No hidden fees.' },
+];
+
+const autoFaqs = [
+  { q: 'What counts as one "automation workflow"?', a: 'One workflow = one trigger-to-outcome sequence. Example: new form submission → add to CRM → send personalized reply email. That\'s one workflow.' },
+  { q: 'What tools do you use?', a: 'Make.com, Zapier, Airtable, OpenAI, and Claude API — depending on what fits your stack best.' },
+  { q: 'What if I need more automations later?', a: 'Additional workflows can be added at $300 each after the initial build.' },
+];
+---
+
+<BaseLayout
+  title="Pricing | Mayfly Web Design — Montana"
+  description="Flat-rate pricing for Montana businesses. Websites from $750, AI automations from $750. No hidden fees, no surprises."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      ...websiteFaqs.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })),
+      ...autoFaqs.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })),
+    ]
+  })} slot="head"></script>
+
+  <Header />
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="page-hero-photo" aria-hidden="true"></div>
+      <div class="page-hero-dim"   aria-hidden="true"></div>
+      <div class="section-container" style="position:relative;z-index:2">
+        <p class="section-eyebrow reveal">Pricing</p>
+        <h1 class="page-headline reveal" style="transition-delay:0.08s">
+          Flat-rate pricing.<br /><em>Zero surprises.</em>
+        </h1>
+        <p class="page-sub reveal" style="transition-delay:0.16s">
+          Every quote is all-inclusive — no hidden fees, no scope creep charges.
+          You know exactly what you're paying before we start.
+        </p>
+      </div>
+    </section>
+
+    <div class="pricing-section-label"><span>Website Design</span></div>
+    <PricingSnapshot />
+
+    <div class="pricing-section-label"><span>AI Automations</span></div>
+    <!-- ── Automations Pricing ──────────────────────── -->
+    <section class="auto-pricing-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">AI Automations</p>
+          <h2 class="auto-headline reveal" style="transition-delay:0.06s">
+            Stop doing work<br /><em>a robot could do.</em>
+          </h2>
+          <p class="auto-sub reveal" style="transition-delay:0.12s">
+            Custom automations built for your workflow. Flat-rate, done-for-you, and documented so you own it.
+          </p>
+        </div>
+
+        <div class="auto-grid">
+          {autoTiers.map((t, i) => (
+            <div
+              class:list={['auto-card reveal', { 'auto-card--dark': t.featured, 'pricing-card--glow-once': t.featured }]}
+              style={`transition-delay:${i * 0.1}s`}
+            >
+              {t.featured && <div class="featured-tag">Most Popular</div>}
+              <div class="card-top">
+                <p class="tier-name">{t.name}</p>
+                <p class="tier-price">{t.price}</p>
+                <p class="tier-desc">{t.desc}</p>
+              </div>
+              <ul class="tier-features" role="list">
+                {t.features.map(f => (
+                  <li class="tier-feature">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                      <path d="M2 6.5l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={t.cta.href}
+                class:list={[t.featured ? 'btn-primary' : 'btn-secondary', 'tier-cta']}
+              >
+                {t.cta.label}
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SEO + GAIO Pricing ──────────────────────── -->
+    <div class="pricing-section-label"><span>SEO + GAIO</span></div>
+    <section class="seo-pricing-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">SEO + GAIO</p>
+          <h2 class="seo-headline reveal" style="transition-delay:0.06s">
+            Rank in Google.<br /><em>Get cited by AI.</em>
+          </h2>
+          <p class="seo-sub reveal" style="transition-delay:0.12s">
+            Local SEO and Generative AI Optimization — monthly retainer, flat-rate setup. Early movers have a real advantage right now.
+          </p>
+        </div>
+
+        <div class="auto-grid">
+          {seoTiers.map((t, i) => (
+            <div
+              class:list={['auto-card reveal', { 'auto-card--dark': t.featured, 'pricing-card--glow-once': t.featured }]}
+              style={`transition-delay:${i * 0.1}s`}
+            >
+              {t.featured && <div class="featured-tag">Most Popular</div>}
+              <div class="card-top">
+                <p class="tier-name">{t.name}</p>
+                <p class="tier-price seo-price">{t.price} <span class="seo-monthly">{t.monthly}</span></p>
+                <p class="tier-desc">{t.desc}</p>
+              </div>
+              <ul class="tier-features" role="list">
+                {t.features.map(f => (
+                  <li class="tier-feature">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                      <path d="M2 6.5l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={t.cta.href}
+                class:list={[t.featured ? 'btn-primary' : 'btn-secondary', 'tier-cta']}
+              >
+                {t.cta.label}
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Add-ons -->
+    <section class="addons-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">Add-Ons</p>
+          <h2 class="section-headline" style="margin-bottom:2.5rem">Build exactly what you need</h2>
+        </div>
+        <div class="addons-grid reveal" style="transition-delay:0.1s">
+          {[
+            { item: 'Extra automation',              price: '+$300 each' },
+            { item: 'Monthly SEO/GAIO maintenance',  price: '+$300/mo' },
+            { item: 'Extra page copywriting',        price: '+$100/page' },
+            { item: 'Logo design',                   price: '+$200' },
+            { item: 'Google Ads setup',              price: '+$250' },
+            { item: 'Rush delivery',                 price: '+20%' },
+          ].map(a => (
+            <div class="addon-row">
+              <span class="addon-item">{a.item}</span>
+              <span class="addon-price">{a.price}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Website FAQ -->
+    <section class="faq-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">FAQ</p>
+          <h2 class="section-headline" style="margin-bottom:3rem">Common questions</h2>
+        </div>
+        <dl class="faq-list">
+          {[...websiteFaqs, ...autoFaqs].map((f, i) => (
+            <div class="faq-item reveal" style={`transition-delay:${i * 0.08}s`}>
+              <dt class="faq-q">{f.q}</dt>
+              <dd class="faq-a">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background-color: var(--color-bg);
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid var(--color-surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero-photo {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center 40%;
+    z-index: 0;
+  }
+  .page-hero-dim {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(22, 22, 20, 0.50);
+    z-index: 1;
+  }
+  .page-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    letter-spacing: -0.025em;
+    color: var(--color-bg);
+    margin-bottom: 1.25rem;
+  }
+  .page-headline em { font-style: italic; color: var(--color-accent); }
+  .page-sub {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(242,237,227,0.72);
+    max-width: 44ch;
+  }
+
+  /* Automations pricing */
+  .auto-pricing-section {
+    background-color: var(--color-bg);
+    padding: 3rem 0 5rem;
+    border-top: 1px solid var(--color-surface);
+  }
+  .auto-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    letter-spacing: -0.025em;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+  }
+  .auto-headline em { font-style: italic; color: var(--color-accent); }
+  .auto-sub {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-muted);
+    max-width: 48ch;
+    margin-bottom: 3.5rem;
+  }
+
+  .auto-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5px;
+    background-color: var(--color-stone, #8A8278);
+    margin-top: 3rem;
+  }
+  @media (min-width: 640px) {
+    .auto-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .auto-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .auto-card {
+    background-color: var(--color-bg);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+  .auto-card:hover { transform: translateY(-2px); }
+  .auto-card--dark {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .featured-tag {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-accent);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.875rem;
+  }
+
+  .card-top { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.5rem; }
+  .tier-name {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: -0.015em;
+    color: inherit;
+  }
+  .tier-price {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 2.875rem;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: inherit;
+  }
+  .tier-desc {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.6;
+    opacity: 0.62;
+  }
+
+  .tier-features {
+    list-style: none;
+    padding: 1.375rem 0 0;
+    margin: 0;
+    border-top: 1px solid rgba(138,130,120,0.22);
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    flex: 1;
+  }
+  .tier-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .tier-feature svg {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 0.175rem;
+  }
+  .auto-card--dark .tier-feature svg { color: rgba(242,237,227,0.6); }
+
+  .tier-cta {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+  }
+  .auto-card--dark .btn-secondary {
+    border-color: rgba(242,237,227,0.35);
+    color: var(--color-bg);
+  }
+  .auto-card--dark .btn-secondary:hover {
+    background-color: rgba(242,237,227,0.1);
+  }
+
+  .addons-section {
+    background-color: var(--color-surface);
+    padding: 5rem 0;
+    border-top: 1px solid var(--color-surface);
+  }
+  .addons-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--color-surface);
+    max-width: 540px;
+  }
+  .addon-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.125rem 0;
+    border-bottom: 1px solid var(--color-surface);
+  }
+  .addon-item {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: var(--color-text);
+  }
+  .addon-price {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-accent);
+    font-style: italic;
+  }
+
+  .faq-section {
+    background-color: var(--color-bg);
+    padding: 5.5rem 0;
+  }
+  .faq-list {
+    max-width: 680px;
+    border-top: 1px solid var(--color-surface);
+  }
+  .faq-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-surface);
+  }
+  .faq-q {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+  .faq-a {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.72;
+    color: var(--color-muted);
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  /* ── Section divider labels ───────── */
+  .pricing-section-label {
+    background-color: var(--color-bg);
+    padding: 2.5rem 0 0;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding-left: clamp(1.25rem, 4vw, 3rem);
+    padding-right: clamp(1.25rem, 4vw, 3rem);
+  }
+  .pricing-section-label::before,
+  .pricing-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--color-accent);
+    opacity: 0.35;
+  }
+  .pricing-section-label::before { display: none; }
+  .pricing-section-label span {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    white-space: nowrap;
+    padding-right: 1rem;
+  }
+
+  /* ── SEO + GAIO Pricing ──────────── */
+  .seo-pricing-section {
+    background-color: var(--color-bg);
+    padding: 3rem 0 5rem;
+    border-top: 1px solid var(--color-surface);
+  }
+  .seo-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    letter-spacing: -0.025em;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+  }
+  .seo-headline em { font-style: italic; color: var(--color-accent); }
+  .seo-sub {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-muted);
+    max-width: 48ch;
+    margin-bottom: 3.5rem;
+  }
+  .seo-price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.375rem;
+  }
+  .seo-monthly {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--color-accent);
+    letter-spacing: 0.01em;
+  }
+  .auto-card--dark .seo-monthly {
+    color: rgba(242,237,227,0.6);
+  }
+</style>

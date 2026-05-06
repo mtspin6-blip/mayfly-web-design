@@ -1,0 +1,335 @@
+---
+const tiers = [
+  {
+    name:     'Hatch',
+    price:    '$750',
+    delivery: '1 week',
+    desc:     'For new businesses that need a professional presence fast.',
+    features: [
+      'Up to 5 pages',
+      'Mobile responsive',
+      'Contact form',
+      'Basic local SEO',
+      'Cloudflare hosting setup',
+      '2 revision rounds',
+      '14-day post-launch support',
+    ],
+    cta:      { href: '/contact/', label: 'Get Started' },
+    featured: false,
+  },
+  {
+    name:     'Rise',
+    price:    '$1,500',
+    delivery: '2 weeks',
+    desc:     'The most popular choice for established businesses ready to grow.',
+    features: [
+      'Up to 8 pages',
+      'Cal.com booking integration',
+      'Full local SEO + GBP setup',
+      'LocalBusiness schema markup',
+      'Copywriting included',
+      '1 AI automation',
+      '3 revision rounds',
+      '30-day post-launch support',
+    ],
+    cta:      { href: '/contact/', label: 'Get Started' },
+    featured: true,
+  },
+  {
+    name:     'Full Current',
+    price:    '$3,000+',
+    delivery: '3–4 weeks',
+    desc:     'For businesses serious about dominating their market online.',
+    features: [
+      'Custom page count',
+      'Advanced SEO & GAIO strategy',
+      'Up to 3 AI automations',
+      'Unlimited revisions during build',
+      'Monthly retainer option',
+      '60-day post-launch support',
+    ],
+    cta:      { href: '/contact/', label: 'Get a Quote' },
+    featured: false,
+  },
+];
+---
+
+<section class="pricing-wrap">
+  <div class="section-container">
+
+    <div class="pricing-hd reveal">
+      <p class="section-eyebrow">Pricing</p>
+      <div class="pricing-hd-row">
+        <h2 class="section-headline">Transparent pricing.<br /><em>No surprises.</em></h2>
+        <a href="/pricing/" class="btn-ghost">
+          See full details &amp; add-ons
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <path d="M2 6.5h9M7 2.5l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+      {tiers.map((t, i) => (
+        <div
+          class:list={['pricing-card reveal', { 'pricing-card--dark': t.featured, 'pricing-card--glow-once': t.featured }]}
+          style={`transition-delay:${i * 0.1}s`}
+        >
+          {t.featured && <div class="featured-tag">Most Popular</div>}
+
+          <div class="card-top">
+            <p class="tier-name">{t.name}</p>
+            <p class="tier-price">{t.price}</p>
+            <p class="tier-delivery">
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style="display:inline;vertical-align:middle;margin-right:3px" aria-hidden="true">
+                <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M5.5 3v2.5L7 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              {t.delivery} turnaround
+            </p>
+            <p class="tier-desc">{t.desc}</p>
+          </div>
+
+          <ul class="tier-features" role="list">
+            {t.features.map(f => (
+              <li class="tier-feature">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <path d="M2 6.5l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={t.cta.href}
+            class:list={[t.featured ? 'btn-primary' : 'btn-secondary', 'tier-cta']}
+          >
+            {t.cta.label}
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Automations teaser -->
+    <div class="auto-teaser reveal">
+      <span class="auto-teaser-label">Also:</span>
+      <span class="auto-teaser-text">AI Automations starting at <strong>$750</strong> — custom workflows built for your business.</span>
+      <a href="/pricing/" class="auto-teaser-link">
+        See automations pricing
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <p class="pricing-footnote reveal">
+      Not sure which tier fits? <a href="/contact/" class="footnote-link">Let's talk — no commitment.</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .pricing-wrap {
+    background-color: var(--color-surface);
+    padding: 5rem 0;
+  }
+  @media (min-width: 768px) { .pricing-wrap { padding: 7rem 0; } }
+
+  .pricing-hd { margin-bottom: 3.5rem; }
+  .pricing-hd-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+  @media (min-width: 640px) {
+    .pricing-hd-row {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5px;
+    background-color: var(--color-stone, #8A8278);
+  }
+  @media (min-width: 640px) {
+    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .pricing-card {
+    background-color: var(--color-surface);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .pricing-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1.5px var(--color-accent), 0 8px 24px rgba(22,22,20,0.08);
+  }
+  .pricing-card--dark:hover {
+    box-shadow: 0 0 0 1.5px var(--color-accent), 0 8px 24px rgba(22,22,20,0.22);
+  }
+  .pricing-card--dark {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .featured-tag {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-accent);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.875rem;
+  }
+
+  .card-top { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.5rem; }
+
+  .tier-name {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: -0.015em;
+    color: inherit;
+  }
+  .tier-price {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 2.875rem;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: inherit;
+  }
+  .tier-delivery {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-accent);
+    letter-spacing: 0.03em;
+  }
+  .pricing-card--dark .tier-delivery {
+    color: rgba(242,237,227,0.55);
+  }
+  .tier-desc {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.6;
+    opacity: 0.62;
+    margin-top: 0.25rem;
+  }
+
+  .tier-features {
+    list-style: none;
+    padding: 1.375rem 0 0;
+    margin: 0;
+    border-top: 1px solid rgba(138,130,120,0.22);
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    flex: 1;
+  }
+  .tier-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .tier-feature svg {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 0.175rem;
+  }
+  .pricing-card--dark .tier-feature svg {
+    color: rgba(242,237,227,0.6);
+  }
+
+  .tier-cta {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+  }
+  .pricing-card--dark .btn-secondary {
+    border-color: rgba(242,237,227,0.35);
+    color: var(--color-bg);
+  }
+  .pricing-card--dark .btn-secondary:hover {
+    background-color: rgba(242,237,227,0.1);
+  }
+
+  /* Automations teaser */
+  .auto-teaser {
+    margin-top: 2.25rem;
+    padding: 1.25rem 1.5rem;
+    background-color: rgba(94,126,88,0.07);
+    border-left: 2px solid var(--color-accent);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+  }
+  .auto-teaser-label {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .auto-teaser-text {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-muted);
+  }
+  .auto-teaser-text strong { font-weight: 500; color: var(--color-text); }
+  .auto-teaser-link {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: gap 0.15s ease, opacity 0.15s ease;
+    margin-left: auto;
+  }
+  .auto-teaser-link:hover { gap: 0.5rem; opacity: 0.8; }
+
+  .pricing-footnote {
+    margin-top: 2rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    text-align: center;
+  }
+  .footnote-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

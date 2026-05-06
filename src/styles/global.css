@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Brand tokens ─────────────────────────────────────────── */
+:root {
+  --color-bg:      #F2EDE3;
+  --color-surface: #E2DDD3;
+  --color-text:    #161614;
+  --color-muted:   #8A8278;
+  --color-accent:  #5E7E58;
+  --color-gold:    #B8882E;
+  --font-display:  'Fraunces', Georgia, serif;
+  --font-body:     'DM Sans', system-ui, sans-serif;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: 1.12;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  a { color: inherit; }
+}
+
+/* ── Components ───────────────────────────────────────────── */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-7 py-3.5 font-body font-medium text-sm transition-all duration-200;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    letter-spacing: 0.025em;
+  }
+  .btn-primary:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+  .btn-primary .btn-arrow {
+    display: inline-block;
+    transform: translateX(-4px);
+    opacity: 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+    margin-left: 0.25rem;
+  }
+  .btn-primary:hover .btn-arrow {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-7 py-3.5 font-body font-medium text-sm transition-all duration-200;
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
+    letter-spacing: 0.025em;
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+  }
+  .btn-secondary .btn-arrow {
+    display: inline-block;
+    transform: translateX(-4px);
+    opacity: 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+    margin-left: 0.25rem;
+  }
+  .btn-secondary:hover .btn-arrow {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 font-body font-medium text-sm transition-opacity duration-200;
+    color: var(--color-accent);
+  }
+  .btn-ghost:hover { opacity: 0.7; }
+
+  .section-container {
+    @apply max-w-6xl mx-auto px-5 sm:px-8 lg:px-12;
+  }
+
+  .section-eyebrow {
+    @apply font-body font-medium;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.875rem;
+  }
+
+  .section-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.875rem, 4vw, 2.875rem);
+    color: var(--color-text);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  /* Scroll-reveal — JS adds .visible when in viewport */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Grain overlay ────────────────────────────────────────── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* Section divider — animated line draw on scroll */
+.divider-line {
+  height: 1px;
+  background-color: var(--color-surface);
+  width: 0;
+  transition: width 0.8s ease;
+}
+.divider-line.visible { width: 100%; }
+
+/* Work card image zoom — already in work.astro but ensure scale is 1.03 */
+
+@keyframes featuredGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(94,126,88,0); }
+  40%  { box-shadow: 0 0 0 6px rgba(94,126,88,0.28); }
+  100% { box-shadow: 0 0 0 0 rgba(94,126,88,0); }
+}
+.pricing-card--glow-once {
+  animation: featuredGlow 2s ease forwards;
+  animation-delay: 0.6s;
+}
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .pricing-card--glow-once {
+    animation: none !important;
+  }
+}

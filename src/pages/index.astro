@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import ServicesGrid from '../components/sections/ServicesGrid.astro';
+import ValueProps from '../components/sections/ValueProps.astro';
+import SocialProof from '../components/sections/SocialProof.astro';
+import PricingSnapshot from '../components/sections/PricingSnapshot.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+---
+
+<BaseLayout
+  title="Montana Web Design | Mayfly Web Design — Missoula, Bozeman"
+  description="Custom websites, AI automations, and GAIO for Montana small businesses. Built modern, priced for Montana. Serving Missoula, Bozeman, Great Falls & statewide."
+>
+  <Header />
+  <main id="main-content">
+    <Hero />
+    <ServicesGrid />
+    <ValueProps />
+    <SocialProof />
+    <PricingSnapshot />
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>

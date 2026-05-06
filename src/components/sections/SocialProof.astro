@@ -1,0 +1,118 @@
+---
+const stats = [
+  { value: '$750',   label: 'Websites starting at', count: 750,  prefix: '$',  suffix: ''    },
+  { value: '1 wk',  label: 'Fastest delivery',       count: 1,    prefix: '',   suffix: ' wk' },
+  { value: '100%',  label: 'Montana-focused',         count: 100,  prefix: '',   suffix: '%'   },
+  { value: '3-in-1', label: 'Web · AI · SEO',         count: null, prefix: '',   suffix: ''    },
+];
+---
+
+<section class="proof-wrap">
+  <div class="section-container">
+    <ul class="proof-list reveal" role="list">
+      {stats.map((s, i) => (
+        <>
+          <li class="proof-item">
+            <strong
+              class="proof-value"
+              data-count={s.count ?? undefined}
+              data-prefix={s.prefix || undefined}
+              data-suffix={s.suffix || undefined}
+            >{s.value}</strong>
+            <span class="proof-label">{s.label}</span>
+          </li>
+          {i < stats.length - 1 && (
+            <li class="proof-divider" aria-hidden="true"></li>
+          )}
+        </>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .proof-wrap {
+    background-color: var(--color-text);
+    padding: 3.5rem 0;
+  }
+
+  .proof-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 1rem;
+  }
+  @media (min-width: 768px) {
+    .proof-list {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+    }
+  }
+
+  .proof-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .proof-value {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.875rem, 4vw, 2.625rem);
+    letter-spacing: -0.03em;
+    color: var(--color-bg);
+  }
+  .proof-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: rgba(242,237,227,0.45);
+  }
+
+  .proof-divider {
+    display: none;
+    width: 1px;
+    height: 3.5rem;
+    background: rgba(242,237,227,0.1);
+  }
+  @media (min-width: 768px) {
+    .proof-divider { display: block; }
+  }
+</style>
+
+<script>
+  function animateCount(el: HTMLElement) {
+    const end    = parseInt(el.dataset.count ?? '0', 10);
+    const prefix = el.dataset.prefix ?? '';
+    const suffix = el.dataset.suffix ?? '';
+    const dur    = 1200;
+    const start  = performance.now();
+
+    function step(now: number) {
+      const progress = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // cubic ease-out
+      const current = Math.round(ease * end);
+      el.textContent = prefix + current + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const targets = document.querySelectorAll<HTMLElement>('.proof-value[data-count]');
+  if (targets.length) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCount(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    targets.forEach(el => observer.observe(el));
+  }
+</script>

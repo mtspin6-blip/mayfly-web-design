@@ -1,0 +1,665 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+
+const automations = [
+  { name: 'Lead Capture',          what: 'Form → CRM → instant reply to every new lead',         saved: '3 hrs/wk' },
+  { name: 'Review Requests',       what: 'Auto-text after job complete — timing, every time',     saved: '2 hrs/wk' },
+  { name: 'Appointment Reminders', what: 'SMS/email 24h before — cuts no-shows dramatically',    saved: '1 hr/wk' },
+  { name: 'AI Content Drafting',   what: 'Social posts + emails generated and queued on autopilot', saved: '4 hrs/wk' },
+  { name: 'Invoice Follow-Up',     what: 'Polite automated nudges until paid — no awkward calls', saved: '2 hrs/wk' },
+];
+
+const tools = ['Make.com', 'Zapier', 'Airtable', 'OpenAI', 'Claude API'];
+
+const steps = [
+  { n: '01', title: 'Workflow Audit',    note: 'We map your current process — where time is lost, where leads fall through' },
+  { n: '02', title: 'Automation Plan',   note: 'We define what to build, in what order, with expected ROI for each' },
+  { n: '03', title: 'Build + Test',      note: '~1 week per automation — built with error handling and tested against real data' },
+  { n: '04', title: 'Train + Monitor',   note: '30 days of check-ins included — we tweak until it runs without you touching it' },
+];
+
+const faqs = [
+  {
+    q: 'Will this break?',
+    a: 'Every automation is built with error handling and alerting. If something goes wrong, we catch it — and monthly check-ins catch anything that drifts over time.',
+  },
+  {
+    q: 'What if my software changes?',
+    a: 'We build with Make.com and Zapier — tools that connect to 1,000+ apps. If your software is replaced, we update the connection. Most changes take under an hour.',
+  },
+  {
+    q: 'Can I run these myself after?',
+    a: 'Yes — full documentation is included with every automation. You\'ll understand exactly what each one does and how to modify it if you need to.',
+  },
+  {
+    q: 'What do AI automations cost for a Montana business?',
+    a: 'A single workflow starts at $750. A stack of 3 automations with CRM integration is $1,500. Full custom AI systems start at $3,000. All flat-rate.',
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a }
+  }))
+};
+---
+
+<BaseLayout
+  title="AI Automations for Montana Small Businesses | Mayfly Web Design"
+  description="Automate your lead follow-up, bookings, and review requests. Montana-built, affordable, and done for you. Starting at $750."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
+  <Header />
+  <main id="main-content">
+
+    <!-- ── Hero ──────────────────────────────────────────── -->
+    <section class="svc-hero">
+      <div class="svc-favicon" aria-hidden="true">
+        <img src="/BugTransparentLogo.svg" alt="" width="72" height="72" />
+      </div>
+      <div class="section-container svc-hero-inner">
+        <div class="svc-hero-content">
+          <p class="section-eyebrow reveal">AI Automations</p>
+          <h1 class="svc-headline reveal" style="transition-delay:0.08s">
+            Stop doing the work<br /><em>a robot could do.</em>
+          </h1>
+          <p class="svc-sub reveal" style="transition-delay:0.16s">
+            Custom automations that handle leads, follow-ups, scheduling, and admin —
+            so you can focus on the work that actually pays.
+          </p>
+          <a href="/contact/" class="btn-primary reveal" style="transition-delay:0.22s">
+            Book a Free Consultation
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <div class="hero-bug" aria-hidden="true">
+          <img src="/BugTransparentLogo.svg" alt="" width="260" height="260" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Problem ───────────────────────────────────────── -->
+    <section class="problem-section">
+      <div class="section-container">
+        <div class="problem-inner reveal">
+          <p class="problem-eyebrow">The Problem</p>
+          <blockquote class="problem-quote">
+            "You're losing 5–10 hours a week to manual tasks: responding to leads,
+            sending invoices, chasing reviews, posting content.
+            <em>That's $500+/week of your time, gone.</em>"
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── What You Get ───────────────────────────────────── -->
+    <section class="automations-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">What You Get</p>
+          <h2 class="section-headline" style="margin-bottom:3rem">
+            Five automations.<br /><em>12 hours back per week.</em>
+          </h2>
+        </div>
+
+        <div class="auto-table-wrap reveal" style="transition-delay:0.1s">
+          <table class="auto-table">
+            <thead>
+              <tr>
+                <th scope="col">Automation</th>
+                <th scope="col">What it does</th>
+                <th scope="col" class="col-saved">Time saved</th>
+              </tr>
+            </thead>
+            <tbody>
+              {automations.map(a => (
+                <tr class="auto-row">
+                  <td class="auto-name">{a.name}</td>
+                  <td class="auto-what">{a.what}</td>
+                  <td class="auto-saved">
+                    <span class="saved-badge">{a.saved}</span>
+                  </td>
+                </tr>
+              ))}
+              <tr class="auto-total">
+                <td colspan="2" class="total-label">Total time reclaimed per week</td>
+                <td><span class="total-badge">12 hrs/wk</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Process ───────────────────────────────────────── -->
+    <section class="process-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">How It Works</p>
+          <h2 class="section-headline" style="margin-bottom:3rem">
+            Four steps,<br /><em>then it runs itself.</em>
+          </h2>
+        </div>
+        <ol class="process-list" role="list">
+          {steps.map((s, i) => (
+            <li class="process-step reveal" style={`transition-delay:${i * 0.08}s`}>
+              <span class="step-n" aria-hidden="true">{s.n}</span>
+              <div class="step-body">
+                <h3 class="step-title">{s.title}</h3>
+                <p class="step-note">{s.note}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ── Tools We Use ─────────────────────────────────── -->
+    <section class="tools-section">
+      <div class="section-container">
+        <div class="tools-hd reveal">
+          <p class="section-eyebrow">Built With</p>
+          <h2 class="section-headline" style="margin-bottom:0.5rem">Built with the best AI tools available</h2>
+          <p class="tools-intro">We pick the right tool for each job — not a one-size-fits-all platform.</p>
+        </div>
+        <div class="tools-grid reveal" style="transition-delay:0.1s">
+          <a href="https://www.make.com" target="_blank" rel="noopener noreferrer" class="tool-card" style="--brand:#9B5EEA">
+            <div class="tool-mark" aria-hidden="true">M</div>
+            <span class="tool-name">Make.com</span>
+          </a>
+          <a href="https://zapier.com" target="_blank" rel="noopener noreferrer" class="tool-card" style="--brand:#FF4A00">
+            <div class="tool-mark" aria-hidden="true">Z</div>
+            <span class="tool-name">Zapier</span>
+          </a>
+          <a href="https://airtable.com" target="_blank" rel="noopener noreferrer" class="tool-card" style="--brand:#2D7FF9">
+            <div class="tool-mark" aria-hidden="true">A</div>
+            <span class="tool-name">Airtable</span>
+          </a>
+          <a href="https://openai.com" target="_blank" rel="noopener noreferrer" class="tool-card" style="--brand:#00A67E">
+            <div class="tool-mark" aria-hidden="true">O</div>
+            <span class="tool-name">OpenAI</span>
+          </a>
+          <a href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer" class="tool-card" style="--brand:#D97757">
+            <div class="tool-mark" aria-hidden="true">C</div>
+            <span class="tool-name">Claude</span>
+          </a>
+          <a href="https://www.notion.so" target="_blank" rel="noopener noreferrer" class="tool-card" style="--brand:#161614">
+            <div class="tool-mark" aria-hidden="true">N</div>
+            <span class="tool-name">Notion</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Bug divider ─────────────────────────────────────── -->
+    <div class="bug-divider" aria-hidden="true">
+      <img src="/BugTransparentLogo.svg" alt="" width="72" height="72" />
+    </div>
+
+    <!-- ── Pricing Teaser ─────────────────────────────────── -->
+    <section class="pricing-teaser">
+      <div class="section-container pricing-teaser-inner reveal">
+        <div>
+          <p class="section-eyebrow">Investment</p>
+          <p class="teaser-price">Starting at $750</p>
+          <p class="teaser-note">Single Flow · Automation Stack · Full System — flat-rate, done for you</p>
+        </div>
+        <a href="/pricing/" class="btn-secondary teaser-cta">
+          See Full Automations Pricing
+          <span class="btn-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── FAQ ───────────────────────────────────────────── -->
+    <section class="faq-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">FAQ</p>
+          <h2 class="section-headline" style="margin-bottom:3rem">Common questions</h2>
+        </div>
+        <dl class="faq-list">
+          {faqs.map((f, i) => (
+            <div class="faq-item reveal" style={`transition-delay:${i * 0.1}s`}>
+              <dt class="faq-q">{f.q}</dt>
+              <dd class="faq-a">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* ── Hero favicon ────────────────── */
+  .svc-favicon {
+    position: absolute;
+    top: 1.5rem;
+    right: clamp(1.25rem, 5vw, 4rem);
+    z-index: 3;
+    width: 70px;
+    height: 70px;
+    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    opacity: 0.82;
+    pointer-events: none;
+  }
+  .svc-favicon img { width: 100%; height: auto; display: block; }
+
+  /* ── Hero ────────────────────────── */
+  .svc-hero {
+    background-color: var(--color-text);
+    padding: 5rem 0 4.5rem;
+    border-bottom: 1px solid rgba(242,237,227,0.08);
+    overflow: hidden;
+    position: relative;
+  }
+  .svc-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1920&auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center 50%;
+    z-index: 0;
+  }
+  .svc-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(22, 22, 20, 0.60);
+    z-index: 1;
+  }
+  .svc-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  @media (min-width: 1024px) {
+    .svc-hero-inner { grid-template-columns: 1fr auto; gap: 4rem; }
+  }
+  .svc-hero-content { max-width: 640px; }
+  .hero-bug {
+    display: none;
+    opacity: 0.18;
+    flex-shrink: 0;
+    filter: brightness(0) invert(1);
+  }
+  @media (min-width: 1024px) {
+    .hero-bug { display: block; }
+    .hero-bug img { width: clamp(160px, 20vw, 280px); height: auto; }
+  }
+
+  .svc-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 1.07;
+    letter-spacing: -0.025em;
+    color: var(--color-bg);
+    margin-bottom: 1.375rem;
+  }
+  .svc-headline em { font-style: italic; color: var(--color-accent); }
+  .svc-sub {
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 1.8vw, 1.0625rem);
+    font-weight: 300;
+    line-height: 1.72;
+    color: rgba(242,237,227,0.72);
+    max-width: 48ch;
+    margin-bottom: 2.25rem;
+  }
+
+  /* ── Problem ─────────────────────── */
+  .problem-section {
+    background-color: var(--color-text);
+    padding: 5rem 0;
+  }
+  .problem-inner { max-width: 740px; }
+  .problem-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1.75rem;
+  }
+  .problem-quote {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.375rem, 3.5vw, 2.25rem);
+    line-height: 1.45;
+    color: rgba(242,237,227,0.88);
+    margin: 0;
+    quotes: none;
+  }
+  .problem-quote em { font-style: italic; color: var(--color-accent); }
+
+  /* ── Automations table ───────────── */
+  .automations-section {
+    background-color: var(--color-surface);
+    padding: 5.5rem 0;
+  }
+  @media (min-width: 768px) { .automations-section { padding: 7rem 0; } }
+
+  .auto-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  .auto-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+  }
+  .auto-table thead th {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    padding: 0 1.25rem 1rem 0;
+    text-align: left;
+    border-bottom: 1.5px solid var(--color-text);
+  }
+  .col-saved { text-align: right; }
+  .auto-row td { padding: 1.375rem 1.25rem 1.375rem 0; border-bottom: 1px solid rgba(138,130,120,0.22); }
+  .auto-row:hover td { background-color: rgba(94,126,88,0.04); }
+  .auto-name {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.0625rem;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    padding-right: 2rem !important;
+  }
+  .auto-what {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+  .auto-saved { text-align: right; }
+  .saved-badge {
+    display: inline-block;
+    background-color: rgba(94,126,88,0.12);
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.625rem;
+    white-space: nowrap;
+  }
+  .auto-total td {
+    padding: 1.25rem 0 0;
+    border-bottom: none;
+  }
+  .total-label {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+  .total-badge {
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.75rem;
+    float: right;
+    margin-right: 1.25rem;
+  }
+
+  /* Tools bar */
+  .tools-bar {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(138,130,120,0.22);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+  .tools-label {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .tools-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tool-tag {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text);
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--color-surface);
+    background-color: var(--color-bg);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Process ─────────────────────── */
+  .process-section {
+    background-color: var(--color-bg);
+    padding: 5.5rem 0;
+  }
+  @media (min-width: 768px) { .process-section { padding: 7rem 0; } }
+
+  .process-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-surface);
+  }
+  .process-step {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-surface);
+    align-items: start;
+    transition: padding-left 0.2s ease;
+  }
+  .process-step:hover { padding-left: 0.5rem; }
+  .step-n {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-muted);
+    padding-top: 0.35rem;
+  }
+  .step-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.375rem;
+    color: var(--color-text);
+    letter-spacing: -0.015em;
+    margin-bottom: 0.375rem;
+  }
+  .step-note {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  /* ── Tools We Use ───────────────── */
+  .tools-section {
+    background-color: var(--color-surface);
+    padding: 5.5rem 0;
+    border-top: 1px solid var(--color-surface);
+  }
+  .tools-hd { margin-bottom: 3rem; }
+  .tools-intro {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    margin-top: 0.75rem;
+    max-width: 44ch;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .tools-grid { grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+  }
+
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+    text-decoration: none;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: filter 0.22s ease, opacity 0.22s ease, transform 0.2s ease;
+  }
+  .tool-card:hover {
+    filter: none;
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+
+  .tool-mark {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background-color: var(--brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 400;
+    font-style: italic;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .tool-name {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  /* ── Bug divider ─────────────────── */
+  .bug-divider {
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 0 1rem;
+    background-color: var(--color-surface);
+  }
+  .bug-divider img { opacity: 0.18; }
+
+  /* ── Pricing teaser ─────────────── */
+  .pricing-teaser {
+    background-color: var(--color-surface);
+    padding: 4.5rem 0;
+    border-top: 1px solid var(--color-muted);
+    border-bottom: 1px solid var(--color-muted);
+  }
+  .pricing-teaser-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  @media (min-width: 768px) {
+    .pricing-teaser-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  .teaser-price {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .teaser-note {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--color-muted);
+  }
+  .teaser-cta { gap: 0.5rem; }
+
+  /* ── FAQ ─────────────────────────── */
+  .faq-section {
+    background-color: var(--color-bg);
+    padding: 5.5rem 0;
+  }
+  @media (min-width: 768px) { .faq-section { padding: 7rem 0; } }
+
+  .faq-list {
+    max-width: 680px;
+    border-top: 1px solid var(--color-surface);
+  }
+  .faq-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-surface);
+  }
+  .faq-q {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+  .faq-a {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.72;
+    color: var(--color-muted);
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .teaser-cta { width: 100%; justify-content: center; }
+  }
+</style>

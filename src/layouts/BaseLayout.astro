@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description,
+  canonical = Astro.url.href,
+} = Astro.props;
+
+const siteName = 'Mayfly Web Design';
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <meta name="geo.region" content="US-MT" />
+    <meta name="geo.placename" content="Montana" />
+    <link rel="icon" type="image/svg+xml" href="/BugTransparentLogo.svg" />
+
+    <!-- Google Fonts — preconnect for speed -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- LocalBusiness schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Mayfly Web Design",
+        "description": "Custom websites, AI automations, and SEO for Montana small businesses. Built modern, priced for Montana.",
+        "url": "https://mayflywebdesign.com",
+        "email": "contact@mayflywebdesign.com",
+        "areaServed": ["Missoula", "Bozeman", "Great Falls", "Billings", "Montana"],
+        "priceRange": "$$",
+        "serviceType": "Web Design"
+      }
+    </script>
+
+    <slot name="head" />
+    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+    <style>
+      body { animation: pageFadeIn 0.3s ease both; }
+      @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) { body { animation: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="grain-overlay" aria-hidden="true"></div>
+    <slot />
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        },
+        { threshold: 0.08 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

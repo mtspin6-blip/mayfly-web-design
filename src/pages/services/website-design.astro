@@ -1,0 +1,522 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+
+const deliverables = [
+  { name: 'Custom Design',  detail: 'Built around your brand, not a template' },
+  { name: 'Mobile-First',   detail: '70% of your traffic is on a phone' },
+  { name: 'Fast Loading',   detail: 'Lighthouse score 90+ — no slow-loading excuses' },
+  { name: 'SEO-Ready',      detail: 'On-page optimization baked in from day one' },
+  { name: 'Easy Edits',     detail: 'Update text and photos yourself — no developer needed' },
+  { name: 'Hosting Setup',  detail: 'Cloudflare — $0–10/month, no vendor lock-in' },
+];
+
+const steps = [
+  { n: '01', title: 'Discovery Call',           note: '30 minutes — your business, your goals, your customers' },
+  { n: '02', title: 'PRD + Design Direction',    note: '3 days — a written spec you approve before we build anything' },
+  { n: '03', title: 'Build',                     note: '1–2 weeks — full custom development, no templates' },
+  { n: '04', title: 'Review + Revisions',        note: '1 week — feedback rounds until it\'s right' },
+  { n: '05', title: 'Launch + Handoff Training', note: 'Go live, then a walkthrough so you can manage it yourself' },
+];
+
+const faqs = [
+  {
+    q: 'How long does it take?',
+    a: '2–3 weeks start to finish — 1 week for discovery and design direction, 1–2 weeks to build, plus a revision round. Rush delivery is available at +20%.',
+  },
+  {
+    q: 'Do I own the site?',
+    a: 'Yes — you get full access to the code, the hosting account, and the domain. No monthly platform fees, no vendor lock-in. It\'s yours.',
+  },
+  {
+    q: 'What if I need changes later?',
+    a: 'We offer add-on support packages, or we train you to make edits yourself during the handoff. Either way, you own the code.',
+  },
+  {
+    q: 'What does a Montana website cost?',
+    a: 'Websites start at $750 for a 5-page site (Hatch tier) and go up to $3,000+ for full custom builds. All pricing is flat-rate — no hourly surprises.',
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a }
+  }))
+};
+---
+
+<BaseLayout
+  title="Website Design for Montana Businesses | Mayfly Web Design"
+  description="Professional websites starting at $750. Mobile-first, fast-loading, and built to convert. Serving Montana statewide — Missoula, Bozeman, Great Falls, Billings."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
+  <Header />
+  <main id="main-content">
+
+    <!-- ── Hero ──────────────────────────────────────────── -->
+    <section class="svc-hero">
+      <div class="svc-favicon" aria-hidden="true">
+        <img src="/BugTransparentLogo.svg" alt="" width="72" height="72" />
+      </div>
+      <div class="section-container svc-hero-inner">
+        <div class="svc-hero-content">
+          <p class="section-eyebrow reveal">Website Design</p>
+          <h1 class="svc-headline reveal" style="transition-delay:0.08s">
+            Websites built to convert,<br /><em>not just exist.</em>
+          </h1>
+          <p class="svc-sub reveal" style="transition-delay:0.16s">
+            Custom websites for Montana businesses — fast to load, easy to update,
+            designed to turn visitors into customers.
+          </p>
+          <a href="/contact/" class="btn-primary reveal" style="transition-delay:0.22s">
+            Book a Free Consultation
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <div class="hero-bug" aria-hidden="true">
+          <img src="/BugTransparentLogo.svg" alt="" width="260" height="260" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Problem ───────────────────────────────────────── -->
+    <section class="problem-section">
+      <div class="section-container">
+        <div class="problem-inner reveal">
+          <p class="problem-eyebrow">The Problem</p>
+          <blockquote class="problem-quote">
+            "Most Montana small businesses are stuck with one of three things:
+            a Wix site they paid too much for, a 10-year-old site that loads
+            in 8 seconds, or no site at all.
+            <em>None of those win you customers.</em>"
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Deliverables ───────────────────────────────────── -->
+    <section class="deliverables-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">What You Get</p>
+          <h2 class="section-headline" style="margin-bottom:3rem">
+            Everything included.<br /><em>Nothing hidden.</em>
+          </h2>
+        </div>
+        <div class="deliverables-grid">
+          {deliverables.map((d, i) => (
+            <div class="deliverable-card reveal" style={`transition-delay:${i * 0.07}s`}>
+              <h3 class="d-name">{d.name}</h3>
+              <p class="d-detail">{d.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Process — horizontal timeline ─────────────────── -->
+    <section class="process-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">How It Works</p>
+          <h2 class="section-headline" style="margin-bottom:3.5rem">
+            Five steps,<br /><em>start to launch.</em>
+          </h2>
+        </div>
+        <ol class="timeline" role="list">
+          {steps.map((s, i) => (
+            <li class="timeline-step reveal" style={`transition-delay:${i * 0.08}s`}>
+              <div class="timeline-node">
+                <span class="timeline-num">{s.n}</span>
+              </div>
+              <h3 class="timeline-title">{s.title}</h3>
+              <p class="timeline-note">{s.note}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ── Bug divider ─────────────────────────────────────── -->
+    <div class="bug-divider" aria-hidden="true">
+      <img src="/BugTransparentLogo.svg" alt="" width="72" height="72" />
+    </div>
+
+    <!-- ── Pricing Teaser ─────────────────────────────────── -->
+    <section class="pricing-teaser">
+      <div class="section-container pricing-teaser-inner reveal">
+        <div>
+          <p class="section-eyebrow">Investment</p>
+          <p class="teaser-price">Starting at $750</p>
+          <p class="teaser-note">Hatch · Rise · Full Current — flat-rate, no surprises</p>
+        </div>
+        <a href="/pricing/" class="btn-secondary teaser-cta">
+          See Full Pricing &amp; Tiers
+          <span class="btn-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── FAQ ───────────────────────────────────────────── -->
+    <section class="faq-section">
+      <div class="section-container">
+        <div class="reveal">
+          <p class="section-eyebrow">FAQ</p>
+          <h2 class="section-headline" style="margin-bottom:3rem">Common questions</h2>
+        </div>
+        <dl class="faq-list">
+          {faqs.map((f, i) => (
+            <div class="faq-item reveal" style={`transition-delay:${i * 0.1}s`}>
+              <dt class="faq-q">{f.q}</dt>
+              <dd class="faq-a">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* ── Hero ────────────────────────── */
+  .svc-hero {
+    background-color: var(--color-text);
+    padding: 5rem 0 4.5rem;
+    border-bottom: 1px solid rgba(242,237,227,0.08);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Favicon — top-right corner */
+  .svc-favicon {
+    position: absolute;
+    top: 1.5rem;
+    right: clamp(1.25rem, 5vw, 4rem);
+    z-index: 3;
+    width: 70px;
+    height: 70px;
+    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    opacity: 0.82;
+    pointer-events: none;
+  }
+  .svc-favicon img { width: 100%; height: auto; display: block; }
+  .svc-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1920&auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center 40%;
+    z-index: 0;
+  }
+  .svc-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(22, 22, 20, 0.52);
+    z-index: 1;
+  }
+  .svc-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  @media (min-width: 1024px) {
+    .svc-hero-inner { grid-template-columns: 1fr auto; gap: 4rem; }
+  }
+  .svc-hero-content { max-width: 640px; }
+
+  .hero-bug {
+    display: none;
+    opacity: 0.18;
+    flex-shrink: 0;
+    filter: brightness(0) invert(1);
+  }
+  @media (min-width: 1024px) {
+    .hero-bug { display: block; }
+    .hero-bug img { width: clamp(160px, 20vw, 280px); height: auto; }
+  }
+
+  .svc-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    line-height: 1.07;
+    letter-spacing: -0.025em;
+    color: var(--color-bg);
+    margin-bottom: 1.375rem;
+  }
+  .svc-headline em { font-style: italic; color: var(--color-accent); }
+  .svc-sub {
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 1.8vw, 1.0625rem);
+    font-weight: 300;
+    line-height: 1.72;
+    color: rgba(242,237,227,0.72);
+    max-width: 48ch;
+    margin-bottom: 2.25rem;
+  }
+
+  /* ── Problem ─────────────────────── */
+  .problem-section {
+    background-color: var(--color-text);
+    padding: 5rem 0;
+  }
+  .problem-inner { max-width: 740px; }
+  .problem-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1.75rem;
+  }
+  .problem-quote {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.375rem, 3.5vw, 2.25rem);
+    line-height: 1.45;
+    color: rgba(242,237,227,0.88);
+    margin: 0;
+    quotes: none;
+  }
+  .problem-quote em {
+    font-style: italic;
+    color: var(--color-accent);
+  }
+
+  /* ── Deliverables ────────────────── */
+  .deliverables-section {
+    background-color: var(--color-surface);
+    padding: 5.5rem 0;
+  }
+  @media (min-width: 768px) { .deliverables-section { padding: 7rem 0; } }
+
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5px;
+    background-color: var(--color-muted);
+  }
+  @media (min-width: 640px) { .deliverables-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .deliverables-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .deliverable-card {
+    background-color: var(--color-surface);
+    padding: 2.25rem 2rem;
+    border-top: 2px solid var(--color-accent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+  .deliverable-card:hover {
+    background-color: var(--color-bg);
+    transform: translateY(-2px);
+  }
+  .d-name {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+  .d-detail {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  /* ── Process — horizontal timeline ─ */
+  .process-section {
+    background-color: var(--color-bg);
+    padding: 5.5rem 0;
+  }
+  @media (min-width: 768px) { .process-section { padding: 7rem 0; } }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  @media (min-width: 768px) {
+    .timeline {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    /* Connector line between nodes */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 1.125rem;
+      left: calc(10% + 0.5rem);
+      right: calc(10% + 0.5rem);
+      height: 1px;
+      background: var(--color-surface);
+    }
+  }
+
+  .timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  @media (min-width: 768px) {
+    .timeline-step {
+      align-items: center;
+      text-align: center;
+      padding: 0 0.75rem;
+    }
+  }
+
+  .timeline-node {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-surface);
+    background-color: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .timeline-step:hover .timeline-node {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+  }
+  .timeline-step:hover .timeline-num { color: white; }
+
+  .timeline-num {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-muted);
+    transition: color 0.2s ease;
+  }
+
+  .timeline-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.0625rem;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .timeline-note {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  /* ── Bug divider ─────────────────── */
+  .bug-divider {
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 0 1rem;
+    background-color: var(--color-surface);
+  }
+  .bug-divider img { opacity: 0.18; }
+
+  /* ── Pricing teaser ─────────────── */
+  .pricing-teaser {
+    background-color: var(--color-surface);
+    padding: 4.5rem 0;
+    border-top: 1px solid var(--color-muted);
+    border-bottom: 1px solid var(--color-muted);
+  }
+  .pricing-teaser-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  @media (min-width: 768px) {
+    .pricing-teaser-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  .teaser-price {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .teaser-note {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    letter-spacing: 0.02em;
+  }
+  .teaser-cta { gap: 0.5rem; }
+
+  /* ── FAQ ─────────────────────────── */
+  .faq-section {
+    background-color: var(--color-bg);
+    padding: 5.5rem 0;
+  }
+  @media (min-width: 768px) { .faq-section { padding: 7rem 0; } }
+
+  .faq-list {
+    max-width: 680px;
+    border-top: 1px solid var(--color-surface);
+  }
+  .faq-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-surface);
+  }
+  .faq-q {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+  .faq-a {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.72;
+    color: var(--color-muted);
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .teaser-cta { width: 100%; justify-content: center; }
+  }
+</style>

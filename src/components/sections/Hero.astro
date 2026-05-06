@@ -1,0 +1,276 @@
+---
+// Hero — Home page
+---
+
+<section class="hero">
+  <!-- Full-bleed Bitterroot Valley background + overlay -->
+  <div class="hero-photo" aria-hidden="true"></div>
+  <div class="hero-dim"   aria-hidden="true"></div>
+
+  <!-- Desktop: logo top-right -->
+  <div class="hero-tr-logo" aria-hidden="true">
+    <img
+      src="/FullTransparentLogo.svg"
+      alt=""
+      width="220"
+      height="70"
+      loading="eager"
+    />
+  </div>
+
+  <div class="hero-body section-container">
+    <div class="hero-content">
+
+      <!-- Mobile: logo centered above eyebrow -->
+      <div class="hero-mobile-logo">
+        <img
+          src="/FullTransparentLogo.svg"
+          alt="Mayfly Web Design"
+          width="200"
+          height="64"
+          loading="eager"
+        />
+      </div>
+
+      <p class="hero-eyebrow reveal">Montana Web Design</p>
+
+      <h1 class="hero-headline reveal" style="transition-delay:0.1s">
+        Built Modern.<br />
+        <em>Priced for Montana.</em>
+      </h1>
+
+      <p class="hero-sub reveal" style="transition-delay:0.2s">
+        Custom websites, AI automations, and SEO — delivered faster
+        and smarter, without the typical price tag.
+      </p>
+
+      <div class="hero-ctas reveal" style="transition-delay:0.3s">
+        <a href="https://cal.com/mtspin6" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          Book a Free Call
+        </a>
+        <a href="/work" class="btn-secondary hero-btn-outline">
+          See Our Work
+        </a>
+      </div>
+
+      <p class="hero-trust reveal" style="transition-delay:0.42s">
+        Missoula &middot; Bozeman &middot; Great Falls &middot; Billings &middot; Montana Statewide
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer bar -->
+  <div class="hero-bar">
+    <div class="section-container hero-bar-inner">
+      <span class="hero-bar-text">Montana-local &nbsp;&bull;&nbsp; AI-augmented &nbsp;&bull;&nbsp; Full-stack digital</span>
+      <div class="scroll-signal" aria-hidden="true">
+        <span class="scroll-label">Scroll</span>
+        <div class="scroll-track"><div class="scroll-fill"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    min-height: 56vh;
+    padding-top: clamp(1.75rem, 4vw, 3rem);
+    padding-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Bitterroot Valley — wide open river valley, golden hour */
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center 45%;
+    z-index: 0;
+  }
+
+  .hero-dim {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(22, 22, 20, 0.52);
+    z-index: 1;
+  }
+
+  /* Desktop: logo anchored top-right */
+  .hero-tr-logo {
+    display: none;
+    position: absolute;
+    top: 1.75rem;
+    right: clamp(1.25rem, 5vw, 4rem);
+    z-index: 3;
+    opacity: 0;
+    animation: heroLogoIn 0.8s ease 0.05s forwards;
+  }
+  @media (min-width: 768px) {
+    .hero-tr-logo { display: block; }
+  }
+  .hero-tr-logo img {
+    width: clamp(140px, 16vw, 220px);
+    height: auto;
+    filter: brightness(0) invert(1) opacity(0.90);
+  }
+
+  /* Mobile: logo in flow, centered, above eyebrow */
+  .hero-mobile-logo {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1.75rem;
+    opacity: 0;
+    animation: heroLogoIn 0.8s ease 0.05s forwards;
+  }
+  @media (min-width: 768px) {
+    .hero-mobile-logo { display: none; }
+  }
+  .hero-mobile-logo img {
+    width: 160px;
+    height: auto;
+    filter: brightness(0) invert(1) opacity(0.90);
+  }
+
+  @keyframes heroLogoIn {
+    to { opacity: 1; }
+  }
+
+  .hero-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-content { max-width: 640px; }
+
+  .hero-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1.125rem;
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.125rem, 4.5vw, 4rem);
+    line-height: 1.07;
+    color: var(--color-bg);
+    margin-bottom: 1.25rem;
+    animation: letterSpreadIn 0.6s ease-out forwards;
+  }
+  @keyframes letterSpreadIn {
+    from { letter-spacing: -0.07em; }
+    to   { letter-spacing: -0.03em; }
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--color-accent);
+  }
+
+  .hero-sub {
+    font-family: var(--font-body);
+    font-size: clamp(0.875rem, 1.6vw, 1.0625rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(242, 237, 227, 0.75);
+    max-width: 44ch;
+    margin-bottom: 2rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    margin-bottom: 1.875rem;
+  }
+
+  .hero-btn-outline {
+    border-color: rgba(242, 237, 227, 0.5) !important;
+    color: var(--color-bg) !important;
+  }
+  .hero-btn-outline:hover {
+    background-color: rgba(242, 237, 227, 0.12) !important;
+    color: var(--color-bg) !important;
+  }
+
+  .hero-trust {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: rgba(242, 237, 227, 0.38);
+    padding-top: 1.125rem;
+    border-top: 1px solid rgba(242, 237, 227, 0.12);
+  }
+
+  /* Bottom bar */
+  .hero-bar {
+    margin-top: 2rem;
+    padding-top: 1.125rem;
+    border-top: 1px solid rgba(242, 237, 227, 0.12);
+    position: relative;
+    z-index: 2;
+  }
+  .hero-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hero-bar-text {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(242, 237, 227, 0.34);
+  }
+  .scroll-signal {
+    display: none;
+    align-items: center;
+    gap: 0.875rem;
+  }
+  @media (min-width: 640px) { .scroll-signal { display: flex; } }
+  .scroll-label {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(242, 237, 227, 0.34);
+  }
+  .scroll-track {
+    width: 36px;
+    height: 1px;
+    background-color: rgba(242, 237, 227, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-fill {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-accent);
+    transform: translateX(-100%);
+    animation: scrollPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%   { transform: translateX(-100%); }
+    50%  { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-fill      { animation: none; transform: translateX(0); opacity: 0.4; }
+    .hero-tr-logo,
+    .hero-mobile-logo { animation: none; opacity: 1; }
+    .hero-headline    { animation: none; letter-spacing: -0.03em; }
+  }
+</style>

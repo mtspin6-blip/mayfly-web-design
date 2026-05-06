@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+
+const values = [
+  {
+    title: 'Transparency',
+    body:  'Flat-rate pricing, honest timelines, and clear communication from day one. No surprises on the invoice.',
+  },
+  {
+    title: 'Craft',
+    body:  'We care about the details — the spacing, the speed, the copy, the conversion. Good enough is never good enough.',
+  },
+  {
+    title: 'Local Accountability',
+    body:  "We're not a ticket in someone else's queue. We're your neighbor, and we stand behind everything we build.",
+  },
+  {
+    title: 'Real Results',
+    body:  'A beautiful site that doesn\'t generate leads is just expensive decoration. Every decision we make is tied to your business goals.',
+  },
+];
+
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "About Mayfly Web Design — Montana-Local Agency",
+  "description": "Built by a Montana local for Montana businesses. Learn the story behind Mayfly Web Design.",
+  "url": "https://mayflywebdesign.com/about/",
+  "isPartOf": { "@type": "WebSite", "name": "Mayfly Web Design", "url": "https://mayflywebdesign.com" }
+};
+---
+
+<BaseLayout
+  title="About Mayfly Web Design | Montana-Local Agency"
+  description="Built by a Montana local for Montana businesses. Learn the story and values behind Mayfly Web Design."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} slot="head"></script>
+  <Header />
+  <main id="main-content">
+
+    <section class="about-hero">
+      <div class="about-hero-photo" aria-hidden="true"></div>
+      <div class="about-hero-dim"   aria-hidden="true"></div>
+      <div class="section-container" style="position:relative;z-index:2">
+        <p class="section-eyebrow reveal">About Mayfly</p>
+        <h1 class="about-headline reveal" style="transition-delay:0.08s">
+          Built by a Montana local,<br /><em>for Montana businesses.</em>
+        </h1>
+      </div>
+    </section>
+
+    <!-- Full-width Missoula / Clark Fork River city image -->
+    <div class="about-city" aria-label="Missoula, Montana"></div>
+
+    <section class="about-bio">
+      <div class="section-container about-bio-grid">
+        <div class="bio-text reveal">
+          <h2 class="bio-heading">The Business</h2>
+          <p>
+            Mayfly Web Design builds modern websites and digital systems for Montana's small businesses.
+            Founded by a Montana local committed to delivering professional-grade work — faster, smarter,
+            and at a price that actually works for Montanans.
+          </p>
+          <h2 class="bio-heading" style="margin-top:2rem">Why Mayfly</h2>
+          <p>
+            The mayfly is a creature of the Montana rivers — small, precise, and built for a specific purpose.
+            That's how we think about every website we build: crafted for the environment it lives in,
+            optimized for the job it has to do.
+          </p>
+          <p style="margin-top:1rem">
+            Most Montana businesses get two choices: pay a national agency premium prices for a
+            cookie-cutter result, or cobble something together on a website builder that never quite
+            fits. Mayfly exists to close that gap — real custom work, at prices that make sense for
+            real Montana businesses.
+          </p>
+        </div>
+        <div class="bio-photo reveal" style="transition-delay:0.15s">
+          <div class="photo-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&auto=format&fit=crop&q=75"
+              alt="Montana river at golden hour — the landscape that inspires our work"
+              class="bio-img"
+              loading="lazy"
+              width="800"
+              height="1067"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="values-section">
+      <div class="section-container">
+        <p class="section-eyebrow reveal">Our Values</p>
+        <h2 class="section-headline reveal" style="transition-delay:0.08s;margin-bottom:3rem">
+          What we stand for
+        </h2>
+        <div class="values-grid">
+          {values.map((v, i) => (
+            <div class="value-card reveal" style={`transition-delay:${i * 0.08}s`}>
+              <h3 class="value-name">{v.title}</h3>
+              <p class="value-body">{v.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .about-hero {
+    background-color: var(--color-bg);
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid var(--color-surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-hero-photo {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center 30%;
+    z-index: 0;
+  }
+  .about-hero-dim {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(22, 22, 20, 0.50);
+    z-index: 1;
+  }
+  .about-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    letter-spacing: -0.025em;
+    color: var(--color-bg);
+  }
+  .about-headline em { font-style: italic; color: var(--color-accent); }
+  .about-hero .section-eyebrow { color: var(--color-accent); }
+
+  /* Full-width Missoula / Clark Fork River city image */
+  .about-city {
+    width: 100%;
+    height: clamp(220px, 40vh, 480px);
+    background-image: url('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1920&auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center 55%;
+    border-bottom: 3px solid var(--color-accent);
+  }
+
+  .about-bio {
+    background-color: var(--color-bg);
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--color-surface);
+  }
+  .about-bio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  @media (min-width: 1024px) {
+    .about-bio-grid { grid-template-columns: 3fr 2fr; }
+  }
+
+  .bio-heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.375rem;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.875rem;
+    color: var(--color-text);
+  }
+  .bio-text p {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-muted);
+    max-width: 60ch;
+  }
+
+  .photo-wrap {
+    width: 100%;
+    max-width: 360px;
+    overflow: hidden;
+  }
+  .bio-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3/4;
+  }
+
+  .values-section {
+    background-color: var(--color-surface);
+    padding: 5rem 0;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    background-color: var(--color-muted);
+  }
+  @media (min-width: 768px) {
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .value-card {
+    background-color: var(--color-surface);
+    padding: 2.25rem 2rem;
+    transition: background-color 0.2s ease;
+  }
+  .value-card:hover { background-color: var(--color-bg); }
+  .value-name {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.375rem;
+    color: var(--color-text);
+    letter-spacing: -0.015em;
+    margin-bottom: 0.75rem;
+  }
+  .value-body {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+</style>

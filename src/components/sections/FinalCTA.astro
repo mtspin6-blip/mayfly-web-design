@@ -1,0 +1,113 @@
+---
+// Final CTA — closing section on every key page
+---
+
+<section class="cta-wrap">
+  <!-- Horizontal rule -->
+  <div class="cta-rule" aria-hidden="true"></div>
+
+  <div class="section-container cta-inner">
+    <div class="cta-content reveal">
+      <p class="cta-eyebrow">Ready to start?</p>
+      <h2 class="cta-headline">
+        Your Montana business deserves<br class="hidden sm:block" />
+        <em>a website that works.</em>
+      </h2>
+      <p class="cta-body">
+        Book a free 30-minute discovery call. We'll talk through what you need,
+        what it'll cost, and what to expect — no pressure, no pitch deck.
+      </p>
+      <div class="cta-buttons">
+        <a
+          href="https://cal.com/mtspin6"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary"
+        >
+          Book a Free Call
+        </a>
+        <a href="mailto:contact@mayflywebdesign.com" class="btn-secondary">
+          Send an Email
+        </a>
+      </div>
+      <p class="cta-fine">We respond within 1 business day.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-wrap {
+    background-color: var(--color-bg);
+    padding: 5.5rem 0 6rem;
+    position: relative;
+  }
+  @media (min-width: 768px) { .cta-wrap { padding: 7.5rem 0 8rem; } }
+
+  .cta-rule {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-surface) 25%, var(--color-surface) 75%, transparent);
+  }
+
+  .cta-inner { text-align: center; }
+
+  .cta-content {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .cta-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1.125rem;
+  }
+
+  .cta-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--color-text);
+    margin-bottom: 1.625rem;
+  }
+  .cta-headline em {
+    font-style: italic;
+    color: var(--color-accent);
+  }
+
+  .cta-body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.72;
+    color: var(--color-muted);
+    max-width: 44ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    justify-content: center;
+    margin-bottom: 1.375rem;
+  }
+
+  .cta-fine {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+  }
+</style>
