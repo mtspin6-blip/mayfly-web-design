@@ -1,5 +1,8 @@
 ---
-// Final CTA — closing section on every key page
+interface Props {
+  ctaEm?: string;
+}
+const { ctaEm = 'a website that works.' } = Astro.props;
 ---
 
 <section class="cta-wrap">
@@ -11,7 +14,7 @@
       <p class="cta-eyebrow">Ready to start?</p>
       <h2 class="cta-headline">
         Your Montana business deserves<br class="hidden sm:block" />
-        <em>a website that works.</em>
+        <em>{ctaEm}</em>
       </h2>
       <p class="cta-body">
         Book a free 30-minute discovery call. We'll talk through what you need,

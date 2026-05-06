@@ -7,28 +7,28 @@ import FinalCTA from '../../components/sections/FinalCTA.astro';
 const services = [
   {
     name:   'Local SEO',
-    detail: 'Google Business Profile optimization, NAP consistency across directories, and local citation building',
+    detail: 'Google Business Profile optimization, NAP consistency across directories, and local citation building for Missoula and Montana markets',
   },
   {
     name:   'On-Page SEO',
-    detail: 'Title tags, meta descriptions, schema markup, header structure — every page dialed in',
+    detail: 'Title tags, meta descriptions, schema markup, header structure — every page optimized for search',
   },
   {
     name:   'GAIO Setup',
     detail: 'Schema for AI parsing, FAQ structures, factual claims, and source signals that get you cited by ChatGPT, Claude & Perplexity',
   },
   {
-    name:   'Tracking',
+    name:   'Ranking Tracking',
     detail: 'Monthly report covering Google rankings, Map Pack visibility, and AI citation tracking',
   },
   {
     name:   'Content Strategy',
-    detail: 'What to write, in what order, targeting which queries — a roadmap, not a guess',
+    detail: 'What to write, in what order, targeting which queries — a roadmap for SEO and GAIO success, not a guess',
   },
 ];
 
 const steps = [
-  { n: '01', title: 'SEO Audit',           note: 'Current state report — where you rank, what\'s broken, what\'s being missed' },
+  { n: '01', title: 'SEO & GAIO Audit',    note: 'Current state report — where you rank, what\'s broken, what\'s being missed, and GAIO opportunities' },
   { n: '02', title: 'Quick Wins',           note: 'Week 1–2: low-hanging fruit that moves the needle fast' },
   { n: '03', title: 'Foundation Build',     note: 'Week 3–6: schema, citations, content structure, and GAIO-ready markup' },
   { n: '04', title: 'Ongoing Optimization', note: 'Monthly: content creation, ranking updates, and AI citation tracking' },
@@ -40,8 +40,8 @@ const faqs = [
     a: 'Local SEO: expect meaningful movement in 4–8 weeks. GAIO (AI search) is faster — 2–4 weeks — because there\'s far less competition. Early movers have a real advantage right now.',
   },
   {
-    q: 'Is GAIO worth it now?',
-    a: 'Yes. AI-generated answers are already replacing the first page of Google for millions of queries. Most of your competitors aren\'t optimizing for this yet. That\'s an opening.',
+    q: 'Is GAIO worth investing in now?',
+    a: 'Yes. AI-generated answers are already replacing the first page of Google for millions of queries. Most of your competitors aren\'t optimizing for GAIO yet. That\'s an opening.',
   },
   {
     q: 'What if I already have an SEO person?',
@@ -49,7 +49,7 @@ const faqs = [
   },
   {
     q: 'What is GAIO and how is it different from regular SEO?',
-    a: 'GAIO (Generative AI Optimization) is how you get cited by AI tools like ChatGPT, Claude, and Perplexity. Traditional SEO optimizes for search engine rankings. GAIO optimizes for AI-generated answer citations — a separate and growing channel.',
+    a: 'GAIO (Generative AI Optimization) is how you get cited by AI tools like ChatGPT, Claude, and Perplexity. Traditional SEO optimizes for Google search rankings. GAIO optimizes for AI-generated answer citations — a separate and growing channel that requires different strategies.',
   },
 ];
 
@@ -86,6 +86,7 @@ const faqSchema = {
           <p class="svc-sub reveal" style="transition-delay:0.16s">
             Most agencies optimize for Google in 2015. We optimize for how Montanans
             actually search today: Google, Maps, ChatGPT, Claude, and Perplexity.
+            Serving Missoula, Bozeman, Great Falls, Billings, and Montana statewide.
           </p>
           <a href="/contact/" class="btn-primary reveal" style="transition-delay:0.22s">
             Book a Free Consultation
@@ -202,7 +203,7 @@ const faqSchema = {
         <div>
           <p class="section-eyebrow">Investment</p>
           <p class="teaser-price">$1,500 setup + $500/mo</p>
-          <p class="teaser-note">One-time foundation + ongoing monthly optimization and tracking</p>
+          <p class="teaser-note">One-time SEO and GAIO foundation + ongoing monthly optimization and tracking</p>
         </div>
         <a href="/pricing/" class="btn-secondary teaser-cta">
           See Full Pricing
@@ -229,7 +230,7 @@ const faqSchema = {
       </div>
     </section>
 
-    <FinalCTA />
+    <FinalCTA ctaEm="SEO and GAIO that work." />
   </main>
   <Footer />
 </BaseLayout>
