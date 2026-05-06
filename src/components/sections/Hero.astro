@@ -1,10 +1,11 @@
 ---
 // Hero — Home page
+import homepageHeader from '../../assets/Homepage-Header.jpg';
 ---
 
 <section class="hero">
   <!-- Full-bleed Bitterroot Valley background + overlay -->
-  <div class="hero-photo" aria-hidden="true"></div>
+  <div class="hero-photo" aria-hidden="true" style={`background-image: url(${homepageHeader.src})`}></div>
   <div class="hero-dim"   aria-hidden="true"></div>
 
   <!-- Desktop: logo top-right -->
@@ -90,7 +91,6 @@
   .hero-photo {
     position: absolute;
     inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&auto=format&fit=crop&q=80');
     background-size: cover;
     background-position: center 45%;
     z-index: 0;
@@ -117,7 +117,7 @@
     .hero-tr-logo { display: block; }
   }
   .hero-tr-logo img {
-    width: clamp(140px, 16vw, 220px);
+    width: clamp(210px, 24vw, 330px);
     height: auto;
     filter: brightness(0) invert(1) opacity(0.90);
   }
@@ -125,7 +125,7 @@
   /* Mobile: logo in flow, centered, above eyebrow */
   .hero-mobile-logo {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     margin-bottom: 1.75rem;
     opacity: 0;
     animation: heroLogoIn 0.8s ease 0.05s forwards;
@@ -134,7 +134,7 @@
     .hero-mobile-logo { display: none; }
   }
   .hero-mobile-logo img {
-    width: 160px;
+    width: 240px;
     height: auto;
     filter: brightness(0) invert(1) opacity(0.90);
   }
@@ -147,11 +147,15 @@
     flex: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
     z-index: 2;
   }
 
-  .hero-content { max-width: 640px; }
+  .hero-content {
+    max-width: 640px;
+    text-align: center;
+  }
 
   .hero-eyebrow {
     font-family: var(--font-body);
@@ -197,12 +201,13 @@
     line-height: 1.7;
     color: rgba(242, 237, 227, 0.75);
     max-width: 44ch;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
   }
 
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.875rem;
     margin-bottom: 1.875rem;
   }

@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
+import aboutHeaderImg from '../assets/About-Header.jpg';
+import aboutSideImg from '../assets/About-SideImage.jpg';
 
 const values = [
   {
@@ -42,7 +44,7 @@ const pageSchema = {
   <main id="main-content">
 
     <section class="about-hero">
-      <div class="about-hero-photo" aria-hidden="true"></div>
+      <div class="about-hero-photo" aria-hidden="true" style={`background-image: url(${aboutHeaderImg.src})`}></div>
       <div class="about-hero-dim"   aria-hidden="true"></div>
       <div class="section-container" style="position:relative;z-index:2">
         <p class="section-eyebrow reveal">About Mayfly</p>
@@ -80,12 +82,12 @@ const pageSchema = {
         <div class="bio-photo reveal" style="transition-delay:0.15s">
           <div class="photo-wrap">
             <img
-              src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&auto=format&fit=crop&q=75"
+              src={aboutSideImg.src}
               alt="Montana river at golden hour — the landscape that inspires our work"
               class="bio-img"
               loading="lazy"
-              width="800"
-              height="1067"
+              width={aboutSideImg.width}
+              height={aboutSideImg.height}
             />
           </div>
         </div>
@@ -125,7 +127,6 @@ const pageSchema = {
   .about-hero-photo {
     position: absolute;
     inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&auto=format&fit=crop&q=80');
     background-size: cover;
     background-position: center 30%;
     z-index: 0;
