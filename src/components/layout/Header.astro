@@ -23,8 +23,8 @@ const normPath = path.replace(/\/$/, '') || '/';
         src="/FullTransparentLogo.svg"
         alt="Mayfly Web Design"
         class="logo-img"
-        width="148"
-        height="48"
+        width="168"
+        height="168"
       />
     </a>
 
@@ -125,7 +125,10 @@ const normPath = path.replace(/\/$/, '') || '/';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 11rem;
+    height: 5rem;
+  }
+  @media (min-width: 768px) {
+    .nav-inner { height: 5.5rem; }
   }
 
   /* Logo */
@@ -141,11 +144,15 @@ const normPath = path.replace(/\/$/, '') || '/';
     to { opacity: 1; }
   }
   .logo-img {
-    height: 168px;
-    width: auto;
+    height: 72px;
+    width: 72px;
     display: block;
-    object-fit: contain;
-    padding: 6px 0;
+  }
+  @media (min-width: 768px) {
+    .logo-img {
+      height: 168px;
+      width: 168px;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .logo { animation: none; opacity: 1; }
