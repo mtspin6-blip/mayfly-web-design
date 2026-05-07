@@ -49,12 +49,63 @@ const faqSchema = {
     "acceptedAnswer": { "@type": "Answer", "text": f.a }
   }))
 };
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Website Design",
+  "description": "Custom website design for Montana small businesses. Fast-loading, mobile-first, SEO-ready sites built to convert visitors into customers. Serving Missoula, Bozeman, Great Falls, Billings, and Montana statewide.",
+  "url": "https://mayflywebdesign.com/services/website-design",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Mayfly Web Design",
+    "url": "https://mayflywebdesign.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Missoula",
+      "addressRegion": "MT",
+      "addressCountry": "US"
+    }
+  },
+  "areaServed": ["Missoula, MT", "Bozeman, MT", "Great Falls, MT", "Billings, MT", "Montana"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Website Design Tiers",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Hatch",
+        "description": "5-page website with basic SEO and hosting setup",
+        "price": "750",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "name": "Rise",
+        "description": "8-page website with full local SEO, GBP setup, and 1 AI automation",
+        "price": "1500",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "name": "Full Current",
+        "description": "Custom pages with advanced SEO & GAIO strategy and up to 3 AI automations",
+        "price": "3000",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      }
+    ]
+  }
+};
 ---
 
 <BaseLayout
   title="Website Design for Montana Businesses | Mayfly Web Design"
   description="Professional websites starting at $750. Mobile-first, fast-loading, and built to convert. Serving Montana statewide — Missoula, Bozeman, Great Falls, Billings."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} slot="head"></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
   <Header />
   <main id="main-content">

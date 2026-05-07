@@ -57,12 +57,43 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "Mayfly Web Design",
-        "description": "Custom websites, AI automations, and SEO for Montana small businesses. Built modern, priced for Montana.",
+        "description": "Custom websites, AI automations, and SEO optimization for Montana small businesses. Based in Missoula, serving Bozeman, Great Falls, Billings, and statewide.",
         "url": "https://mayflywebdesign.com",
         "email": "contact@mayflywebdesign.com",
-        "areaServed": ["Missoula", "Bozeman", "Great Falls", "Billings", "Montana"],
-        "priceRange": "$$",
-        "serviceType": "Web Design"
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Missoula",
+          "addressRegion": "MT",
+          "addressCountry": "US"
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Missoula",
+            "address": { "@type": "PostalAddress", "addressRegion": "MT" }
+          },
+          {
+            "@type": "City",
+            "name": "Bozeman",
+            "address": { "@type": "PostalAddress", "addressRegion": "MT" }
+          },
+          {
+            "@type": "City",
+            "name": "Great Falls",
+            "address": { "@type": "PostalAddress", "addressRegion": "MT" }
+          },
+          {
+            "@type": "City",
+            "name": "Billings",
+            "address": { "@type": "PostalAddress", "addressRegion": "MT" }
+          },
+          {
+            "@type": "State",
+            "name": "Montana"
+          }
+        ],
+        "priceRange": "$750-$3000+",
+        "foundingDate": "2024"
       }
     </script>
 

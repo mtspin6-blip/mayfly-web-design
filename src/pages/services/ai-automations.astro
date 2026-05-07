@@ -49,12 +49,63 @@ const faqSchema = {
     "acceptedAnswer": { "@type": "Answer", "text": f.a }
   }))
 };
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "AI Automations",
+  "description": "Custom AI automation workflows for Montana businesses. Automate lead capture, follow-ups, scheduling, and admin tasks. Save 12+ hours per week with documented, done-for-you automation systems.",
+  "url": "https://mayflywebdesign.com/services/ai-automations",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Mayfly Web Design",
+    "url": "https://mayflywebdesign.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Missoula",
+      "addressRegion": "MT",
+      "addressCountry": "US"
+    }
+  },
+  "areaServed": ["Missoula, MT", "Bozeman, MT", "Great Falls, MT", "Billings, MT", "Montana"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "AI Automation Tiers",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Single Flow",
+        "description": "1 custom automation workflow with full build, testing, and 30-day support",
+        "price": "750",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "name": "Automation Stack",
+        "description": "3 custom automation workflows with CRM integration and 60-day support",
+        "price": "1500",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "name": "Full System",
+        "description": "Unlimited automation workflows with custom AI integration and ongoing monitoring",
+        "price": "3000",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      }
+    ]
+  }
+};
 ---
 
 <BaseLayout
   title="AI Automations for Montana Small Businesses | Mayfly Web Design"
   description="Automate your lead follow-up, bookings, and review requests. Montana-built, affordable, and done for you. Starting at $750."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} slot="head"></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
   <Header />
   <main id="main-content">

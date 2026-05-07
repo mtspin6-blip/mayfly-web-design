@@ -62,12 +62,81 @@ const faqSchema = {
     "acceptedAnswer": { "@type": "Answer", "text": f.a }
   }))
 };
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "SEO & GAIO",
+  "description": "Local SEO and Generative AI Optimization for Montana businesses. Rank in Google and get cited by ChatGPT, Claude, and Perplexity. Serving Missoula, Bozeman, Great Falls, Billings, and Montana statewide.",
+  "url": "https://mayflywebdesign.com/services/seo-gaio",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Mayfly Web Design",
+    "url": "https://mayflywebdesign.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Missoula",
+      "addressRegion": "MT",
+      "addressCountry": "US"
+    }
+  },
+  "areaServed": ["Missoula, MT", "Bozeman, MT", "Great Falls, MT", "Billings, MT", "Montana"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "SEO & GAIO Tiers",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Local Presence",
+        "description": "Google Business Profile optimization, on-page SEO, and GAIO setup with monthly ranking report",
+        "price": "750",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "USD",
+          "price": "300",
+          "billingDuration": "P1M"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Visibility Stack",
+        "description": "Complete local SEO, citation building, FAQ schema, GAIO optimization, and monthly strategy call",
+        "price": "1500",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "USD",
+          "price": "500",
+          "billingDuration": "P1M"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "Full Authority",
+        "description": "Everything in Visibility Stack plus monthly blog content, GAIO monitoring, priority support, and quarterly reviews",
+        "price": "3000",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "USD",
+          "price": "800",
+          "billingDuration": "P1M"
+        }
+      }
+    ]
+  }
+};
 ---
 
 <BaseLayout
   title="Montana SEO + GAIO Services | Mayfly Web Design"
   description="Rank locally and get cited by AI. Full local SEO and Generative AI Optimization (GAIO) for Montana businesses — Missoula, Bozeman, statewide."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} slot="head"></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
   <Header />
   <main id="main-content">
