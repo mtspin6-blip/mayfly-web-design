@@ -74,8 +74,8 @@ const faqSchema = {
 
     <!-- ── Hero ──────────────────────────────────────────── -->
     <section class="svc-hero">
-      <div class="svc-favicon" aria-hidden="true">
-        <img src="/BugTransparentLogo.svg" alt="" width="144" height="144" />
+      <div class="svc-logo" aria-hidden="true">
+        <img src="/FullTransparentLogo.svg" alt="" width="200" height="200" loading="eager" />
       </div>
       <div class="section-container svc-hero-inner">
         <div class="svc-hero-content">
@@ -233,24 +233,32 @@ const faqSchema = {
 </BaseLayout>
 
 <style>
-  /* Favicon — top-right */
-  .svc-favicon {
+  /* Full logo — top-right of hero */
+  .svc-logo {
+    display: none;
     position: absolute;
-    top: 1.5rem;
+    top: 1.75rem;
     right: clamp(1.25rem, 5vw, 4rem);
     z-index: 3;
-    width: 140px;
-    height: 140px;
-    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.6));
-    opacity: 0.88;
+    width: 200px;
+    height: 200px;
+    filter: brightness(0) invert(1) drop-shadow(0 2px 12px rgba(0,0,0,0.5));
+    opacity: 0.85;
     pointer-events: none;
   }
-  .svc-favicon img { width: 100%; height: auto; display: block; }
+  @media (min-width: 640px) {
+    .svc-logo { display: block; width: 140px; height: 140px; }
+  }
+  @media (min-width: 1024px) {
+    .svc-logo { width: 200px; height: 200px; }
+  }
+  .svc-logo img { width: 100%; height: auto; display: block; }
 
   /* ── Hero ────────────────────────── */
   .svc-hero {
     background-color: var(--color-text);
     padding: 5rem 0 4.5rem;
+    min-height: clamp(240px, 32vh, 440px);
     border-bottom: 1px solid rgba(242,237,227,0.08);
     overflow: hidden;
     position: relative;
@@ -297,7 +305,7 @@ const faqSchema = {
   .svc-headline {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(2.5rem, 6vw, 4.25rem);
+    font-size: clamp(3.25rem, 7vw, 5.5rem);
     line-height: 1.07;
     letter-spacing: -0.025em;
     color: var(--color-bg);

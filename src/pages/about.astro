@@ -4,7 +4,7 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
 import aboutHeaderImg from '../assets/About-Header.jpg';
-import aboutSideImg from '../assets/About-SideImage.jpg';
+import aboutSideImg from '../assets/About-NewSideImage.jpg';
 
 const values = [
   {
@@ -117,6 +117,7 @@ const pageSchema = {
   .about-hero {
     background-color: var(--color-bg);
     padding: 5rem 0 4rem;
+    min-height: clamp(240px, 32vh, 440px);
     border-bottom: 1px solid var(--color-surface);
     position: relative;
     overflow: hidden;
@@ -125,7 +126,7 @@ const pageSchema = {
     position: absolute;
     inset: 0;
     background-size: cover;
-    background-position: center 30%;
+    background-position: center 45%;
     z-index: 0;
   }
   .about-hero-dim {
@@ -137,7 +138,7 @@ const pageSchema = {
   .about-headline {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-size: clamp(3rem, 6.5vw, 5rem);
     letter-spacing: -0.025em;
     color: var(--color-bg);
   }

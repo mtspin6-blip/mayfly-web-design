@@ -8,30 +8,8 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
   <div class="hero-photo" aria-hidden="true" style={`background-image: url(${homepageHeader.src})`}></div>
   <div class="hero-dim"   aria-hidden="true"></div>
 
-  <!-- Desktop: logo top-right -->
-  <div class="hero-tr-logo" aria-hidden="true">
-    <img
-      src="/FullTransparentLogo.svg"
-      alt=""
-      width="220"
-      height="70"
-      loading="eager"
-    />
-  </div>
-
   <div class="hero-body section-container">
     <div class="hero-content">
-
-      <!-- Mobile: logo centered above eyebrow -->
-      <div class="hero-mobile-logo">
-        <img
-          src="/FullTransparentLogo.svg"
-          alt="Mayfly Web Design"
-          width="200"
-          height="64"
-          loading="eager"
-        />
-      </div>
 
       <p class="hero-eyebrow reveal">Montana Web Design</p>
 
@@ -103,46 +81,6 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
     z-index: 1;
   }
 
-  /* Desktop: logo anchored top-right */
-  .hero-tr-logo {
-    display: none;
-    position: absolute;
-    top: 1.75rem;
-    right: clamp(1.25rem, 5vw, 4rem);
-    z-index: 3;
-    opacity: 0;
-    animation: heroLogoIn 0.8s ease 0.05s forwards;
-  }
-  @media (min-width: 768px) {
-    .hero-tr-logo { display: block; }
-  }
-  .hero-tr-logo img {
-    width: clamp(210px, 24vw, 330px);
-    height: auto;
-    filter: brightness(0) invert(1) opacity(0.90);
-  }
-
-  /* Mobile: logo in flow, centered, above eyebrow */
-  .hero-mobile-logo {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.75rem;
-    opacity: 0;
-    animation: heroLogoIn 0.8s ease 0.05s forwards;
-  }
-  @media (min-width: 768px) {
-    .hero-mobile-logo { display: none; }
-  }
-  .hero-mobile-logo img {
-    width: 240px;
-    height: auto;
-    filter: brightness(0) invert(1) opacity(0.90);
-  }
-
-  @keyframes heroLogoIn {
-    to { opacity: 1; }
-  }
-
   .hero-body {
     flex: 1;
     display: flex;
@@ -170,7 +108,7 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
   .hero-headline {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(2.125rem, 4.5vw, 4rem);
+    font-size: clamp(2.75rem, 5.5vw, 5.25rem);
     line-height: 1.07;
     color: var(--color-bg);
     margin-bottom: 1.25rem;
@@ -287,8 +225,6 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
 
   @media (prefers-reduced-motion: reduce) {
     .scroll-fill      { animation: none; transform: translateX(0); opacity: 0.4; }
-    .hero-tr-logo,
-    .hero-mobile-logo { animation: none; opacity: 1; }
     .hero-headline    { animation: none; letter-spacing: -0.03em; }
   }
 </style>
