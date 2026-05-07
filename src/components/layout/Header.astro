@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import LogoPng from '../../assets/Logo-2x.png';
+
 const services = [
   { href: '/services/website-design/', label: 'Website Design' },
   { href: '/services/ai-automations/', label: 'AI Automations' },
@@ -19,12 +22,14 @@ const normPath = path.replace(/\/$/, '') || '/';
 
     <!-- Logo -->
     <a href="/" class="logo" aria-label="Mayfly Web Design — Home">
-      <img
-        src="/FullTransparentLogo.svg"
+      <Image
+        src={LogoPng}
         alt="Mayfly Web Design"
         class="logo-img"
-        width="100"
-        height="100"
+        width={100}
+        height={100}
+        densities={[1, 2, 3]}
+        loading="eager"
       />
     </a>
 

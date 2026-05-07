@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import LogoPng from '../../assets/Logo-2x.png';
+
 const year = new Date().getFullYear();
 
 const cols = {
@@ -23,12 +26,13 @@ const cols = {
       <!-- Brand column -->
       <div class="footer-brand reveal">
         <a href="/" class="footer-logo" aria-label="Mayfly Web Design">
-          <img
-            src="/FullTransparentLogo.svg"
+          <Image
+            src={LogoPng}
             alt="Mayfly Web Design"
             class="footer-logo-img"
-            width="168"
-            height="56"
+            width={168}
+            height={168}
+            densities={[1, 2, 3]}
           />
         </a>
         <p class="footer-tagline">Built Modern. Priced for Montana.</p>
