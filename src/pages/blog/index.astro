@@ -1,0 +1,342 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Mayfly Web Design Blog",
+  "description": "Web design, AI search, and GAIO insights for Montana small businesses",
+  "url": "https://mayflywebdesign.com/blog",
+  "publisher": {
+    "@type": "LocalBusiness",
+    "name": "Mayfly Web Design",
+    "url": "https://mayflywebdesign.com"
+  }
+};
+---
+
+<BaseLayout
+  title="Montana Web Design & AI Search Blog | Mayfly Web Design"
+  description="Insights on web design, AI search optimization, and GAIO for Montana small businesses. Built for guides, breweries, restaurants, and trades."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} slot="head"></script>
+
+  <Header />
+  <main id="main-content">
+
+    <!-- ── Hero ─────────────────────────────────────────────── -->
+    <section class="blog-hero">
+      <div class="section-container blog-hero-inner">
+        <p class="blog-hero-eyebrow">Field Notes</p>
+        <h1 class="blog-hero-headline">The Mayfly Blog</h1>
+        <p class="blog-hero-sub">Web design, AI search, and digital strategy for Montana businesses.</p>
+        <div class="blog-hero-rule" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ── Post Grid ─────────────────────────────────────────── -->
+    <section class="blog-grid-section">
+      <div class="section-container">
+
+        {posts.length === 0 ? (
+          <div class="blog-empty reveal">
+            <p>More posts coming soon. <a href="mailto:contact@mayflywebdesign.com">Subscribe below.</a></p>
+          </div>
+        ) : (
+          <ul class="blog-grid" role="list">
+            {posts.map((post, i) => (
+              <li
+                class="blog-card reveal"
+                style={`transition-delay: ${i * 0.08}s`}
+              >
+                <a href={`/blog/${post.slug}/`} class="blog-card-link" tabindex="-1" aria-hidden="true"></a>
+                <div class="blog-card-top">
+                  <span class="blog-tag">{post.data.category}</span>
+                  <span class="blog-read-time">{post.data.readTime}</span>
+                </div>
+                <h2 class="blog-card-title">
+                  <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                </h2>
+                <p class="blog-card-excerpt">{post.data.excerpt}</p>
+                <div class="blog-card-footer">
+                  <a href={`/blog/${post.slug}/`} class="blog-read-more">
+                    Read More <span class="read-arrow" aria-hidden="true">→</span>
+                  </a>
+                  <time class="blog-date" datetime={post.data.date}>
+                    {new Date(post.data.date).toLocaleDateString('en-US', {
+                      year: 'numeric', month: 'long', day: 'numeric'
+                    })}
+                  </time>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+
+    <!-- ── CTA Strip ─────────────────────────────────────────── -->
+    <section class="blog-cta-strip">
+      <div class="section-container blog-cta-inner reveal">
+        <p class="blog-cta-headline">Want results like this for your business?</p>
+        <a
+          href="https://cal.com/mtspin6"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="blog-cta-btn"
+        >
+          Book a Free Call
+        </a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .blog-hero {
+    background-color: var(--color-text);
+    padding: 5rem 0 4.5rem;
+  }
+  @media (min-width: 768px) {
+    .blog-hero { padding: 7rem 0 6rem; }
+  }
+
+  .blog-hero-inner { position: relative; }
+
+  .blog-hero-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-hero-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--color-bg);
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-hero-sub {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 300;
+    color: rgba(242, 237, 227, 0.52);
+    max-width: 44ch;
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+  }
+
+  .blog-hero-rule {
+    width: 3rem;
+    height: 2px;
+    background-color: var(--color-accent);
+  }
+
+  /* ── Grid ─────────────────────────────────────────────────── */
+  .blog-grid-section {
+    background-color: var(--color-bg);
+    padding: 5rem 0 6rem;
+  }
+
+  .blog-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  @media (min-width: 768px) {
+    .blog-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── Card ─────────────────────────────────────────────────── */
+  .blog-card {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid var(--color-surface);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .blog-card:hover {
+    box-shadow: 0 12px 36px rgba(22, 22, 20, 0.1);
+    transform: translateY(-3px);
+  }
+
+  /* invisible full-card link overlay */
+  .blog-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .blog-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.125rem;
+  }
+
+  .blog-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-bg);
+    background-color: var(--color-accent);
+    padding: 0.3rem 0.75rem;
+  }
+
+  .blog-read-time {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 300;
+  }
+
+  .blog-card-title {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin-bottom: 0.875rem;
+  }
+  .blog-card-title a {
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    z-index: 1;
+  }
+  .blog-card-title a:hover { color: var(--color-gold); }
+
+  .blog-card-excerpt {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.68;
+    color: var(--color-muted);
+    margin-bottom: 1.75rem;
+    flex: 1;
+  }
+
+  .blog-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-surface);
+  }
+
+  .blog-read-more {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--color-gold);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    position: relative;
+    z-index: 1;
+    transition: gap 0.18s ease;
+  }
+  .blog-read-more:hover { gap: 0.6rem; }
+  .read-arrow { transition: transform 0.18s ease; }
+  .blog-read-more:hover .read-arrow { transform: translateX(3px); }
+
+  .blog-date {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 300;
+    white-space: nowrap;
+  }
+
+  /* ── Empty state ──────────────────────────────────────────── */
+  .blog-empty {
+    text-align: center;
+    padding: 4rem 0;
+    font-family: var(--font-body);
+    color: var(--color-muted);
+  }
+  .blog-empty a {
+    color: var(--color-gold);
+    text-decoration: underline;
+  }
+
+  /* ── CTA Strip ────────────────────────────────────────────── */
+  .blog-cta-strip {
+    background-color: var(--color-accent);
+    padding: 3.5rem 0;
+  }
+
+  .blog-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    text-align: center;
+  }
+  @media (min-width: 640px) {
+    .blog-cta-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+
+  .blog-cta-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.375rem, 3vw, 1.875rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-bg);
+  }
+
+  .blog-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0.875rem 2rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .blog-cta-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+</style>

@@ -1,0 +1,463 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const { title, excerpt, date, category, readTime, author } = entry.data;
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+
+// Related posts — same category, exclude this one, max 2
+const allPosts = await getCollection('blog');
+const related = allPosts
+  .filter(p => p.slug !== entry.slug && p.data.category === category)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 2);
+
+const postSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": excerpt,
+  "datePublished": date,
+  "dateModified": date,
+  "author": {
+    "@type": "Person",
+    "name": author
+  },
+  "publisher": {
+    "@type": "LocalBusiness",
+    "name": "Mayfly Web Design",
+    "url": "https://mayflywebdesign.com"
+  },
+  "url": `https://mayflywebdesign.com/blog/${entry.slug}`
+};
+---
+
+<BaseLayout
+  title={`${title} | Mayfly Web Design`}
+  description={excerpt.slice(0, 155)}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(postSchema)} slot="head"></script>
+
+  <Header />
+  <main id="main-content">
+
+    <!-- ── Post Header ───────────────────────────────────────── -->
+    <section class="post-hero">
+      <div class="section-container post-hero-inner">
+        <a href="/blog/" class="post-back">← Back to Blog</a>
+        <div class="post-hero-content">
+          <span class="post-tag">{category}</span>
+          <h1 class="post-title">{title}</h1>
+          <p class="post-excerpt">{excerpt}</p>
+          <div class="post-meta">
+            <span>{author}</span>
+            <span class="post-meta-dot" aria-hidden="true">·</span>
+            <time datetime={date}>{formattedDate}</time>
+            <span class="post-meta-dot" aria-hidden="true">·</span>
+            <span>{readTime}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Post Body ─────────────────────────────────────────── -->
+    <section class="post-body-section">
+      <div class="section-container">
+        <article class="post-body">
+          <Content />
+
+          <!-- ── Inline CTA ─────────────────────────────────── -->
+          <div class="post-cta">
+            <p class="post-cta-text">Ready to get your Montana business showing up in AI search?</p>
+            <a
+              href="https://cal.com/mtspin6"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="post-cta-btn"
+            >
+              Book a Free Call
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── Related Posts ─────────────────────────────────────── -->
+    {related.length > 0 && (
+      <section class="related-section">
+        <div class="section-container">
+          <p class="related-label">More from the blog</p>
+          <ul class="related-grid" role="list">
+            {related.map(post => (
+              <li class="blog-card reveal">
+                <a href={`/blog/${post.slug}/`} class="blog-card-link" tabindex="-1" aria-hidden="true"></a>
+                <div class="blog-card-top">
+                  <span class="blog-tag">{post.data.category}</span>
+                  <span class="blog-read-time">{post.data.readTime}</span>
+                </div>
+                <h2 class="blog-card-title">
+                  <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                </h2>
+                <p class="blog-card-excerpt">{post.data.excerpt}</p>
+                <div class="blog-card-footer">
+                  <a href={`/blog/${post.slug}/`} class="blog-read-more">
+                    Read More <span class="read-arrow" aria-hidden="true">→</span>
+                  </a>
+                  <time class="blog-date" datetime={post.data.date}>
+                    {new Date(post.data.date).toLocaleDateString('en-US', {
+                      year: 'numeric', month: 'long', day: 'numeric'
+                    })}
+                  </time>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
+
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* ── Post Hero ────────────────────────────────────────────── */
+  .post-hero {
+    background-color: var(--color-text);
+    padding: 3rem 0 4.5rem;
+  }
+  @media (min-width: 768px) {
+    .post-hero { padding: 4rem 0 6rem; }
+  }
+
+  .post-hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .post-back {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-gold);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    align-self: flex-start;
+    transition: opacity 0.15s ease;
+  }
+  .post-back:hover { opacity: 0.72; }
+
+  .post-hero-content { max-width: 760px; }
+
+  .post-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-bg);
+    background-color: var(--color-accent);
+    padding: 0.3rem 0.75rem;
+    margin-bottom: 1.375rem;
+  }
+
+  .post-title {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.375rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--color-bg);
+    margin-bottom: 1.25rem;
+  }
+
+  .post-excerpt {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.68;
+    color: rgba(242, 237, 227, 0.55);
+    max-width: 58ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.625rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 300;
+    color: rgba(242, 237, 227, 0.42);
+  }
+  .post-meta-dot { color: rgba(242, 237, 227, 0.2); }
+
+  /* ── Post Body ────────────────────────────────────────────── */
+  .post-body-section {
+    background-color: var(--color-bg);
+    padding: 5rem 0 6rem;
+  }
+
+  .post-body {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* Prose typography */
+  .post-body :global(h2) {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+    color: var(--color-text);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+  .post-body :global(h3) {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .post-body :global(p) {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.78;
+    color: var(--color-text);
+    margin-bottom: 1.625rem;
+  }
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.78;
+    color: var(--color-text);
+    padding-left: 1.5rem;
+    margin-bottom: 1.625rem;
+  }
+  .post-body :global(li) { margin-bottom: 0.5rem; }
+  .post-body :global(strong) {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+  .post-body :global(a) {
+    color: var(--color-gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.15s ease;
+  }
+  .post-body :global(a:hover) { opacity: 0.75; }
+  .post-body :global(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--color-muted);
+  }
+  .post-body :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-surface);
+    margin: 2.5rem 0;
+  }
+
+  /* ── Inline CTA ───────────────────────────────────────────── */
+  .post-cta {
+    background-color: var(--color-accent);
+    padding: 2.5rem;
+    margin-top: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.375rem;
+  }
+  @media (min-width: 640px) {
+    .post-cta {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .post-cta-text {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--color-bg);
+    margin: 0;
+  }
+
+  .post-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0.875rem 1.875rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .post-cta-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  /* ── Related Posts ────────────────────────────────────────── */
+  .related-section {
+    background-color: var(--color-surface);
+    padding: 4.5rem 0 5.5rem;
+  }
+
+  .related-label {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+  }
+
+  .related-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .related-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Shared card styles (also used in related section) */
+  .blog-card {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid var(--color-surface);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .blog-card:hover {
+    box-shadow: 0 12px 36px rgba(22, 22, 20, 0.1);
+    transform: translateY(-3px);
+  }
+  .blog-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .blog-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.125rem;
+  }
+  .blog-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-bg);
+    background-color: var(--color-accent);
+    padding: 0.3rem 0.75rem;
+  }
+  .blog-read-time {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 300;
+  }
+  .blog-card-title {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin-bottom: 0.875rem;
+  }
+  .blog-card-title a {
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    z-index: 1;
+  }
+  .blog-card-title a:hover { color: var(--color-gold); }
+  .blog-card-excerpt {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.68;
+    color: var(--color-muted);
+    margin-bottom: 1.75rem;
+    flex: 1;
+  }
+  .blog-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-surface);
+  }
+  .blog-read-more {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--color-gold);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    position: relative;
+    z-index: 1;
+    transition: gap 0.18s ease;
+  }
+  .blog-read-more:hover { gap: 0.6rem; }
+  .read-arrow { transition: transform 0.18s ease; }
+  .blog-read-more:hover .read-arrow { transform: translateX(3px); }
+  .blog-date {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 300;
+    white-space: nowrap;
+  }
+</style>
