@@ -1,11 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import { getImage, Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import HeroImg from '../../assets/BlogPageHeader.jpg';
-import LogoImg from '../../assets/Logo-2x.png';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
@@ -43,15 +42,6 @@ const blogSchema = {
       aria-label="Blog hero"
     >
       <div class="blog-hero-overlay" aria-hidden="true"></div>
-
-      <Image
-        src={LogoImg}
-        alt="Mayfly Web Design"
-        class="blog-hero-logo"
-        width={80}
-        height={80}
-        loading="eager"
-      />
 
       <div class="section-container blog-hero-content">
         <p class="blog-hero-eyebrow">Field Notes</p>
@@ -125,7 +115,7 @@ const blogSchema = {
   /* ── Hero ─────────────────────────────────────────────────── */
   .blog-hero {
     position: relative;
-    min-height: 360px;
+    min-height: 280px;
     background-size: cover;
     background-position: center 35%;
     overflow: hidden;
@@ -134,7 +124,7 @@ const blogSchema = {
     justify-content: flex-end;
   }
   @media (min-width: 768px) {
-    .blog-hero { min-height: 520px; }
+    .blog-hero { min-height: 400px; }
   }
 
   .blog-hero-overlay {
@@ -142,27 +132,6 @@ const blogSchema = {
     inset: 0;
     background: rgba(22, 22, 20, 0.62);
     z-index: 0;
-  }
-
-  /* Logo — top-right of hero */
-  .blog-hero-logo {
-    position: absolute;
-    top: 2.5rem;
-    right: 2.5rem;
-    width: 80px !important;
-    height: 80px !important;
-    object-fit: contain;
-    filter: brightness(0) invert(1) opacity(0.88);
-    z-index: 1;
-    animation: heroFadeUp 0.5s ease-out 0.2s both;
-  }
-  @media (max-width: 767px) {
-    .blog-hero-logo {
-      top: 1.875rem;
-      right: 1.875rem;
-      width: 60px !important;
-      height: 60px !important;
-    }
   }
 
   .blog-hero-content {
@@ -278,17 +247,12 @@ const blogSchema = {
     background-color: rgba(184, 136, 46, 0.05);
   }
 
-  /* SEO — Warm Black, off-white background */
+  /* SEO — Warm Black border, white background */
   .blog-card[data-category="SEO"] {
-    background-color: var(--color-bg);
     border-left-color: var(--color-text);
-    box-shadow: 0 4px 12px rgba(22, 22, 20, 0.06);
   }
   .blog-card[data-category="SEO"] .blog-tag {
     background-color: var(--color-text);
-  }
-  .blog-card[data-category="SEO"]:hover {
-    box-shadow: 0 8px 20px rgba(22, 22, 20, 0.1);
   }
 
   /* Pricing — gradient left border via pseudo-element */

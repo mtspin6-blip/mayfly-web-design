@@ -76,23 +76,6 @@ const postSchema = {
       </div>
     </section>
 
-    <!-- ── Feature Image ─────────────────────────────────────── -->
-    {image && (
-      <div class="post-feature-wrap">
-        <div class="section-container">
-          <div class="post-feature-img-box">
-            <Image
-              src={image}
-              alt={title}
-              width={720}
-              class="post-feature-img"
-              loading="eager"
-            />
-          </div>
-        </div>
-      </div>
-    )}
-
     <!-- ── Post Body ─────────────────────────────────────────── -->
     <section class="post-body-section">
       <div class="section-container">
@@ -228,36 +211,10 @@ const postSchema = {
   }
   .post-meta-dot { color: rgba(242, 237, 227, 0.2); }
 
-  /* ── Feature Image ────────────────────────────────────────── */
-  .post-feature-wrap {
-    background-color: var(--color-bg);
-    padding: 3rem 0 0;
-  }
-
-  .post-feature-img-box {
-    max-width: 720px;
-    margin: 0 auto;
-    height: 380px;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(22, 22, 20, 0.12);
-  }
-  @media (max-width: 767px) {
-    .post-feature-img-box { height: 240px; border-radius: 4px; }
-  }
-
-  .post-feature-img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-  }
-
   /* ── Post Body ────────────────────────────────────────────── */
   .post-body-section {
     background-color: var(--color-bg);
-    padding: 3rem 0 6rem;
+    padding: 5rem 0 6rem;
   }
 
   .post-body {
