@@ -4,7 +4,8 @@ excerpt: "Most Montana small businesses have a website that quietly drives custo
 date: "2026-05-08"
 category: "Web Design"
 readTime: "4 min read"
-author: "Mitchell Spinetta"
+author: "Mayfly Web Design"
+image: ../../assets/matthew-lancaster-cWFlYyJp2PE-unsplash.jpg
 ---
 
 ## The Problem Most Montana Businesses Do Not Realize They Have

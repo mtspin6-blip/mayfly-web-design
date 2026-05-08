@@ -4,7 +4,8 @@ excerpt: "Website pricing in Montana is all over the map. Here is an honest brea
 date: "2026-05-11"
 category: "Pricing"
 readTime: "5 min read"
-author: "Mitchell Spinetta"
+author: "Mayfly Web Design"
+image: ../../assets/joss-woodhead-aksMD569g60-unsplash.jpg
 ---
 
 ## Why Website Pricing Is So Confusing

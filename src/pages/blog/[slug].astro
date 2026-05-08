@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
@@ -15,7 +16,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-const { title, excerpt, date, category, readTime, author } = entry.data;
+const { title, excerpt, date, category, readTime, author, image } = entry.data;
 const formattedDate = new Date(date).toLocaleDateString('en-US', {
   year: 'numeric', month: 'long', day: 'numeric'
 });
@@ -74,6 +75,23 @@ const postSchema = {
         </div>
       </div>
     </section>
+
+    <!-- ── Feature Image ─────────────────────────────────────── -->
+    {image && (
+      <div class="post-feature-wrap">
+        <div class="section-container">
+          <div class="post-feature-img-box">
+            <Image
+              src={image}
+              alt={title}
+              width={720}
+              class="post-feature-img"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+    )}
 
     <!-- ── Post Body ─────────────────────────────────────────── -->
     <section class="post-body-section">
@@ -210,10 +228,36 @@ const postSchema = {
   }
   .post-meta-dot { color: rgba(242, 237, 227, 0.2); }
 
+  /* ── Feature Image ────────────────────────────────────────── */
+  .post-feature-wrap {
+    background-color: var(--color-bg);
+    padding: 3rem 0 0;
+  }
+
+  .post-feature-img-box {
+    max-width: 720px;
+    margin: 0 auto;
+    height: 380px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(22, 22, 20, 0.12);
+  }
+  @media (max-width: 767px) {
+    .post-feature-img-box { height: 240px; border-radius: 4px; }
+  }
+
+  .post-feature-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
   /* ── Post Body ────────────────────────────────────────────── */
   .post-body-section {
     background-color: var(--color-bg);
-    padding: 5rem 0 6rem;
+    padding: 3rem 0 6rem;
   }
 
   .post-body {
@@ -226,9 +270,9 @@ const postSchema = {
     font-family: var(--font-display);
     font-weight: 300;
     font-size: clamp(1.5rem, 3vw, 2rem);
-    line-height: 1.18;
+    line-height: 1.4;
     letter-spacing: -0.025em;
-    color: var(--color-text);
+    color: #5A5A58;
     margin-top: 3rem;
     margin-bottom: 1rem;
   }
@@ -236,7 +280,7 @@ const postSchema = {
     font-family: var(--font-body);
     font-size: 1.125rem;
     font-weight: 600;
-    color: var(--color-text);
+    color: #7A7A78;
     margin-top: 2.25rem;
     margin-bottom: 0.75rem;
     letter-spacing: -0.01em;

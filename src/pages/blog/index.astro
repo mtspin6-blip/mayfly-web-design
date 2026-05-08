@@ -1,12 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
+import { getImage, Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
+import HeroImg from '../../assets/BlogPageHeader.jpg';
+import LogoImg from '../../assets/Logo-2x.png';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
+
+const heroImage = await getImage({ src: HeroImg, width: 1920, format: 'webp', quality: 82 });
 
 const blogSchema = {
   "@context": "https://schema.org",
@@ -32,12 +37,26 @@ const blogSchema = {
   <main id="main-content">
 
     <!-- ── Hero ─────────────────────────────────────────────── -->
-    <section class="blog-hero">
-      <div class="section-container blog-hero-inner">
+    <section
+      class="blog-hero"
+      style={`background-image: url('${heroImage.src}')`}
+      aria-label="Blog hero"
+    >
+      <div class="blog-hero-overlay" aria-hidden="true"></div>
+
+      <Image
+        src={LogoImg}
+        alt="Mayfly Web Design"
+        class="blog-hero-logo"
+        width={80}
+        height={80}
+        loading="eager"
+      />
+
+      <div class="section-container blog-hero-content">
         <p class="blog-hero-eyebrow">Field Notes</p>
         <h1 class="blog-hero-headline">The Mayfly Blog</h1>
         <p class="blog-hero-sub">Web design, AI search, and digital strategy for Montana businesses.</p>
-        <div class="blog-hero-rule" aria-hidden="true"></div>
       </div>
     </section>
 
@@ -47,13 +66,14 @@ const blogSchema = {
 
         {posts.length === 0 ? (
           <div class="blog-empty reveal">
-            <p>More posts coming soon. <a href="mailto:contact@mayflywebdesign.com">Subscribe below.</a></p>
+            <p>More posts coming soon. <a href="mailto:contact@mayflywebdesign.com">Get in touch.</a></p>
           </div>
         ) : (
           <ul class="blog-grid" role="list">
             {posts.map((post, i) => (
               <li
                 class="blog-card reveal"
+                data-category={post.data.category}
                 style={`transition-delay: ${i * 0.08}s`}
               >
                 <a href={`/blog/${post.slug}/`} class="blog-card-link" tabindex="-1" aria-hidden="true"></a>
@@ -104,14 +124,56 @@ const blogSchema = {
 <style>
   /* ── Hero ─────────────────────────────────────────────────── */
   .blog-hero {
-    background-color: var(--color-text);
-    padding: 5rem 0 4.5rem;
+    position: relative;
+    min-height: 360px;
+    background-size: cover;
+    background-position: center 35%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
   @media (min-width: 768px) {
-    .blog-hero { padding: 7rem 0 6rem; }
+    .blog-hero { min-height: 520px; }
   }
 
-  .blog-hero-inner { position: relative; }
+  .blog-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(22, 22, 20, 0.62);
+    z-index: 0;
+  }
+
+  /* Logo — top-right of hero */
+  .blog-hero-logo {
+    position: absolute;
+    top: 2.5rem;
+    right: 2.5rem;
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: contain;
+    filter: brightness(0) invert(1) opacity(0.88);
+    z-index: 1;
+    animation: heroFadeUp 0.5s ease-out 0.2s both;
+  }
+  @media (max-width: 767px) {
+    .blog-hero-logo {
+      top: 1.875rem;
+      right: 1.875rem;
+      width: 60px !important;
+      height: 60px !important;
+    }
+  }
+
+  .blog-hero-content {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 3.5rem;
+    padding-top: 6rem;
+  }
+  @media (min-width: 768px) {
+    .blog-hero-content { padding-bottom: 5rem; }
+  }
 
   .blog-hero-eyebrow {
     font-family: var(--font-body);
@@ -120,33 +182,45 @@ const blogSchema = {
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--color-accent);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
+    animation: heroFadeUp 0.5s ease-out 0.05s both;
   }
 
   .blog-hero-headline {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(2.75rem, 7vw, 5rem);
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
     color: var(--color-bg);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 12px rgba(22, 22, 20, 0.5);
+    animation: heroFadeUp 0.6s ease-out 0.1s both;
   }
 
   .blog-hero-sub {
     font-family: var(--font-body);
     font-size: 1.0625rem;
     font-weight: 300;
-    color: rgba(242, 237, 227, 0.52);
+    color: rgba(242, 237, 227, 0.82);
     max-width: 44ch;
     line-height: 1.65;
-    margin-bottom: 2.5rem;
+    animation: heroFadeUp 0.5s ease-out 0.3s both;
   }
 
-  .blog-hero-rule {
-    width: 3rem;
-    height: 2px;
-    background-color: var(--color-accent);
+  /* Load animations */
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blog-hero-logo,
+    .blog-hero-eyebrow,
+    .blog-hero-headline,
+    .blog-hero-sub {
+      animation: none;
+    }
   }
 
   /* ── Grid ─────────────────────────────────────────────────── */
@@ -167,20 +241,71 @@ const blogSchema = {
     .blog-grid { grid-template-columns: 1fr 1fr; }
   }
 
-  /* ── Card ─────────────────────────────────────────────────── */
+  /* ── Card base ────────────────────────────────────────────── */
   .blog-card {
     position: relative;
     background-color: #fff;
     border: 1px solid var(--color-surface);
+    border-left: 2px solid var(--color-accent); /* default: sage green */
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 0;
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 4px 12px rgba(22, 22, 20, 0.08);
+    transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
   }
   .blog-card:hover {
-    box-shadow: 0 12px 36px rgba(22, 22, 20, 0.1);
-    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(22, 22, 20, 0.13);
+    transform: translateY(-4px);
+  }
+
+  /* ── Category variants ────────────────────────────────────── */
+
+  /* Web Design + AI Search — Sage Green (default, no override needed) */
+  .blog-card[data-category="Web Design"]:hover,
+  .blog-card[data-category="AI Search"]:hover {
+    background-color: rgba(94, 126, 88, 0.04);
+  }
+
+  /* Automations — Gold */
+  .blog-card[data-category="Automations"] {
+    border-left-color: var(--color-gold);
+  }
+  .blog-card[data-category="Automations"] .blog-tag {
+    background-color: var(--color-gold);
+  }
+  .blog-card[data-category="Automations"]:hover {
+    background-color: rgba(184, 136, 46, 0.05);
+  }
+
+  /* SEO — Warm Black, off-white background */
+  .blog-card[data-category="SEO"] {
+    background-color: var(--color-bg);
+    border-left-color: var(--color-text);
+    box-shadow: 0 4px 12px rgba(22, 22, 20, 0.06);
+  }
+  .blog-card[data-category="SEO"] .blog-tag {
+    background-color: var(--color-text);
+  }
+  .blog-card[data-category="SEO"]:hover {
+    box-shadow: 0 8px 20px rgba(22, 22, 20, 0.1);
+  }
+
+  /* Pricing — gradient left border via pseudo-element */
+  .blog-card[data-category="Pricing"] {
+    border-left-color: transparent;
+  }
+  .blog-card[data-category="Pricing"]::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--color-accent) 67%, var(--color-gold) 100%);
+    pointer-events: none;
+  }
+  .blog-card[data-category="Pricing"]:hover {
+    background-color: rgba(94, 126, 88, 0.03);
   }
 
   /* invisible full-card link overlay */
@@ -214,6 +339,7 @@ const blogSchema = {
     font-size: 0.75rem;
     color: var(--color-muted);
     font-weight: 300;
+    font-style: italic;
   }
 
   .blog-card-title {
@@ -222,7 +348,7 @@ const blogSchema = {
     font-size: clamp(1.25rem, 2.5vw, 1.5rem);
     line-height: 1.18;
     letter-spacing: -0.02em;
-    color: var(--color-text);
+    color: #161614;
     margin-bottom: 0.875rem;
   }
   .blog-card-title a {
@@ -238,7 +364,7 @@ const blogSchema = {
     font-size: 0.9375rem;
     font-weight: 300;
     line-height: 1.68;
-    color: var(--color-muted);
+    color: #6B6B69;
     margin-bottom: 1.75rem;
     flex: 1;
   }
@@ -273,7 +399,7 @@ const blogSchema = {
   .blog-date {
     font-family: var(--font-body);
     font-size: 0.75rem;
-    color: var(--color-muted);
+    color: #ABABAB;
     font-weight: 300;
     white-space: nowrap;
   }
@@ -338,5 +464,19 @@ const blogSchema = {
   .blog-cta-btn:hover {
     opacity: 0.9;
     transform: translateY(-1px);
+  }
+
+  /* ── Reduced motion ───────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .blog-card {
+      transition: none;
+    }
+    .blog-card:hover {
+      transform: none;
+    }
+    .blog-read-more,
+    .read-arrow {
+      transition: none;
+    }
   }
 </style>

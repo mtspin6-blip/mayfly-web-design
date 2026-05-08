@@ -4,7 +4,8 @@ excerpt: "Most Montana small business owners are drowning in repetitive work. He
 date: "2026-05-09"
 category: "Automations"
 readTime: "5 min read"
-author: "Mitchell Spinetta"
+author: "Mayfly Web Design"
+image: ../../assets/steven-cordes-v8rgLNfpHyY-unsplash.jpg
 ---
 
 ## Why Automations Matter for Small Businesses Now

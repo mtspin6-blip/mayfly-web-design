@@ -4,7 +4,8 @@ excerpt: "Younger customers aren't searching the way they used to. Here's what c
 date: "2026-05-07"
 category: "AI Search"
 readTime: "3 min read"
-author: "Mitchell Spinetta"
+author: "Mayfly Web Design"
+image: ../../assets/glen-rushton-azhKlWu66p8-unsplash.jpg
 ---
 
 ## What Is AI Search?
