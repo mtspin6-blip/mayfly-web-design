@@ -17,9 +17,25 @@
   --color-muted-light:  #9C958A;
   --color-gold-light:   #C4953A;
   --color-gold:    #7C5C1D;
-  --font-display:  'Fraunces', Georgia, serif;
-  --font-body:     'DM Sans', system-ui, sans-serif;
+  --font-display:  'Fraunces', 'Fraunces Fallback', Georgia, serif;
+  --font-body:     'DM Sans', 'DM Sans Fallback', system-ui, sans-serif;
 }
+
+/* ── Metric-matched fallback fonts ────────────────────────────
+   Google Fonts load without blocking first paint, so text first renders in a
+   local fallback and then swaps. Unadjusted, Georgia's wider italic rewrapped
+   the homepage headline and shifted the page (CLS 0.21). These faces scale
+   Georgia/Arial to the widths of Fraunces/DM Sans, measured in Chrome at the
+   mobile headline size (48px, optical sizing auto) and body size (16px), so the
+   swap doesn't move anything. Where Georgia/Arial aren't installed, local()
+   fails and the stack falls through to the unadjusted generic family.
+   ──────────────────────────────────────────────────────────── */
+@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); font-style: normal; font-weight: 100 350; size-adjust: 97.7%; ascent-override: 100.3%; descent-override: 26.6%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'); font-style: normal; font-weight: 351 900; size-adjust: 103%; ascent-override: 95.1%; descent-override: 25.2%; line-gap-override: 0%; }
+@font-face { font-family: 'Fraunces Fallback'; src: local('Georgia Italic'), local('Georgia-Italic'); font-style: italic; font-weight: 100 900; size-adjust: 89%; ascent-override: 110%; descent-override: 29.2%; line-gap-override: 0%; }
+@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'), local('ArialMT'); font-weight: 100 350; size-adjust: 102%; ascent-override: 97.1%; descent-override: 30.4%; line-gap-override: 0%; }
+@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'), local('ArialMT'); font-weight: 351 450; size-adjust: 103.5%; ascent-override: 95.7%; descent-override: 30%; line-gap-override: 0%; }
+@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'), local('ArialMT'); font-weight: 451 900; size-adjust: 105.4%; ascent-override: 93.9%; descent-override: 29.4%; line-gap-override: 0%; }
 
 /* ── Base ─────────────────────────────────────────────────── */
 @layer base {

@@ -12,8 +12,8 @@ export default {
         'gold':       '#7C5C1D',
       },
       fontFamily: {
-        display: ['Fraunces', 'Georgia', 'serif'],
-        body:    ['DM Sans', 'system-ui', 'sans-serif'],
+        display: ['Fraunces', 'Fraunces Fallback', 'Georgia', 'serif'],
+        body:    ['DM Sans', 'DM Sans Fallback', 'system-ui', 'sans-serif'],
       },
     },
   },

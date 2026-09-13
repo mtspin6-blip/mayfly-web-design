@@ -107,11 +107,11 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
     </script>
 
     <slot name="head" />
-    <style>
-      body { animation: pageFadeIn 0.3s ease both; }
-      @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
-      @media (prefers-reduced-motion: reduce) { body { animation: none; } }
-    </style>
+    <!--
+      No whole-page fade-in: starting <body> at opacity 0 meant nothing counted as
+      painted until the animation ran, which blocked First Contentful Paint (Lighthouse
+      NO_FCP on the live /work/ page). Section reveals below the fold still animate.
+    -->
   </head>
   <body>
     <div class="grain-overlay" aria-hidden="true"></div>
