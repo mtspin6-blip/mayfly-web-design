@@ -1,6 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import LogoPng from '../../assets/Logo-2x.png';
+// Trimmed to the wordmark (the square Logo-2x.png is ~80% transparent padding,
+// which is why the logo read so small in the bar).
+import LogoPng from '../../assets/Logo-nav.png';
 
 const services = [
   { href: '/services/website-design/', label: 'Website Design' },
@@ -27,8 +29,7 @@ const normPath = path.replace(/\/$/, '') || '/';
         src={LogoPng}
         alt="Mayfly Web Design"
         class="logo-img"
-        width={100}
-        height={100}
+        height={42}
         densities={[1, 2, 3]}
         loading="eager"
       />
@@ -131,10 +132,10 @@ const normPath = path.replace(/\/$/, '') || '/';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 5rem;
+    height: 3.75rem;
   }
   @media (min-width: 768px) {
-    .nav-inner { height: 7rem; }
+    .nav-inner { height: 4.5rem; }
   }
 
   /* Logo */
@@ -150,15 +151,13 @@ const normPath = path.replace(/\/$/, '') || '/';
     to { opacity: 1; }
   }
   .logo-img {
-    height: 64px;
-    width: 64px;
+    height: 32px;
+    width: auto;
     display: block;
   }
-  @media (min-width: 768px) {
-    .logo-img {
-      height: 100px;
-      width: 100px;
-    }
+  /* Full size only once the link row has room beside it (768–1023 is tight). */
+  @media (min-width: 1024px) {
+    .logo-img { height: 42px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .logo { animation: none; opacity: 1; }
@@ -172,6 +171,10 @@ const normPath = path.replace(/\/$/, '') || '/';
     padding: 0;
     align-items: center;
     gap: 2rem;
+  }
+  /* Tablet widths: the larger logo + 7 links + CTA only fit with tighter link spacing. */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .desktop-nav { gap: 1.25rem; }
   }
   @media (min-width: 768px) {
     .desktop-nav { display: flex; }

@@ -60,16 +60,3 @@ export const projects = [
     accent:      '#41697B',
   },
 ];
-
-/**
- * Secondary industry explorations shown as a compact strip below the main
- * grid. These are positioning tiles, not case studies — no detail pages.
- */
-export const explorations = [
-  { name: 'Clearwater Outfitters', industry: 'Fly Fishing Outfitter',  city: 'Missoula' },
-  { name: 'Highline Brewing Co.',  industry: 'Brewery & Taproom',      city: 'Great Falls' },
-  { name: 'Peak HVAC Services',    industry: 'Home Services & Trades', city: 'Billings' },
-  { name: 'Ridgeline Coffee',      industry: 'Café & Roastery',        city: 'Missoula' },
-  { name: 'Big Sky Dental',        industry: 'Dental Practice',        city: 'Bozeman' },
-  { name: 'Bitterroot Realty',     industry: 'Real Estate Brokerage',  city: 'Hamilton' },
-];
