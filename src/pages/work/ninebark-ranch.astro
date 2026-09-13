@@ -1,0 +1,149 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import BrowserFrame from '../../components/work/BrowserFrame.astro';
+import NinebarkMockup from '../../components/work/NinebarkMockup.astro';
+
+const moves = [
+  {
+    h: 'Sell the week before you ask for the date',
+    p: `Nobody spends $6,400 off a booking widget. The homepage earns the inquiry first —
+        what's included, what a day looks like, who else is there that week — and only then
+        asks for dates. The availability bar sits under the hero, not in it, so it reads as
+        the next step rather than the pitch.`,
+  },
+  {
+    h: 'Make scarcity honest and visible',
+    p: `"4 of 14 cabins still open for June. Most weeks book 9–11 months ahead." That's a
+        true operational fact, and stating it plainly does more for urgency than any
+        countdown timer — while quietly teaching a first-time guest that they need to book
+        a year out.`,
+  },
+  {
+    h: 'One rate, stated early',
+    p: `All-inclusive pricing is the product's biggest advantage and most ranches bury it.
+        Rates appear on every stay card, in the nav, and on their own page with a seasonal
+        table — because the guest who can't afford it should self-select out on page one,
+        and the guest who can should stop wondering what the real number is.`,
+  },
+  {
+    h: 'Write for the AI answer, not just the ten blue links',
+    p: `Somebody planning a Montana family trip now asks ChatGPT before Google. Structured
+        data for the property, the rates, and the season, plus plain-language pages that
+        answer "what's included at an all-inclusive Montana guest ranch" — so the ranch is
+        quotable when an assistant builds the shortlist.`,
+  },
+];
+
+const spec = [
+  { dt: 'Pages',      dd: 'Home, Stays index + 14 detail pages, Riding, Fishing, The Ranch, Seasons & Rates, Journal, Inquiry' },
+  { dt: 'Build',      dd: 'Astro static site, stays and rates from content collections' },
+  { dt: 'Booking',    dd: 'Availability inquiry form → ranch reservation system; no instant-book by design' },
+  { dt: 'Schema',     dd: 'LodgingBusiness + Offer markup for rates, seasons, and amenities' },
+  { dt: 'Typography', dd: 'Cormorant Garamond (display) · DM Sans (body)' },
+  { dt: 'Palette',    dd: 'Forest #2E3D31 · Rust #B5713A · Cream #F7F2E8' },
+];
+---
+
+<CaseStudyLayout
+  slug="ninebark-ranch"
+  title="Ninebark Ranch — Website Concept | Mayfly Web Design"
+  description="A website concept for a Paradise Valley all-inclusive guest ranch: cinematic stay pages, season-aware rates, and an inquiry flow tuned for a high-consideration booking."
+  fontHref="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap"
+  schemaType="CreativeWork"
+>
+  <!-- The brief -->
+  <section class="cs-block cs-block--tight">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The brief</p>
+        <div class="cs-prose">
+          <p>
+            Ninebark is a working guest ranch in Paradise Valley — <strong>fourteen cabins,
+            ninety horses, seven private miles of the Yellowstone, and one all-inclusive
+            rate that runs from $3,800 to $11,400 a week.</strong>
+          </p>
+          <p>
+            This is the hardest kind of sale a Montana website has to make. The guest is
+            usually from Chicago or Dallas, has never been to the state, is spending more
+            than they've ever spent on a vacation, and is comparing three ranches whose
+            websites all look like a 2014 WordPress theme with a slideshow of horses.
+          </p>
+          <p>
+            They will not call first. They will read the site for forty minutes across two
+            weeks, show it to their spouse, and then either inquire or quietly move on. So
+            the site's whole job is to <strong>answer every question that would otherwise
+            end the visit</strong> — what it costs, what's included, what a Tuesday actually
+            looks like, and whether their eleven-year-old will be bored.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The mockup -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The homepage</p>
+        <div>
+          <BrowserFrame
+            url="ninebarkranch.com"
+            width={1280}
+            height={1500}
+            label="Homepage — cinematic hero, availability bar with honest scarcity, all-inclusive breakdown, and stay cards that lead with rate."
+          >
+            <NinebarkMockup />
+          </BrowserFrame>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The moves -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The decisions</p>
+        <div>
+          <h2 class="cs-h2 reveal">Four choices that carry the site.</h2>
+          <div class="cs-moves">
+            {moves.map((m, i) => (
+              <div class="cs-move reveal" style={`transition-delay:${i * 0.06}s`}>
+                <span class="cs-move-n">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{m.h}</h3>
+                  <p>{m.p}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spec -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">Build spec</p>
+        <div>
+          <dl class="cs-spec reveal">
+            {spec.map((s) => (
+              <div class="cs-spec-item">
+                <dt>{s.dt}</dt>
+                <dd>{s.dd}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="cs-tags">
+            <a href="/services/website-design/" class="cs-tag">Website Design</a>
+            <a href="/services/seo-gaio/" class="cs-tag">SEO + GAIO</a>
+            <a href="/services/ai-automations/" class="cs-tag">AI Automations</a>
+            <a href="/pricing/" class="cs-tag">See pricing</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</CaseStudyLayout>

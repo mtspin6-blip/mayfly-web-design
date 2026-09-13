@@ -1,0 +1,155 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import landing   from '../../assets/work/riverline-landing.png';
+import dashboard from '../../assets/work/riverline-dashboard.png';
+
+const moves = [
+  {
+    h: 'Answer the question in one screen',
+    p: `Every fishing site makes you dig — a gauge here, a forecast there, a shop report
+        from last Thursday. Riverline puts flow, water temp, snowpack, and a single
+        fishability score above the fold for whichever river you pick, because the actual
+        question is "should I go tomorrow," and it deserves one answer, not four tabs.`,
+  },
+  {
+    h: 'Score it, then show your work',
+    p: `A 0–100 fishability score is only useful if you can see why. Each score expands
+        into the flow trend, water clarity estimate, and hatch window that produced it —
+        so an experienced angler can disagree with the number and still get value from
+        the inputs.`,
+  },
+  {
+    h: 'Give the AI a real knowledge base',
+    p: `The Riverline Guide isn't a chatbot bolted onto a weather page. It's retrieval over
+        an embedded corpus of historical outfitter reports, hatch charts, and fly patterns
+        for these specific rivers, joined to today's live conditions — so it answers
+        "what should I throw on the Madison this week" with something a guide would say.`,
+  },
+  {
+    h: 'Engineer the cost curve before launch, not after',
+    p: `Conditions are fetched once by a scheduled worker and cached in KV; LLM responses
+        memoize for six hours; a Durable Object rate-limits abuse. AI spend stays roughly
+        flat as traffic grows instead of scaling linearly with it — which is the difference
+        between a product and an expensive hobby.`,
+  },
+];
+
+const spec = [
+  { dt: 'Frontend',  dd: 'Vite + vanilla JS, deployed on Cloudflare Pages' },
+  { dt: 'Backend',   dd: 'Pages Functions, a scheduled Cloudflare Worker, KV cache, Durable Object rate limiter' },
+  { dt: 'Data',      dd: 'USGS streamflow, NOAA weather, NRCS snowpack — refreshed hourly, 16 rivers' },
+  { dt: 'AI',        dd: 'Retrieval over embedded outfitter reports + hatch data, with 6-hour response memoization' },
+  { dt: 'Accounts',  dd: 'Supabase auth with magic links, saved rivers, transactional email via Resend' },
+  { dt: 'Business',  dd: 'Free conditions dashboard · $9/mo premium for the trip planner and guide' },
+];
+---
+
+<CaseStudyLayout
+  slug="riverline"
+  title="Riverline — Fly Fishing Conditions Platform | Mayfly Web Design"
+  description="Riverline is a live fly-fishing conditions dashboard and AI trip planner covering 16 rivers across Montana, Idaho, Wyoming, and Canada. Designed and built end to end by Mayfly Web Design."
+  schemaType="SoftwareApplication"
+>
+  <!-- The brief -->
+  <section class="cs-block cs-block--tight">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">What it is</p>
+        <div class="cs-prose">
+          <p>
+            Riverline is a live conditions platform for fly fishing the Northern Rockies —
+            <strong>real-time streamflow, water temperature, snowpack, weather, hatch
+            forecasts, and an AI guide across 16 rivers</strong> in Montana, Idaho, Wyoming,
+            and Canada. It's public, it's paid, and it's running right now.
+          </p>
+          <p>
+            It exists because the information an angler needs before a trip is scattered
+            across a federal gauge site, a weather service, a snowpack database, and a shop
+            report someone updates when they remember to. Riverline pulls all of it hourly,
+            scores it, and explains it.
+          </p>
+          <p>
+            <strong>This is the one on the list that isn't a concept.</strong> Design,
+            frontend, backend, data pipeline, AI layer, auth, email, billing, and
+            deployment — all of it. If you want to know what we can actually build, this is
+            the honest answer.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The product</p>
+        <div>
+          <figure class="cs-shot">
+            <Image src={dashboard} alt="Riverline conditions dashboard showing the Bitterroot River with streamflow, water temperature, snowpack, and a fishability score of 90" widths={[640, 1000, 1440]} sizes="(min-width: 860px) 60vw, 92vw" />
+            <figcaption>
+              The conditions dashboard — one river, one screen, one answer. Live screenshot
+              from riverline.app.
+            </figcaption>
+          </figure>
+
+          <figure class="cs-shot">
+            <Image src={landing} alt="Riverline landing page with the headline Know before you go and free versus premium pricing cards" widths={[640, 1000, 1440]} sizes="(min-width: 860px) 60vw, 92vw" />
+            <figcaption>
+              The landing page — free tier does real work, premium sells the planner and the
+              AI guide.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The moves -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The decisions</p>
+        <div>
+          <h2 class="cs-h2 reveal">What the build actually required.</h2>
+          <div class="cs-moves">
+            {moves.map((m, i) => (
+              <div class="cs-move reveal" style={`transition-delay:${i * 0.06}s`}>
+                <span class="cs-move-n">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{m.h}</h3>
+                  <p>{m.p}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spec -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">Under the hood</p>
+        <div>
+          <dl class="cs-spec reveal">
+            {spec.map((s) => (
+              <div class="cs-spec-item">
+                <dt>{s.dt}</dt>
+                <dd>{s.dd}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="cs-tags">
+            <a href="https://riverline.app" target="_blank" rel="noopener noreferrer" class="cs-tag">Visit riverline.app →</a>
+            <a href="/services/ai-automations/" class="cs-tag">AI Automations</a>
+            <a href="/services/website-design/" class="cs-tag">Website Design</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</CaseStudyLayout>

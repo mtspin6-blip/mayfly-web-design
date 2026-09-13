@@ -292,6 +292,10 @@ const autoFaqs = [
 
 <style>
   .page-hero {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     background-color: var(--color-bg);
     padding: 5rem 0 4rem;
     min-height: clamp(240px, 32vh, 440px);
@@ -382,6 +386,10 @@ const autoFaqs = [
   }
   .auto-card:hover { transform: translateY(-2px); }
   .auto-card--dark {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     background-color: var(--color-text);
     color: var(--color-bg);
   }
@@ -391,7 +399,7 @@ const autoFaqs = [
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     color: white;
     font-family: var(--font-body);
     font-size: 0.6rem;
@@ -544,7 +552,7 @@ const autoFaqs = [
     content: '';
     flex: 1;
     height: 1px;
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     opacity: 0.35;
   }
   .pricing-section-label::before { display: none; }

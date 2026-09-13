@@ -1,4 +1,8 @@
 ---
+import { Image } from 'astro:assets';
+// PNG exports of the logo: the public/*.svg versions were rasters wrapped in SVG (441–753 KB).
+import logoFull from '../../assets/Logo-2x.png';
+import logoBug from '../../assets/Favicon-2x.png';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
@@ -113,7 +117,7 @@ const serviceSchema = {
     <!-- ── Hero ──────────────────────────────────────────── -->
     <section class="svc-hero">
       <div class="svc-logo" aria-hidden="true">
-        <img src="/FullTransparentLogo.svg" alt="" width="200" height="200" loading="eager" />
+        <Image src={logoFull} alt="" width={200} height={200} densities={[1, 2]} format="webp" loading="eager" />
       </div>
       <div class="section-container svc-hero-inner">
         <div class="svc-hero-content">
@@ -249,7 +253,7 @@ const serviceSchema = {
 
     <!-- ── Bug divider ─────────────────────────────────────── -->
     <div class="bug-divider" aria-hidden="true">
-      <img src="/BugTransparentLogo.svg" alt="" width="72" height="72" />
+      <Image src={logoBug} alt="" width={72} height={72} densities={[1, 2]} format="webp" />
     </div>
 
     <!-- ── Pricing Teaser ─────────────────────────────────── -->
@@ -314,6 +318,10 @@ const serviceSchema = {
 
   /* ── Hero ────────────────────────── */
   .svc-hero {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     background-color: var(--color-text);
     padding: 5rem 0 4.5rem;
     min-height: clamp(240px, 32vh, 440px);
@@ -382,6 +390,10 @@ const serviceSchema = {
 
   /* ── Problem ─────────────────────── */
   .problem-section {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     background-color: var(--color-text);
     padding: 5rem 0;
   }
@@ -475,7 +487,7 @@ const serviceSchema = {
   }
   .total-badge {
     display: inline-block;
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     color: var(--color-bg);
     font-family: var(--font-body);
     font-size: 0.72rem;

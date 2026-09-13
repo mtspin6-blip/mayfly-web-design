@@ -1,42 +1,56 @@
 ---
 // Hero — Home page
+import { Image } from 'astro:assets';
 import homepageHeader from '../../assets/Homepage-Header.jpg';
 ---
 
 <section class="hero">
   <!-- Full-bleed Bitterroot Valley background + overlay -->
-  <div class="hero-photo" aria-hidden="true" style={`background-image: url(${homepageHeader.src})`}></div>
+  <!-- Responsive WebP instead of the 3.6 MB source JPG; it's the LCP candidate, so eager + high priority -->
+  <Image
+    src={homepageHeader}
+    alt=""
+    aria-hidden="true"
+    class="hero-photo"
+    widths={[640, 960, 1280, 1920]}
+    width={1920}
+    sizes="100vw"
+    format="webp"
+    quality={70}
+    loading="eager"
+    fetchpriority="high"
+  />
   <div class="hero-dim"   aria-hidden="true"></div>
 
   <div class="hero-body section-container">
     <div class="hero-content">
 
-      <p class="hero-eyebrow reveal">Montana Web Design</p>
+      <p class="hero-eyebrow hero-in">Montana Web Design</p>
 
-      <h1 class="hero-headline reveal" style="transition-delay:0.1s">
+      <h1 class="hero-headline hero-in" style="animation-delay:0.1s">
         Built Modern.<br />
         <em>Priced for Montana.</em>
       </h1>
 
-      <p class="hero-sub reveal" style="transition-delay:0.2s">
+      <p class="hero-sub hero-in" style="animation-delay:0.2s">
         Custom websites, AI automations, and SEO — delivered faster
         and smarter, without the typical price tag.
       </p>
 
-      <p class="hero-location reveal" style="transition-delay:0.25s">
+      <p class="hero-location hero-in" style="animation-delay:0.25s">
         Missoula-based web design for Montana small businesses.
       </p>
 
-      <div class="hero-ctas reveal" style="transition-delay:0.3s">
+      <div class="hero-ctas hero-in" style="animation-delay:0.3s">
         <a href="https://cal.com/mayflywebdesign/discovery" target="_blank" rel="noopener noreferrer" class="btn-primary">
           Book a Free Call
         </a>
-        <a href="/work" class="btn-secondary hero-btn-outline">
+        <a href="/work/" class="btn-secondary hero-btn-outline">
           See Our Work
         </a>
       </div>
 
-      <p class="hero-trust reveal" style="transition-delay:0.42s">
+      <p class="hero-trust hero-in" style="animation-delay:0.42s">
         Missoula &middot; Bozeman &middot; Great Falls &middot; Billings &middot; Montana Statewide
       </p>
     </div>
@@ -56,6 +70,10 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
 
 <style>
   .hero {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     display: flex;
     flex-direction: column;
     min-height: 56vh;
@@ -69,8 +87,10 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
   .hero-photo {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center 45%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 45%;
     z-index: 0;
   }
 
@@ -101,7 +121,7 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: var(--color-accent-light);
     margin-bottom: 1.125rem;
   }
 
@@ -120,7 +140,7 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
   }
   .hero-headline em {
     font-style: italic;
-    color: var(--color-accent);
+    color: var(--color-accent-light);
   }
 
   .hero-location {
@@ -213,7 +233,7 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
   .scroll-fill {
     position: absolute;
     inset: 0;
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-light);
     transform: translateX(-100%);
     animation: scrollPulse 2.4s ease-in-out infinite;
   }
@@ -223,8 +243,21 @@ import homepageHeader from '../../assets/Homepage-Header.jpg';
     100% { transform: translateX(100%); }
   }
 
+  /*
+   * Above-the-fold entrance: transform only, never opacity — the headline
+   * paints on the first frame, so LCP doesn't wait on a script or a fade.
+   */
+  .hero-in { animation: heroRise 0.7s ease both; }
+  .hero-headline.hero-in { animation: letterSpreadIn 0.6s ease-out forwards, heroRise 0.7s ease both; }
+  @keyframes heroRise {
+    from { transform: translateY(16px); }
+    to   { transform: translateY(0); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .scroll-fill      { animation: none; transform: translateX(0); opacity: 0.4; }
     .hero-headline    { animation: none; letter-spacing: -0.03em; }
+    .hero-in,
+    .hero-headline.hero-in { animation: none; }
   }
 </style>

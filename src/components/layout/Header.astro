@@ -205,6 +205,10 @@ const normPath = path.replace(/\/$/, '') || '/';
   .services-parent { position: relative; }
 
   .dropdown {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     display: none;
     position: absolute;
     top: calc(100% + 0.75rem);

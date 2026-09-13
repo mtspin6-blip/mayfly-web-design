@@ -1,0 +1,419 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import ScaleFrames from '../../components/work/ScaleFrames.astro';
+import LarkspurMockup from '../../components/work/LarkspurMockup.astro';
+import NinebarkMockup from '../../components/work/NinebarkMockup.astro';
+import CairnMockup from '../../components/work/CairnMockup.astro';
+import { projects, explorations } from '../../data/projects.js';
+import riverlineShot from '../../assets/work/riverline-dashboard.png';
+
+const byslug = Object.fromEntries(projects.map((p) => [p.slug, p]));
+---
+
+<BaseLayout
+  title="Our Work | Mayfly Web Design — Montana"
+  description="Website concepts for Montana businesses plus two shipped products — Riverline and Cairn. Portfolio of web design, AI automation, and SEO work by Mayfly Web Design."
+>
+  <Fragment slot="head">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" /></noscript>
+  </Fragment>
+
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Our Work — Mayfly Web Design Portfolio',
+    description:
+      'Website concepts for Montana construction, hospitality, and service businesses, plus two shipped products: Riverline and Cairn.',
+    url: 'https://mayflywebdesign.com/work/',
+    isPartOf: { '@type': 'WebSite', name: 'Mayfly Web Design', url: 'https://mayflywebdesign.com' },
+    hasPart: projects.map((p) => ({
+      '@type': 'CreativeWork',
+      name: p.name,
+      about: p.industry,
+      url: `https://mayflywebdesign.com/work/${p.slug}/`,
+    })),
+  })} />
+
+  <ScaleFrames />
+
+  <Header />
+  <main id="main-content">
+
+    <!-- ── Hero ───────────────────────────────────────────── -->
+    <section class="work-hero">
+      <div class="section-container">
+        <p class="section-eyebrow reveal">Portfolio</p>
+        <h1 class="work-headline reveal" style="transition-delay:0.08s">
+          Montana businesses,<br /><em>built right.</em>
+        </h1>
+        <p class="work-sub reveal" style="transition-delay:0.16s">
+          Two concept builds for the kind of Montana companies we work with, and two
+          products we designed and shipped ourselves. Click into any of them — the
+          thinking is all there, and none of it is padded with fake numbers.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Main grid ──────────────────────────────────────── -->
+    <section class="work-body">
+      <div class="section-container">
+        <div class="work-grid">
+
+          <!-- Larkspur -->
+          <a href="/work/larkspur-construction/" class="wc reveal">
+            <div class="wc-frame">
+              <div class="wc-chrome" aria-hidden="true">
+                <span></span><span></span><span></span>
+                <em>larkspurconstruction.com</em>
+              </div>
+              <div class="wc-viewport" data-design-w="1280">
+                <div class="wc-scaler"><LarkspurMockup priority heroSizes="(min-width: 1024px) 508px, 92vw" cardSizes="(min-width: 1024px) 160px, 29vw" /></div>
+              </div>
+            </div>
+            <div class="wc-meta">
+              <span class="wc-tag wc-tag--concept">{byslug['larkspur-construction'].statusLabel}</span>
+              <h2 class="wc-title">{byslug['larkspur-construction'].name}</h2>
+              <p class="wc-industry">
+                {byslug['larkspur-construction'].industry} · {byslug['larkspur-construction'].location}
+              </p>
+              <p class="wc-desc">{byslug['larkspur-construction'].cardBlurb}</p>
+              <span class="wc-more">View case study<i>→</i></span>
+            </div>
+          </a>
+
+          <!-- Ninebark -->
+          <a href="/work/ninebark-ranch/" class="wc reveal" style="transition-delay:0.08s">
+            <div class="wc-frame">
+              <div class="wc-chrome" aria-hidden="true">
+                <span></span><span></span><span></span>
+                <em>ninebarkranch.com</em>
+              </div>
+              <div class="wc-viewport" data-design-w="1280">
+                <div class="wc-scaler"><NinebarkMockup heroSizes="(min-width: 1024px) 508px, 92vw" cardSizes="(min-width: 1024px) 160px, 29vw" /></div>
+              </div>
+            </div>
+            <div class="wc-meta">
+              <span class="wc-tag wc-tag--concept">{byslug['ninebark-ranch'].statusLabel}</span>
+              <h2 class="wc-title">{byslug['ninebark-ranch'].name}</h2>
+              <p class="wc-industry">
+                {byslug['ninebark-ranch'].industry} · {byslug['ninebark-ranch'].location}
+              </p>
+              <p class="wc-desc">{byslug['ninebark-ranch'].cardBlurb}</p>
+              <span class="wc-more">View case study<i>→</i></span>
+            </div>
+          </a>
+
+          <!-- Riverline -->
+          <a href="/work/riverline/" class="wc reveal" style="transition-delay:0.16s">
+            <div class="wc-frame">
+              <div class="wc-chrome" aria-hidden="true">
+                <span></span><span></span><span></span>
+                <em>riverline.app</em>
+              </div>
+              <div class="wc-viewport">
+                <Image
+                  src={riverlineShot}
+                  alt="Riverline conditions dashboard showing live streamflow, water temperature, and a fishability score"
+                  class="wc-shot"
+                  widths={[560, 900]}
+                  sizes="(min-width: 1024px) 46vw, 92vw"
+                />
+              </div>
+            </div>
+            <div class="wc-meta">
+              <span class="wc-tag wc-tag--shipped">{byslug['riverline'].statusLabel}</span>
+              <h2 class="wc-title">{byslug['riverline'].name}</h2>
+              <p class="wc-industry">
+                {byslug['riverline'].industry} · {byslug['riverline'].location}
+              </p>
+              <p class="wc-desc">{byslug['riverline'].cardBlurb}</p>
+              <span class="wc-more">View case study<i>→</i></span>
+            </div>
+          </a>
+
+          <!-- Cairn -->
+          <a href="/work/cairn/" class="wc reveal" style="transition-delay:0.24s">
+            <div class="wc-frame">
+              <div class="wc-chrome" aria-hidden="true">
+                <span></span><span></span><span></span>
+                <em>Cairn — iOS</em>
+              </div>
+              <div class="wc-viewport" data-design-w="1280">
+                <div class="wc-scaler"><CairnMockup /></div>
+              </div>
+            </div>
+            <div class="wc-meta">
+              <span class="wc-tag wc-tag--shipped">{byslug['cairn'].statusLabel}</span>
+              <h2 class="wc-title">{byslug['cairn'].name}</h2>
+              <p class="wc-industry">
+                {byslug['cairn'].industry} · {byslug['cairn'].location}
+              </p>
+              <p class="wc-desc">{byslug['cairn'].cardBlurb}</p>
+              <span class="wc-more">View case study<i>→</i></span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Explorations ───────────────────────────────────── -->
+    <section class="work-expl">
+      <div class="section-container">
+        <div class="expl-head reveal">
+          <h2 class="section-headline">Also on the bench.</h2>
+          <p class="expl-sub">
+            Industries we build for regularly. Full concept treatments for these are in
+            progress — ask and we'll walk you through the approach for yours.
+          </p>
+        </div>
+        <ul class="expl-grid" role="list">
+          {explorations.map((e, i) => (
+            <li class="expl-item reveal" style={`transition-delay:${i * 0.05}s`}>
+              <span class="expl-name">{e.name}</span>
+              <span class="expl-industry">{e.industry}</span>
+              <span class="expl-city">{e.city}, MT</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* ── Hero ───────────────────────────────────────────────── */
+  .work-hero {
+    padding: 4.5rem 0 3rem;
+    border-bottom: 1px solid var(--color-surface);
+  }
+  .work-headline {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.25rem, 6.5vw, 5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    color: var(--color-text);
+    margin-bottom: 1.5rem;
+  }
+  .work-headline em { font-style: italic; color: var(--color-accent); }
+  .work-sub {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.72;
+    color: var(--color-muted);
+    max-width: 58ch;
+  }
+
+  /* ── Grid ───────────────────────────────────────────────── */
+  .work-body { padding: 3.5rem 0 1rem; }
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem 2.5rem;
+  }
+  @media (min-width: 1024px) {
+    .work-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .wc { display: block; text-decoration: none; color: inherit; }
+
+  /* Preview frame */
+  .wc-frame {
+    border: 1px solid var(--color-surface);
+    background-color: #fff;
+    overflow: hidden;
+    box-shadow: 0 16px 40px -24px rgba(22, 22, 20, 0.3);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .wc:hover .wc-frame {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 54px -26px rgba(22, 22, 20, 0.36);
+  }
+  .wc-chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    background-color: #E9E6DF;
+    border-bottom: 1px solid var(--color-surface);
+  }
+  .wc-chrome span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background-color: #C8C3B8;
+    display: block;
+    flex-shrink: 0;
+  }
+  .wc-chrome em {
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 0.625rem;
+    color: #68615A;
+    background-color: #F5F3EE;
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /*
+   * Previews are the real mockup components, laid out at their 1280px design
+   * width and transform-scaled to the card. Cropped to the top ~880px so each
+   * card shows a site's hero and first section, the way a real thumbnail would.
+   */
+  .wc-viewport {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1280 / 900;
+    overflow: hidden;
+    background-color: #F7F5F0;
+    /*
+     * Fallback until ScaleFrames measures the real card width. Erring small
+     * letterboxes the mockup for one frame; erring large crops it, which reads
+     * as broken — so these are deliberately under the true value.
+     */
+    --s: 0.24;
+  }
+  @media (min-width: 640px) { .wc-viewport { --s: 0.34; } }
+  @media (min-width: 1024px) { .wc-viewport { --s: 0.3; } }
+  @media (min-width: 1280px) { .wc-viewport { --s: 0.36; } }
+  .wc-scaler {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1280px;
+    transform-origin: top left;
+    transform: scale(var(--s));
+  }
+  .wc-shot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  /* Card meta */
+  .wc-meta { padding-top: 1.375rem; }
+  .wc-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.55rem;
+    margin-bottom: 0.75rem;
+  }
+  .wc-tag--concept {
+    color: var(--color-gold);
+    border: 1px solid rgba(184, 136, 46, 0.4);
+  }
+  .wc-tag--shipped {
+    color: var(--color-bg);
+    background-color: var(--color-accent-solid);
+  }
+  .wc-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.625rem;
+    letter-spacing: -0.022em;
+    color: var(--color-text);
+    transition: color 0.2s ease;
+  }
+  .wc:hover .wc-title { color: var(--color-accent); }
+  .wc-industry {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--color-muted);
+    margin-top: 0.3rem;
+  }
+  .wc-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-muted);
+    margin-top: 0.75rem;
+    max-width: 52ch;
+  }
+  .wc-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    margin-top: 0.875rem;
+  }
+  .wc-more i { font-style: normal; transition: transform 0.22s ease; }
+  .wc:hover .wc-more i { transform: translateX(4px); }
+
+  /* ── Explorations ───────────────────────────────────────── */
+  .work-expl {
+    padding: 4.5rem 0 4rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--color-surface);
+  }
+  .expl-head { margin-bottom: 2.25rem; }
+  .expl-sub {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-muted);
+    max-width: 54ch;
+    margin-top: 0.875rem;
+  }
+  .expl-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-surface);
+  }
+  @media (min-width: 640px) { .expl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .expl-grid { grid-template-columns: repeat(3, 1fr); } }
+  .expl-item {
+    background-color: var(--color-bg);
+    padding: 1.25rem 1.375rem 1.375rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .expl-name {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--color-text);
+  }
+  .expl-industry {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 300;
+    color: var(--color-muted);
+  }
+  .expl-city {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-top: 0.375rem;
+  }
+</style>

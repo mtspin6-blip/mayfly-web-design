@@ -1,0 +1,467 @@
+---
+/**
+ * Cairn — product composition: the save sheet, the feed, and the payoff
+ * (an AI assistant retrieving a save through the MCP server).
+ *
+ * Built from Cairn's own design tokens (cairn-app/src/constants/theme.ts) —
+ * warm stone neutrals, a single slate-blue accent, SF Pro at the 13/15/17/22/28
+ * scale. Two deliberate deviations for WCAG AA: tertiary text uses the
+ * secondary grey, and clay/sand tag text uses a darker ink (see --clayInk).
+ */
+---
+
+<div class="cn" aria-hidden="true">
+  <!-- ── Phone 1: the save sheet ─────────────────────────── -->
+  <div class="cn-col">
+    <span class="cn-step">01 · Share to Cairn</span>
+    <div class="cn-phone">
+      <div class="cn-notch"></div>
+      <div class="cn-screen cn-screen--sheet">
+        <div class="cn-sheet">
+          <div class="cn-grabber"></div>
+          <p class="cn-sheet-q">Why do you want to save this reel?</p>
+
+          <div class="cn-thumb">
+            <div class="cn-thumb-img"></div>
+            <div class="cn-thumb-meta">
+              <span class="cn-pill cn-pill--ig">Instagram</span>
+              <span class="cn-thumb-t">@aidevdaily · 1:12</span>
+            </div>
+          </div>
+
+          <div class="cn-input">A note to future me…</div>
+
+          <div class="cn-chips">
+            <span class="cn-chip cn-chip--on">for a project</span>
+            <span class="cn-chip">idea to revisit</span>
+            <span class="cn-chip">learn this</span>
+            <span class="cn-chip">share later</span>
+          </div>
+
+          <div class="cn-cta">Save</div>
+          <p class="cn-sheet-note">Saved in under a second. Skippable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Phone 2: the feed ───────────────────────────────── -->
+  <div class="cn-col">
+    <span class="cn-step">02 · Structured automatically</span>
+    <div class="cn-phone">
+      <div class="cn-notch"></div>
+      <div class="cn-screen">
+        <div class="cn-nav">
+          <span class="cn-title">Cairn</span>
+          <span class="cn-search">Search</span>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-tags">
+            <span class="cn-pill cn-pill--ig">Instagram</span>
+            <span class="cn-pill cn-pill--sand">Claude Code</span>
+          </div>
+          <p class="cn-card-sum">
+            Six Claude Code skills for shipping faster — subagent delegation,
+            worktrees, and a TDD loop. <b>You saved this for the Mayfly rebuild.</b>
+          </p>
+          <span class="cn-card-meta">2 days ago · 1:12</span>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-tags">
+            <span class="cn-pill cn-pill--web">Article</span>
+            <span class="cn-pill cn-pill--sand">Pricing</span>
+          </div>
+          <p class="cn-card-sum">
+            How usage-based pricing breaks at low volume, with the margin math.
+            <b>Tied to your note about the $9 tier.</b>
+          </p>
+          <span class="cn-card-meta">5 days ago · 8 min read</span>
+        </div>
+
+        <div class="cn-card">
+          <div class="cn-card-tags">
+            <span class="cn-pill cn-pill--idea">Idea</span>
+          </div>
+          <p class="cn-card-sum">
+            Score rivers against a date range, not just today — analogs from past
+            seasons.
+          </p>
+          <span class="cn-card-meta">1 week ago</span>
+        </div>
+
+        <div class="cn-card cn-card--fail">
+          <div class="cn-card-tags">
+            <span class="cn-pill cn-pill--tk">TikTok</span>
+            <span class="cn-pill cn-pill--fail">Couldn't process</span>
+          </div>
+          <p class="cn-card-sum">Note and link kept. Still searchable.</p>
+          <span class="cn-retry">Retry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Panel 3: the payoff ─────────────────────────────── -->
+  <div class="cn-col cn-col--wide">
+    <span class="cn-step">03 · Retrieved mid-conversation</span>
+    <div class="cn-chat">
+      <div class="cn-chat-bar">
+        <span class="cn-chat-dot"></span>
+        <span class="cn-chat-title">Claude</span>
+        <span class="cn-mcp">cairn · MCP connected</span>
+      </div>
+
+      <div class="cn-chat-body">
+        <div class="cn-msg cn-msg--user">
+          What were those Claude Code skills I saved a while back? I'm about to
+          start the Mayfly work page.
+        </div>
+
+        <div class="cn-tool">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+            <path d="M1.5 5.5l2.5 2.5 5.5-5.5" stroke="#41697B" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span><b>search_saves</b>("claude code skills") → 3 results</span>
+        </div>
+
+        <div class="cn-msg cn-msg--ai">
+          You saved a reel from @aidevdaily two days ago, and your note said it was
+          for the Mayfly rebuild. The three that matter here are subagent
+          delegation, git worktrees for isolated feature work, and a TDD loop —
+          <span class="cn-cite">from your save</span>
+        </div>
+
+        <div class="cn-msg cn-msg--ai cn-msg--ghost">
+          Want me to pull the full transcript of that one?
+        </div>
+      </div>
+    </div>
+
+    <div class="cn-tools">
+      <div class="cn-tool-row"><b>search_saves</b><span>semantic search, returns summaries not transcripts</span></div>
+      <div class="cn-tool-row"><b>get_recent_saves</b><span>the last n saves, newest first</span></div>
+      <div class="cn-tool-row"><b>get_save_details</b><span>full context object for one save</span></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cn {
+    /* Cairn's own tokens */
+    --paper:      #F6F4EF;
+    --surface:    #FFFFFF;
+    --sunken:     #EEEBE4;
+    --hairline:   #E4E0D8;
+    --stone900:   #232220;
+    --stone600:   #6E6A62;
+    --stone400:   #9C978D;
+    --slate:      #41697B;
+    --slateSub:   #E3EAEE;
+    --clay:       #A85A4A;
+    --claySub:    #F1E2DE;
+    --moss:       #5B6E55;
+    --mossSub:    #E7ECE1;
+    --sand:       #8A7558;
+    --sandSub:    #ECE5D7;
+    /* Darker ink for tag text on the clay/sand tints — the app's own values
+       measure 3.9:1 and 3.5:1, under WCAG AA. */
+    --clayInk:    #8F4637;
+    --sandInk:    #6F5C43;
+
+    width: 1280px;
+    min-height: 800px;
+    background-color: var(--paper);
+    padding: 34px 40px 40px;
+    display: grid;
+    grid-template-columns: 300px 300px 1fr;
+    gap: 26px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+    color: var(--stone900);
+    box-sizing: border-box;
+  }
+
+  .cn-col { display: flex; flex-direction: column; }
+  .cn-step {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--stone600);
+    margin-bottom: 14px;
+  }
+
+  /* ── Phone shell ─────────────────────────────────────── */
+  .cn-phone {
+    position: relative;
+    width: 300px;
+    height: 604px;
+    background-color: var(--stone900);
+    border-radius: 34px;
+    padding: 9px;
+    box-shadow: 0 22px 44px -20px rgba(35,34,32,0.42);
+    box-sizing: border-box;
+  }
+  .cn-notch {
+    position: absolute;
+    top: 9px; left: 50%;
+    transform: translateX(-50%);
+    width: 96px; height: 22px;
+    background-color: var(--stone900);
+    border-radius: 0 0 13px 13px;
+    z-index: 3;
+  }
+  .cn-screen {
+    width: 100%; height: 100%;
+    background-color: var(--paper);
+    border-radius: 26px;
+    overflow: hidden;
+    padding: 34px 14px 14px;
+    box-sizing: border-box;
+  }
+  .cn-screen--sheet {
+    background-color: #DCD8D0;
+    display: flex;
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  /* ── Save sheet ──────────────────────────────────────── */
+  .cn-sheet {
+    width: 100%;
+    background-color: var(--paper);
+    border-radius: 22px 22px 26px 26px;
+    padding: 10px 16px 18px;
+    box-sizing: border-box;
+  }
+  .cn-grabber {
+    width: 34px; height: 4px;
+    border-radius: 2px;
+    background-color: var(--hairline);
+    margin: 0 auto 14px;
+  }
+  .cn-sheet-q {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 23px;
+    letter-spacing: -0.2px;
+    margin: 0 0 14px;
+  }
+  .cn-thumb {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background-color: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 8px;
+    margin-bottom: 12px;
+  }
+  .cn-thumb-img {
+    width: 44px; height: 56px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: linear-gradient(150deg, #C9BFA9 0%, #8A7558 55%, #4A4238 100%);
+  }
+  .cn-thumb-meta { display: flex; flex-direction: column; gap: 5px; }
+  .cn-thumb-t { font-size: 12px; color: var(--stone600); }
+
+  .cn-input {
+    background-color: var(--sunken);
+    border-radius: 9px;
+    padding: 13px 12px;
+    font-size: 15px;
+    color: var(--stone600);
+    margin-bottom: 12px;
+  }
+  .cn-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .cn-chip {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 11px;
+    border-radius: 15px;
+    background-color: var(--sunken);
+    color: var(--stone600);
+  }
+  .cn-chip--on { background-color: var(--slateSub); color: var(--slate); }
+  .cn-cta {
+    background-color: var(--slate);
+    color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: 13px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .cn-sheet-note {
+    font-size: 12px;
+    color: var(--stone600);
+    text-align: center;
+    margin: 9px 0 0;
+  }
+
+  /* ── Feed ────────────────────────────────────────────── */
+  .cn-nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 0 2px;
+  }
+  .cn-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+  }
+  .cn-search { font-size: 13px; font-weight: 500; color: var(--slate); }
+
+  .cn-card {
+    background-color: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 12px 13px 11px;
+    margin-bottom: 9px;
+  }
+  .cn-card-tags { display: flex; gap: 5px; margin-bottom: 8px; }
+  .cn-card-sum {
+    font-size: 14px;
+    line-height: 19px;
+    color: var(--stone900);
+    margin: 0 0 8px;
+  }
+  .cn-card-sum b { font-weight: 600; color: var(--slate); }
+  .cn-card-meta { font-size: 11.5px; font-weight: 500; color: var(--stone600); letter-spacing: 0.1px; }
+  .cn-card--fail { border-color: var(--claySub); background-color: #FDFBFA; }
+  .cn-retry {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--clay);
+    border: 1px solid var(--claySub);
+    border-radius: 13px;
+    padding: 4px 12px;
+    margin-top: 2px;
+  }
+
+  /* Pills */
+  .cn-pill {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    padding: 3px 7px;
+    border-radius: 5px;
+  }
+  .cn-pill--ig   { background-color: var(--claySub);  color: var(--clayInk); }
+  .cn-pill--tk   { background-color: var(--slateSub); color: var(--slate); }
+  .cn-pill--web  { background-color: var(--sunken);   color: var(--stone600); }
+  .cn-pill--idea { background-color: var(--mossSub);  color: var(--moss); }
+  .cn-pill--sand { background-color: var(--sandSub);  color: var(--sandInk); }
+  .cn-pill--fail { background-color: var(--claySub);  color: var(--clayInk); }
+
+  /* ── Chat panel ──────────────────────────────────────── */
+  .cn-col--wide { min-width: 0; }
+  .cn-chat {
+    background-color: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px -24px rgba(35,34,32,0.35);
+  }
+  .cn-chat-bar {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 16px;
+    background-color: var(--sunken);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .cn-chat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background-color: var(--moss);
+  }
+  .cn-chat-title { font-size: 13px; font-weight: 600; }
+  .cn-mcp {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--slate);
+    background-color: var(--slateSub);
+    border-radius: 4px;
+    padding: 3px 8px;
+  }
+  .cn-chat-body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+  .cn-msg {
+    font-size: 14.5px;
+    line-height: 21px;
+    border-radius: 12px;
+    padding: 12px 14px;
+    max-width: 92%;
+  }
+  .cn-msg--user {
+    background-color: var(--slateSub);
+    color: var(--stone900);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .cn-msg--ai {
+    background-color: var(--paper);
+    border: 1px solid var(--hairline);
+    color: var(--stone900);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .cn-msg--ghost { color: var(--stone600); }
+  .cn-cite {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--slate);
+    background-color: var(--slateSub);
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-left: 3px;
+    vertical-align: 1px;
+  }
+  .cn-tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    align-self: flex-start;
+    font-size: 12.5px;
+    color: var(--stone900);
+    background-color: var(--slateSub);
+    border-radius: 7px;
+    padding: 7px 11px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .cn-tool b { color: var(--slate); font-weight: 600; }
+
+  /* Tool list */
+  .cn-tools {
+    margin-top: 18px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .cn-tool-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 16px;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .cn-tool-row:last-child { border-bottom: 0; }
+  .cn-tool-row b {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--slate);
+    flex-shrink: 0;
+    width: 132px;
+  }
+  .cn-tool-row span { font-size: 12.5px; color: var(--stone600); }
+</style>

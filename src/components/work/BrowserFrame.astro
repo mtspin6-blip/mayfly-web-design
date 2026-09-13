@@ -1,0 +1,128 @@
+---
+/**
+ * A browser chrome wrapper for rendered site mockups.
+ *
+ * The mockup inside is real HTML/CSS, not an image — it stays crisp at any
+ * zoom, weighs nothing, and can be edited as fast as the design changes.
+ * `scale` shrinks a desktop-width layout down to fit the column via
+ * transform, so the mockup keeps genuine desktop proportions.
+ */
+import ScaleFrames from './ScaleFrames.astro';
+
+export interface Props {
+  url: string;
+  /** Design width of the slotted mockup, in px. */
+  width?: number;
+  /** Rendered height of the mockup at design width, in px. */
+  height?: number;
+  label?: string;
+}
+
+const { url, width = 1280, height = 900, label } = Astro.props;
+---
+
+<ScaleFrames />
+
+<figure class="bf">
+  <div class="bf-chrome">
+    <div class="bf-dots" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="bf-url">
+      <svg width="9" height="11" viewBox="0 0 9 11" fill="none" aria-hidden="true">
+        <path d="M2 4.5V3a2.5 2.5 0 015 0v1.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+        <rect x="1" y="4.5" width="7" height="5.5" rx="1" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      {url}
+    </div>
+  </div>
+
+  <div class="bf-viewport" data-design-w={width} style={`--bf-w:${width}; --bf-h:${height};`}>
+    <div class="bf-scaler">
+      <slot />
+    </div>
+  </div>
+
+  {label && <figcaption class="bf-caption">{label}</figcaption>}
+</figure>
+
+<style>
+  .bf {
+    border: 1px solid var(--color-surface);
+    background-color: #fff;
+    box-shadow: 0 18px 50px -22px rgba(22, 22, 20, 0.28);
+    overflow: hidden;
+  }
+
+  .bf-chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.625rem 0.875rem;
+    background-color: #E9E6DF;
+    border-bottom: 1px solid var(--color-surface);
+  }
+  .bf-dots { display: flex; gap: 0.375rem; flex-shrink: 0; }
+  .bf-dots span {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #C8C3B8;
+    display: block;
+  }
+  .bf-url {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    color: #68615A;
+    background-color: #F5F3EE;
+    border-radius: 3px;
+    padding: 0.25rem 0.625rem;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .bf-url svg { flex-shrink: 0; opacity: 0.7; }
+
+  /*
+   * The viewport is a fixed-aspect box that establishes a query container.
+   * The scaler inside is laid out at the mockup's true desktop design width,
+   * then transform-scaled by (container width / design width) — so the mockup
+   * keeps real desktop proportions at any column width. ScaleFrames sets --s.
+   */
+  .bf-viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* --bf-w / --bf-h are unitless: aspect-ratio rejects lengths. */
+    aspect-ratio: var(--bf-w) / var(--bf-h);
+    /* Fallback until ScaleFrames measures the real column width; see note
+     * in work/index.astro — always err small so it letterboxes, not crops. */
+    --s: 0.24;
+  }
+  @media (min-width: 640px) { .bf-viewport { --s: 0.42; } }
+  @media (min-width: 860px) { .bf-viewport { --s: 0.4; } }
+  @media (min-width: 1280px) { .bf-viewport { --s: 0.5; } }
+  .bf-scaler {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(var(--bf-w) * 1px);
+    height: calc(var(--bf-h) * 1px);
+    transform-origin: top left;
+    transform: scale(var(--s));
+  }
+
+  .bf-caption {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    padding: 0.875rem 1rem;
+    border-top: 1px solid var(--color-surface);
+    background-color: var(--color-bg);
+  }
+</style>

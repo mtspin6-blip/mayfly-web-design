@@ -139,6 +139,10 @@ const postSchema = {
 <style>
   /* ── Post Hero ────────────────────────────────────────────── */
   .post-hero {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     background-color: var(--color-text);
     padding: 3rem 0 4.5rem;
   }
@@ -174,7 +178,7 @@ const postSchema = {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-bg);
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     padding: 0.3rem 0.75rem;
     margin-bottom: 1.375rem;
   }
@@ -207,9 +211,9 @@ const postSchema = {
     font-family: var(--font-body);
     font-size: 0.8125rem;
     font-weight: 300;
-    color: rgba(242, 237, 227, 0.42);
+    color: rgba(242, 237, 227, 0.62);
   }
-  .post-meta-dot { color: rgba(242, 237, 227, 0.2); }
+  .post-meta-dot { color: rgba(242, 237, 227, 0.55); }
 
   /* ── Post Body ────────────────────────────────────────────── */
   .post-body-section {
@@ -287,7 +291,7 @@ const postSchema = {
 
   /* ── Inline CTA ───────────────────────────────────────────── */
   .post-cta {
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     padding: 2.5rem;
     margin-top: 3.5rem;
     display: flex;
@@ -303,7 +307,8 @@ const postSchema = {
     }
   }
 
-  .post-cta-text {
+  /* Scoped under .post-cta so the post body's paragraph color can't override it on the green fill. */
+  .post-cta .post-cta-text {
     font-family: var(--font-display);
     font-weight: 300;
     font-size: clamp(1.125rem, 2.5vw, 1.375rem);
@@ -395,7 +400,7 @@ const postSchema = {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-bg);
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     padding: 0.3rem 0.75rem;
   }
   .blog-read-time {

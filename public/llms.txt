@@ -1,0 +1,34 @@
+# Mayfly Web Design
+
+> Montana web design studio based in Missoula. Custom websites, AI automations, and SEO + GAIO (generative AI optimization) for Montana small and mid-sized businesses, serving Missoula, Bozeman, Great Falls, Billings, and statewide. Websites from $750; contact@mayflywebdesign.com.
+
+Mayfly builds fast static websites (Astro, Cloudflare), automation workflows, and search visibility work for Montana businesses — outfitters, trades and home services, construction, hospitality, breweries, and professional practices.
+
+## Services
+
+- [Website Design](https://mayflywebdesign.com/services/website-design/): Custom, conversion-focused websites for Montana businesses.
+- [AI Automations](https://mayflywebdesign.com/services/ai-automations/): Automated workflows for lead handling, follow-up, and operations.
+- [SEO + GAIO](https://mayflywebdesign.com/services/seo-gaio/): Local search and AI-assistant visibility.
+- [Pricing](https://mayflywebdesign.com/pricing/): Website, automation, and SEO packages with published prices.
+
+## Work
+
+- [Portfolio](https://mayflywebdesign.com/work/): Concept builds and shipped products.
+- [Larkspur Construction Group](https://mayflywebdesign.com/work/larkspur-construction/): Concept site for a Bozeman general contractor, built around recruiting.
+- [Ninebark Ranch](https://mayflywebdesign.com/work/ninebark-ranch/): Concept site for a Paradise Valley all-inclusive guest ranch.
+- [Riverline](https://mayflywebdesign.com/work/riverline/): Shipped fly-fishing conditions platform with an AI guide (riverline.app).
+- [Cairn](https://mayflywebdesign.com/work/cairn/): Shipped iOS app and MCP server that makes saved content retrievable by AI assistants.
+
+## Guides
+
+- [How much does a website cost in Montana?](https://mayflywebdesign.com/blog/montana-website-cost-guide/)
+- [Local SEO and "near me" searches in Montana](https://mayflywebdesign.com/blog/local-seo-montana-near-me-searches/)
+- [Getting your Montana business found in ChatGPT and AI search](https://mayflywebdesign.com/blog/montana-business-chatgpt-ai-search/)
+- [AI automations for Montana small businesses](https://mayflywebdesign.com/blog/ai-automations-montana-small-business/)
+- [Is your website costing you customers?](https://mayflywebdesign.com/blog/montana-small-business-website-costing-customers/)
+
+## Company
+
+- [About](https://mayflywebdesign.com/about/)
+- [Contact](https://mayflywebdesign.com/contact/)
+- [Book a discovery call](https://cal.com/mayflywebdesign/discovery)

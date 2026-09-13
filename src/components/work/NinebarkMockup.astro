@@ -1,0 +1,403 @@
+---
+/**
+ * Ninebark Ranch — homepage mockup.
+ * Rendered at a 1280px design width; BrowserFrame scales it to the column.
+ * Cormorant Garamond + a mineral/ochre palette — a deliberately different
+ * brand system from both Larkspur and Mayfly itself.
+ */
+import { getImage } from 'astro:assets';
+
+export interface Props {
+  /** First mockup on a page: load the hero eagerly at high priority. */
+  priority?: boolean;
+  /**
+   * `sizes` for the photos. Mockups are transform-scaled, so layout width isn't
+   * the displayed width — callers pass the real on-screen width. Defaults fit
+   * the case-study BrowserFrame column.
+   */
+  heroSizes?: string;
+  cardSizes?: string;
+}
+const {
+  priority = false,
+  heroSizes = '(min-width: 1200px) 760px, (min-width: 860px) 62vw, 92vw',
+  cardSizes = '(min-width: 1200px) 240px, (min-width: 860px) 20vw, 29vw',
+} = Astro.props;
+
+const HERO_W = [480, 800, 1100];
+const CARD_W = [240, 480, 640];
+const srcsetOf = async (src, widths) => {
+  const out = await Promise.all(widths.map((w) => getImage({ src, width: w, format: 'webp', quality: 62 })));
+  return { src: out[out.length - 1].src, srcset: out.map((o, i) => `${o.src} ${widths[i]}w`).join(', ') };
+};
+import hero  from '../../assets/austin-farrington-gp2QLJKOvVc-unsplash.jpg';
+import cabin from '../../assets/work/ninebark-cabin.jpg';
+import lodge from '../../assets/work/ninebark-lodge.jpg';
+import river from '../../assets/troy-olson-CGFsPbYYN2c-unsplash.jpg';
+
+const stays = [
+  { img: cabin, name: 'Creekside Cabins',   sleeps: 'Sleeps 2–4',  rate: 'from $4,900 / week' },
+  { img: lodge, name: 'The Lodge Rooms',    sleeps: 'Sleeps 2',    rate: 'from $3,800 / week' },
+  { img: river, name: 'Ninebark House',     sleeps: 'Sleeps 8–10', rate: 'from $11,400 / week' },
+];
+
+// Sources here are 4–6K px originals; mockups only ever need ~1280px / 640px.
+const heroImg = await srcsetOf(hero, HERO_W);
+const cards = await Promise.all(stays.map(async (s) => ({ ...s, ...(await srcsetOf(s.img, CARD_W)) })));
+
+const included = [
+  { t: 'All meals',        d: 'Ranch kitchen, three a day' },
+  { t: 'Horses',           d: 'Matched rider, daily rides' },
+  { t: 'Guided water',     d: '7 private miles, wade & float' },
+  { t: 'Airport transfer', d: 'Bozeman, both directions' },
+];
+---
+
+<div class="nb" aria-hidden="true">
+  <!-- Top bar -->
+  <div class="nb-top">
+    <span>Paradise Valley, Montana · A working guest ranch since 1974</span>
+    <span class="nb-top-r">(406) 555‑0192 · stay@ninebarkranch.com</span>
+  </div>
+
+  <!-- Nav -->
+  <div class="nb-nav">
+    <ul class="nb-links nb-links--l">
+      <li>Stays</li><li>The Ranch</li><li>Riding</li>
+    </ul>
+    <div class="nb-logo">
+      <svg width="17" height="21" viewBox="0 0 17 21" fill="none" aria-hidden="true">
+        <ellipse cx="8.5" cy="17.4" rx="7"   ry="3.1" fill="#2E3D31"/>
+        <ellipse cx="8.5" cy="11.6" rx="5.4" ry="2.7" fill="#4E6350"/>
+        <ellipse cx="8.5" cy="6.4"  rx="3.9" ry="2.3" fill="#9A5C2B"/>
+        <ellipse cx="8.5" cy="2.3"  rx="2.4" ry="1.7" fill="#2E3D31"/>
+      </svg>
+      <span class="nb-wordmark">Ninebark<em>Ranch</em></span>
+    </div>
+    <ul class="nb-links nb-links--r">
+      <li>Fishing</li><li>Rates</li>
+      <li class="nb-nav-cta">Check dates</li>
+    </ul>
+  </div>
+
+  <!-- Hero -->
+  <div class="nb-hero">
+    <img
+      class="nb-hero-img"
+      src={heroImg.src}
+      srcset={heroImg.srcset}
+      sizes={heroSizes}
+      alt=""
+      width="1100"
+      height="447"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding="async"
+    />
+    <div class="nb-hero-in">
+      <span class="nb-eyebrow">All‑inclusive · Sunday to Sunday</span>
+      <p class="nb-h1">Seven private miles<br />of the Yellowstone.</p>
+      <p class="nb-hero-sub">
+        Fourteen cabins, ninety horses, and one road in. Everything is included —
+        the meals, the water, the saddle that fits you.
+      </p>
+    </div>
+  </div>
+
+  <!-- Booking bar -->
+  <div class="nb-book">
+    <div class="nb-book-in">
+      <div class="nb-field"><span class="nb-label">Arrive</span><span>Sun, Jun 14 2026</span></div>
+      <div class="nb-field"><span class="nb-label">Depart</span><span>Sun, Jun 21 2026</span></div>
+      <div class="nb-field"><span class="nb-label">Guests</span><span>2 adults</span></div>
+      <div class="nb-field nb-field--last"><span class="nb-label">Season</span><span>Summer · Peak</span></div>
+      <span class="nb-book-btn">See what's open</span>
+    </div>
+    <p class="nb-book-note">4 of 14 cabins still open for June. Most weeks book 9–11 months ahead.</p>
+  </div>
+
+  <!-- Included -->
+  <div class="nb-incl">
+    <p class="nb-h2">One rate. Nothing else to decide.</p>
+    <div class="nb-incl-grid">
+      {included.map((i) => (
+        <div class="nb-incl-item">
+          <strong>{i.t}</strong>
+          <span>{i.d}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Stays -->
+  <div class="nb-stays">
+    <div class="nb-stays-head">
+      <p class="nb-h2">Where you'll sleep</p>
+      <span class="nb-more">All fourteen →</span>
+    </div>
+    <div class="nb-grid">
+      {cards.map((s) => (
+        <div class="nb-card">
+          <img class="nb-card-img" src={s.src} srcset={s.srcset} sizes={cardSizes} alt="" width="640" height="400" loading="lazy" decoding="async" />
+          <div class="nb-card-body">
+            <p class="nb-card-t">{s.name}</p>
+            <span class="nb-card-sleeps">{s.sleeps}</span>
+            <span class="nb-card-rate">{s.rate}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .nb {
+    --cream:  #F7F2E8;
+    --paper:  #FFFDF8;
+    --forest: #2E3D31;
+    --moss:   #4E6350;
+    --rust:   #9A5C2B;
+    --bark:   #6B6155;
+    --line:   #E3DACA;
+
+    width: 1280px;
+    background-color: var(--paper);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--forest);
+    line-height: 1.5;
+  }
+
+  /* Top bar */
+  .nb-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 34px;
+    padding: 0 44px;
+    background-color: var(--forest);
+    color: rgba(247,242,232,0.72);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+  }
+  .nb-top-r { color: rgba(247,242,232,0.9); }
+
+  /* Nav */
+  .nb-nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 84px;
+    padding: 0 44px;
+    background-color: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .nb-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0; padding: 0;
+    font-size: 12.5px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bark);
+    align-items: center;
+  }
+  .nb-links--r { justify-content: flex-end; }
+  .nb-nav-cta {
+    border: 1px solid var(--rust);
+    color: var(--rust);
+    padding: 9px 16px;
+    letter-spacing: 0.1em;
+  }
+  .nb-logo { display: flex; align-items: center; gap: 9px; }
+  .nb-wordmark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 25px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--forest);
+  }
+  .nb-wordmark em {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-style: normal;
+    font-size: 8.5px;
+    font-weight: 400;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-top: 3px;
+  }
+
+  /* Hero */
+  .nb-hero {
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+  }
+  .nb-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+  }
+  .nb-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(30,38,31,.42) 0%, rgba(30,38,31,.18) 45%, rgba(30,38,31,.72) 100%);
+  }
+  .nb-hero-in { position: relative; z-index: 2; padding: 0 44px 62px; max-width: 760px; }
+  .nb-eyebrow {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82);
+    margin-bottom: 18px;
+  }
+  .nb-h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 62px;
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+    color: #fff;
+    margin: 0;
+  }
+  .nb-hero-sub {
+    font-size: 15.5px;
+    font-weight: 300;
+    line-height: 1.68;
+    color: rgba(255,255,255,0.86);
+    margin: 18px auto 0;
+    max-width: 50ch;
+  }
+
+  /* Booking bar */
+  .nb-book { padding: 0 44px; margin-top: -30px; position: relative; z-index: 2; }
+  .nb-book-in {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    align-items: stretch;
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: 0 14px 34px -18px rgba(46,61,49,0.4);
+  }
+  .nb-field {
+    padding: 16px 22px;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .nb-field .nb-label {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bark);
+  }
+  .nb-field span { font-size: 14.5px; font-weight: 400; color: var(--forest); }
+  .nb-book-btn {
+    display: flex;
+    align-items: center;
+    background-color: var(--rust);
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0 30px;
+  }
+  .nb-book-note {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--bark);
+    margin: 12px 0 0;
+    text-align: center;
+  }
+
+  /* Included */
+  .nb-incl { padding: 54px 44px 10px; text-align: center; }
+  .nb-h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 38px;
+    font-weight: 400;
+    letter-spacing: 0;
+    margin: 0;
+    color: var(--forest);
+  }
+  .nb-incl-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background-color: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 30px;
+  }
+  .nb-incl-item {
+    background-color: var(--cream);
+    padding: 22px 18px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .nb-incl-item strong {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--forest);
+  }
+  .nb-incl-item span { font-size: 12.5px; font-weight: 300; color: var(--bark); }
+
+  /* Stays */
+  .nb-stays { padding: 52px 44px 58px; }
+  .nb-stays-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .nb-more {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+  .nb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .nb-card { background-color: var(--cream); border: 1px solid var(--line); }
+  .nb-card-img { display: block; width: 100%; height: 200px; object-fit: cover; }
+  .nb-card-body {
+    padding: 16px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .nb-card-body .nb-card-t {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--forest);
+  }
+  .nb-card-sleeps { font-size: 12px; font-weight: 300; color: var(--bark); }
+  .nb-card-rate {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--rust);
+    margin-top: 6px;
+  }
+</style>

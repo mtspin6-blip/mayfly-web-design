@@ -114,6 +114,10 @@ const blogSchema = {
 <style>
   /* ── Hero ─────────────────────────────────────────────────── */
   .blog-hero {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     position: relative;
     min-height: 280px;
     background-size: cover;
@@ -294,7 +298,7 @@ const blogSchema = {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-bg);
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     padding: 0.3rem 0.75rem;
   }
 
@@ -363,7 +367,7 @@ const blogSchema = {
   .blog-date {
     font-family: var(--font-body);
     font-size: 0.75rem;
-    color: #ABABAB;
+    color: var(--color-muted);
     font-weight: 300;
     white-space: nowrap;
   }
@@ -382,7 +386,7 @@ const blogSchema = {
 
   /* ── CTA Strip ────────────────────────────────────────────── */
   .blog-cta-strip {
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     padding: 3.5rem 0;
   }
 

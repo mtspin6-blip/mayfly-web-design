@@ -1,0 +1,407 @@
+---
+/**
+ * Larkspur Construction Group — homepage mockup.
+ * Rendered at a 1280px design width; BrowserFrame scales it to the column.
+ * Its own brand system, deliberately nothing like Mayfly's.
+ */
+import { getImage } from 'astro:assets';
+
+export interface Props {
+  /** First mockup on a page: load the hero eagerly at high priority (it's the LCP element). */
+  priority?: boolean;
+  /**
+   * `sizes` for the photos. Mockups are transform-scaled, so layout width isn't
+   * the displayed width — callers pass the real on-screen width. Defaults fit
+   * the case-study BrowserFrame column.
+   */
+  heroSizes?: string;
+  cardSizes?: string;
+}
+const {
+  priority = false,
+  heroSizes = '(min-width: 1200px) 760px, (min-width: 860px) 62vw, 92vw',
+  cardSizes = '(min-width: 1200px) 240px, (min-width: 860px) 20vw, 29vw',
+} = Astro.props;
+
+const HERO_W = [480, 800, 1100];
+const CARD_W = [240, 480, 640];
+const srcsetOf = async (src, widths) => {
+  const out = await Promise.all(widths.map((w) => getImage({ src, width: w, format: 'webp', quality: 62 })));
+  return { src: out[out.length - 1].src, srcset: out.map((o, i) => `${o.src} ${widths[i]}w`).join(', ') };
+};
+import hero      from '../../assets/work/larkspur-hero.jpg';
+import framing   from '../../assets/work/larkspur-framing.jpg';
+import civic     from '../../assets/work/larkspur-civic.jpg';
+import residence from '../../assets/work/larkspur-residence.jpg';
+
+const projects = [
+  { img: civic,     name: 'Gallatin Valley Vet Campus', meta: 'Commercial · 34,000 sf · 2024' },
+  { img: residence, name: 'Bridger Canyon Residence',   meta: 'Custom Residential · 2023' },
+  { img: framing,   name: 'Story Mill Community Housing', meta: 'Multi-Family · 48 units · 2025' },
+];
+
+// Mockups render at 25–55% scale, so ~1280px hero / 640px cards is plenty — WebP, not the raw JPGs.
+const heroImg = await srcsetOf(hero, HERO_W);
+const cards = await Promise.all(projects.map(async (p) => ({ ...p, ...(await srcsetOf(p.img, CARD_W)) })));
+
+const stats = [
+  { n: '27',    l: 'Years in the valley' },
+  { n: '45',    l: 'People on staff' },
+  { n: '$180M', l: 'Built since 1998' },
+  { n: '71%',   l: 'Repeat & referral work' },
+];
+---
+
+<div class="lk" aria-hidden="true">
+  <!-- Utility bar -->
+  <div class="lk-util">
+    <span class="lk-util-l">Bozeman, Montana · Licensed &amp; bonded in MT and WY</span>
+    <span class="lk-util-r">
+      <span class="lk-hiring"><i></i> Now hiring — 6 open positions</span>
+      <span class="lk-phone">(406) 555‑0148</span>
+    </span>
+  </div>
+
+  <!-- Nav -->
+  <div class="lk-nav">
+    <div class="lk-logo">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <path d="M3 23L13 3l10 20" stroke="#47598F" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M8 23l5-10 5 10" stroke="#14171B" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <span class="lk-wordmark">LARKSPUR<em>Construction Group</em></span>
+    </div>
+    <ul class="lk-links">
+      <li>Projects</li><li>Capabilities</li><li>Preconstruction</li><li>About</li>
+      <li class="lk-link-hl">Careers</li>
+    </ul>
+    <span class="lk-nav-cta">Request a Bid</span>
+  </div>
+
+  <!-- Hero -->
+  <div class="lk-hero">
+    <img
+      class="lk-hero-img"
+      src={heroImg.src}
+      srcset={heroImg.srcset}
+      sizes={heroSizes}
+      alt=""
+      width="1100"
+      height="447"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding="async"
+    />
+    <div class="lk-hero-in">
+      <span class="lk-eyebrow">General Contractor · Est. 1998</span>
+      <p class="lk-h1">We build the<br />valley's hardest jobs.</p>
+      <p class="lk-hero-sub">
+        Commercial, multi-family, and custom residential construction across
+        Gallatin, Park, and Madison counties — self-performed concrete and framing,
+        one superintendent from groundbreak to punch list.
+      </p>
+      <div class="lk-hero-btns">
+        <span class="lk-btn-p">Start a project</span>
+        <span class="lk-btn-s">See our work →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stat band -->
+  <div class="lk-stats">
+    {stats.map((s) => (
+      <div class="lk-stat">
+        <strong>{s.n}</strong>
+        <span>{s.l}</span>
+      </div>
+    ))}
+  </div>
+
+  <!-- Projects -->
+  <div class="lk-work">
+    <div class="lk-work-head">
+      <p class="lk-h2">Selected projects</p>
+      <span class="lk-more">All 60+ projects →</span>
+    </div>
+    <div class="lk-grid">
+      {cards.map((p) => (
+        <div class="lk-card">
+          <img class="lk-card-img" src={p.src} srcset={p.srcset} sizes={cardSizes} alt="" width="640" height="392" loading="lazy" decoding="async" />
+          <div class="lk-card-body">
+            <p class="lk-card-t">{p.name}</p>
+            <span>{p.meta}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Careers band -->
+  <div class="lk-careers">
+    <div class="lk-careers-in">
+      <div>
+        <span class="lk-eyebrow lk-eyebrow--light">Careers</span>
+        <p class="lk-h2 lk-h2--light">Crews first.</p>
+        <p class="lk-careers-sub">
+          Year-round work, no travel, and a foreman track you can actually reach.
+          Health, dental, and a 4% match from day 90.
+        </p>
+      </div>
+      <div class="lk-jobs">
+        <div class="lk-job"><strong>Carpenter — Commercial</strong><span>Bozeman · $28–38/hr</span></div>
+        <div class="lk-job"><strong>Project Engineer</strong><span>Bozeman · Salaried</span></div>
+        <div class="lk-job"><strong>Concrete Finisher</strong><span>Belgrade · $26–34/hr</span></div>
+        <span class="lk-btn-p lk-btn-p--light">Apply in 2 minutes</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .lk {
+    --ink:      #14171B;
+    --paper:    #FBFAF8;
+    --concrete: #E7E4DE;
+    --steel:    #6C7079;
+    --blue:     #47598F;
+    --amber:    #C4761F;
+
+    width: 1280px;
+    background-color: var(--paper);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* Utility bar */
+  .lk-util {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 34px;
+    padding: 0 44px;
+    background-color: var(--ink);
+    color: rgba(255,255,255,0.72);
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+  }
+  .lk-util-r { display: flex; align-items: center; gap: 22px; }
+  .lk-hiring { display: inline-flex; align-items: center; gap: 6px; color: #E8B579; font-weight: 500; }
+  .lk-hiring i {
+    width: 6px; height: 6px; border-radius: 50%;
+    background-color: #E8B579; display: block;
+  }
+  .lk-phone { color: #fff; font-weight: 600; }
+
+  /* Nav */
+  .lk-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+    padding: 0 44px;
+    background-color: var(--paper);
+    border-bottom: 1px solid var(--concrete);
+  }
+  .lk-logo { display: flex; align-items: center; gap: 10px; }
+  .lk-wordmark {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Archivo', 'DM Sans', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.09em;
+    line-height: 1.1;
+  }
+  .lk-wordmark em {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-top: 2px;
+  }
+  .lk-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #33373D;
+    margin: 0; padding: 0;
+  }
+  .lk-link-hl { color: var(--blue); font-weight: 600; }
+  .lk-nav-cta {
+    background-color: var(--blue);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 11px 20px;
+  }
+
+  /* Hero */
+  .lk-hero {
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .lk-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .lk-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(20,23,27,.94) 0%, rgba(20,23,27,.82) 42%, rgba(20,23,27,.35) 100%);
+  }
+  .lk-hero-in { position: relative; z-index: 2; padding: 0 44px; max-width: 690px; }
+  .lk-eyebrow {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8FA2CE;
+    margin-bottom: 18px;
+  }
+  .lk-eyebrow--light { color: rgba(255,255,255,0.85); }
+  .lk-h1 {
+    font-family: 'Archivo', 'DM Sans', system-ui, sans-serif;
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.032em;
+    color: #fff;
+    margin: 0;
+  }
+  .lk-hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.62;
+    color: rgba(255,255,255,0.76);
+    margin: 20px 0 30px;
+    max-width: 54ch;
+  }
+  .lk-hero-btns { display: flex; gap: 14px; align-items: center; }
+  .lk-btn-p {
+    background-color: var(--blue);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 26px;
+  }
+  .lk-btn-s {
+    border: 1px solid rgba(255,255,255,0.42);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 13px 24px;
+  }
+
+  /* Stats */
+  .lk-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: var(--ink);
+    padding: 0 44px;
+  }
+  .lk-stat {
+    padding: 30px 0;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .lk-stat:last-child { border-right: 0; }
+  .lk-stat strong {
+    display: block;
+    font-family: 'Archivo', 'DM Sans', system-ui, sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #fff;
+    line-height: 1;
+  }
+  .lk-stat span {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.55);
+    margin-top: 8px;
+  }
+
+  /* Projects */
+  .lk-work { padding: 56px 44px 60px; }
+  .lk-work-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 26px;
+  }
+  .lk-h2 {
+    font-family: 'Archivo', 'DM Sans', system-ui, sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    margin: 0;
+  }
+  .lk-h2--light { color: #fff; }
+  .lk-more { font-size: 13px; font-weight: 600; color: var(--blue); }
+  .lk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .lk-card { background-color: #fff; border: 1px solid var(--concrete); }
+  .lk-card-img {
+    display: block;
+    width: 100%;
+    height: 196px;
+    object-fit: cover;
+  }
+  .lk-card-body { padding: 16px 18px 20px; }
+  .lk-card-body .lk-card-t {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 5px;
+  }
+  .lk-card-body span { font-size: 12px; color: var(--steel); }
+
+  /* Careers */
+  .lk-careers { background-color: var(--blue); padding: 46px 44px 50px; }
+  .lk-careers-in {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .lk-careers-sub {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.62;
+    color: rgba(255,255,255,0.8);
+    margin: 14px 0 0;
+    max-width: 42ch;
+  }
+  .lk-jobs { display: flex; flex-direction: column; gap: 9px; }
+  .lk-job {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 13px 16px;
+  }
+  .lk-job strong { font-size: 14px; font-weight: 600; color: #fff; }
+  .lk-job span { font-size: 12px; color: rgba(255,255,255,0.95); }
+  .lk-btn-p--light {
+    background-color: #fff;
+    color: var(--blue);
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+</style>

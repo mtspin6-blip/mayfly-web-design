@@ -1,0 +1,33 @@
+---
+/**
+ * Scales fixed-width mockups down to whatever column they land in.
+ *
+ * CSS alone can't do this: `transform: scale()` needs a unitless number, and
+ * `calc(100cqw / 1280)` evaluates to a length, so the declaration is dropped
+ * and the mockup renders at 1:1. So a ResizeObserver sets `--s` instead.
+ *
+ * Every `[data-design-w]` element gets `--s` set to (its width / design width);
+ * its first element child is the scaler. The stylesheets carry a static `--s`
+ * fallback so the layout is still sane before this runs, or without JS.
+ */
+---
+
+<script>
+  const frames = document.querySelectorAll('[data-design-w]');
+  if (frames.length) {
+    const fit = (el) => {
+      const design = parseFloat(el.dataset.designW);
+      if (!design) return;
+      el.style.setProperty('--s', el.clientWidth / design);
+    };
+
+    frames.forEach(fit);
+
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
+      frames.forEach((el) => ro.observe(el));
+    } else {
+      window.addEventListener('resize', () => frames.forEach(fit));
+    }
+  }
+</script>

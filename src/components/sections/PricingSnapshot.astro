@@ -183,6 +183,10 @@ const tiers = [
     box-shadow: 0 0 0 1.5px var(--color-accent), 0 8px 24px rgba(22,22,20,0.22);
   }
   .pricing-card--dark {
+    /* Dark ground: text tokens swap to their light variants (see global.css). */
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
     background-color: var(--color-text);
     color: var(--color-bg);
   }
@@ -192,7 +196,7 @@ const tiers = [
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-solid);
     color: white;
     font-family: var(--font-body);
     font-size: 0.6rem;
@@ -296,20 +300,20 @@ const tiers = [
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: #3F543B;
   }
   .auto-teaser-text {
     font-family: var(--font-body);
     font-size: 0.9rem;
     font-weight: 300;
-    color: var(--color-muted);
+    color: #524C45;
   }
   .auto-teaser-text strong { font-weight: 500; color: var(--color-text); }
   .auto-teaser-link {
     font-family: var(--font-body);
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-accent);
+    color: #3F543B;
     text-decoration: none;
     display: inline-flex;
     align-items: center;

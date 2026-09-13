@@ -1,0 +1,145 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import BrowserFrame from '../../components/work/BrowserFrame.astro';
+import LarkspurMockup from '../../components/work/LarkspurMockup.astro';
+
+const moves = [
+  {
+    h: 'Put careers in the primary nav, not the footer',
+    p: `Most contractor sites bury hiring three clicks down. For a firm turning away work
+        because it can't staff it, the careers page is a revenue page — so it sits in the
+        nav, gets its own band on the homepage with live openings and real pay ranges, and
+        runs a two-minute application instead of a PDF emailed to an office manager.`,
+  },
+  {
+    h: 'Lead with proof of scale, not adjectives',
+    p: `"Quality craftsmanship since 1998" is what every competitor says. A stat band
+        directly under the hero — years, headcount, dollars built, repeat-work rate — does
+        the same job in four numbers a developer or architect can actually underwrite.`,
+  },
+  {
+    h: 'One project page per job, built for search',
+    p: `Sixty project pages, each with the delivery method, square footage, architect,
+        completion date, and photography. That is sixty indexable pages targeting
+        "Bozeman commercial contractor," "Gallatin Valley multi-family builder," and the
+        long tail underneath — plus the exact reference library a bid team asks for.`,
+  },
+  {
+    h: 'Split the two audiences at the door',
+    p: `An owner looking for a bid and a finish carpenter looking for work need different
+        pages, different language, and different calls to action. Two paths from the hero,
+        two funnels behind them, so neither one has to wade through the other's content.`,
+  },
+];
+
+const spec = [
+  { dt: 'Pages',        dd: 'Home, Capabilities (×4), Preconstruction, Projects index + 60 detail pages, Careers, About, Contact' },
+  { dt: 'Build',        dd: 'Astro static site, project pages from a content collection' },
+  { dt: 'Forms',        dd: 'Bid request + job application, routed to separate inboxes with file upload' },
+  { dt: 'SEO target',   dd: 'Bozeman, Belgrade, Big Sky, Livingston commercial + multi-family terms' },
+  { dt: 'Typography',   dd: 'Archivo (headings) · DM Sans (body)' },
+  { dt: 'Palette',      dd: 'Ink #14171B · Larkspur blue #47598F · Concrete #E7E4DE' },
+];
+---
+
+<CaseStudyLayout
+  slug="larkspur-construction"
+  title="Larkspur Construction Group — Website Concept | Mayfly Web Design"
+  description="A website concept for a 45-person Bozeman general contractor: project portfolio, capability pages, and a recruiting funnel built to win crews as well as clients."
+  fontHref="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap"
+>
+  <!-- The brief -->
+  <section class="cs-block cs-block--tight">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The brief</p>
+        <div class="cs-prose">
+          <p>
+            Larkspur is the kind of firm we build for: <strong>27 years in the Gallatin
+            Valley, 45 people on staff, and more work available than crew to run it.</strong>
+            Commercial shells, multi-family, and a custom residential arm that keeps the
+            carpenters busy through winter.
+          </p>
+          <p>
+            A contractor at this size almost never has a lead problem. Architects and
+            developers already know who they are. What they have is a <strong>hiring
+            problem</strong> — and a credibility problem with the one client who
+            <em>doesn't</em> already know them: the out-of-state developer comparing three
+            bids on a Tuesday afternoon, entirely from a laptop.
+          </p>
+          <p>
+            So this site is built to do two jobs its competitors' sites don't even attempt:
+            close a crew member, and survive due diligence from someone who will never visit
+            the office.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The mockup -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The homepage</p>
+        <div>
+          <BrowserFrame
+            url="larkspurconstruction.com"
+            width={1280}
+            height={1424}
+            label="Homepage — hero, proof band, selected projects, and a careers band with live openings. Rendered in HTML, not a flat image."
+          >
+            <LarkspurMockup />
+          </BrowserFrame>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The moves -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The decisions</p>
+        <div>
+          <h2 class="cs-h2 reveal">Four choices that carry the site.</h2>
+          <div class="cs-moves">
+            {moves.map((m, i) => (
+              <div class="cs-move reveal" style={`transition-delay:${i * 0.06}s`}>
+                <span class="cs-move-n">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{m.h}</h3>
+                  <p>{m.p}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spec -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">Build spec</p>
+        <div>
+          <dl class="cs-spec reveal">
+            {spec.map((s) => (
+              <div class="cs-spec-item">
+                <dt>{s.dt}</dt>
+                <dd>{s.dd}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="cs-tags">
+            <a href="/services/website-design/" class="cs-tag">Website Design</a>
+            <a href="/services/seo-gaio/" class="cs-tag">SEO + GAIO</a>
+            <a href="/pricing/" class="cs-tag">See pricing</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</CaseStudyLayout>

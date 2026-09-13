@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<!--
+  Cloudflare Pages serves 404.html with a real 404 status for unmatched paths.
+  Without it, Pages falls back to the homepage with a 200 — every typo'd URL
+  (and /llms.txt, before it existed) looked like a duplicate homepage to crawlers.
+-->
+<BaseLayout
+  title="Page Not Found | Mayfly Web Design"
+  description="That page doesn't exist. Head back to Mayfly Web Design's homepage, services, or portfolio."
+>
+  <meta name="robots" content="noindex" slot="head" />
+
+  <Header />
+  <main id="main-content" class="nf">
+    <div class="section-container">
+      <p class="section-eyebrow">404</p>
+      <h1 class="nf-title">This stretch of river<br /><em>is empty.</em></h1>
+      <p class="nf-body">The page you're looking for moved or never existed. Try one of these instead.</p>
+      <div class="nf-links">
+        <a href="/" class="btn-primary">Home</a>
+        <a href="/work/" class="btn-secondary">Our Work</a>
+        <a href="/pricing/" class="btn-secondary">Pricing</a>
+        <a href="/contact/" class="btn-secondary">Contact</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .nf { padding: 6rem 0 7rem; }
+  .nf-title {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.25rem, 6vw, 4rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--color-text);
+    margin-bottom: 1.25rem;
+  }
+  .nf-title em { font-style: italic; color: var(--color-accent); }
+  .nf-body {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 300;
+    color: var(--color-muted);
+    max-width: 46ch;
+    margin-bottom: 2rem;
+  }
+  .nf-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+</style>

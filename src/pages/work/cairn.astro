@@ -1,0 +1,161 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import BrowserFrame from '../../components/work/BrowserFrame.astro';
+import CairnMockup from '../../components/work/CairnMockup.astro';
+
+const moves = [
+  {
+    h: 'Protect the one-second save',
+    p: `The whole product dies if sharing a video feels slow. The native iOS share
+        extension writes the save and dismisses immediately; transcription, summarisation,
+        and embedding all happen after the sheet is gone. The user never waits on a
+        pipeline they didn't ask about.`,
+  },
+  {
+    h: 'Design for a 30% failure rate on purpose',
+    p: `Video extraction fails — private accounts, deleted posts, region locks. Rather
+        than pretending otherwise, a failed save survives with the user's note and link
+        intact, stays searchable by that note, and offers one manual retry. No silent
+        failures, no auto-retry complexity, no lost saves.`,
+  },
+  {
+    h: 'Three MCP tools, and not a fourth',
+    p: `search_saves, get_recent_saves, get_save_details. Search deliberately returns
+        summaries rather than full transcripts, because context window is the scarce
+        resource in an AI conversation. Every tool description is UX copy — it's what
+        decides whether the assistant reaches for Cairn unprompted.`,
+  },
+  {
+    h: 'Enforce the business model in the database',
+    p: `Plan limits are a DB trigger, not a client-side check — a free account gets 30
+        lifetime video saves, Pro is unlimited behind a 40/day fair-use guard. At roughly
+        $0.007 of processing per video, even a maxed-out user stays profitable, which is
+        why the pricing could stay this simple.`,
+  },
+];
+
+const spec = [
+  { dt: 'App',       dd: 'React Native + Expo, native iOS share extension, TypeScript' },
+  { dt: 'Backend',   dd: 'Node service on Railway, Supabase Postgres with row-level security' },
+  { dt: 'Pipeline',  dd: 'Video → transcription → structured context object → embedding → semantic search' },
+  { dt: 'AI access', dd: 'Hosted MCP server, live from claude.ai and ChatGPT' },
+  { dt: 'Design',    dd: 'Token-locked design system — no ad-hoc color, size, spacing, or radius ships' },
+  { dt: 'Billing',   dd: 'RevenueCat over App Store IAP · Free tier + $14/mo Pro' },
+];
+---
+
+<CaseStudyLayout
+  slug="cairn"
+  title="Cairn — iOS App & AI Infrastructure | Mayfly Web Design"
+  description="Cairn is an iOS app and backend that turns saved video and articles into structured context Claude and ChatGPT retrieve mid-conversation over MCP. Built end to end by Mayfly Web Design."
+  schemaType="SoftwareApplication"
+>
+  <!-- The brief -->
+  <section class="cs-block cs-block--tight">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">What it is</p>
+        <div class="cs-prose">
+          <p>
+            Cairn takes the things you save and never see again — Reels, TikToks, articles,
+            half-formed ideas — and turns them into <strong>structured context that Claude
+            and ChatGPT can retrieve mid-conversation</strong>, through a hosted MCP server.
+          </p>
+          <p>
+            Share a video to Cairn, optionally say why you're saving it, and it gets
+            transcribed, summarised against that intent, embedded, and stored. Weeks later,
+            mid-project, you ask your assistant a question and it surfaces the thing you
+            saved — sometimes without being asked to look.
+          </p>
+          <p>
+            It's a full native iOS app, a backend, an extraction pipeline, a semantic search
+            layer, and an MCP server, all shipped. <em>Positioned deliberately as a personal
+            knowledge tool that links out to sources</em> — a framing that matters as much
+            for App Store review as it does for the product.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The mockup -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The loop</p>
+        <div>
+          <BrowserFrame
+            url="Cairn — iOS"
+            width={1280}
+            height={800}
+            label="Save, structure, retrieve — rendered from Cairn's own design tokens: warm stone neutrals, a single slate-blue accent, and a fixed 13/15/17/22/28 type scale."
+          >
+            <CairnMockup />
+          </BrowserFrame>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The moves -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The decisions</p>
+        <div>
+          <h2 class="cs-h2 reveal">What the build actually required.</h2>
+          <div class="cs-moves">
+            {moves.map((m, i) => (
+              <div class="cs-move reveal" style={`transition-delay:${i * 0.06}s`}>
+                <span class="cs-move-n">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{m.h}</h3>
+                  <p>{m.p}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spec -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">Under the hood</p>
+        <div>
+          <dl class="cs-spec reveal">
+            {spec.map((s) => (
+              <div class="cs-spec-item">
+                <dt>{s.dt}</dt>
+                <dd>{s.dd}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="cs-footnote">
+            Cairn is live on device with the backend deployed and serving AI assistants in
+            production. App Store release is pending review.
+          </p>
+          <div class="cs-tags">
+            <a href="/services/ai-automations/" class="cs-tag">AI Automations</a>
+            <a href="/services/website-design/" class="cs-tag">Website Design</a>
+            <a href="/contact/" class="cs-tag">Talk about a build</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  .cs-footnote {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--color-muted);
+    margin-top: 1rem;
+  }
+</style>

@@ -5,11 +5,11 @@ export default {
     extend: {
       colors: {
         'warm-black': '#161614',
-        'sage':       '#5E7E58',
+        'sage':       '#4E6949',
         'off-white':  '#F2EDE3',
         'warm-cream': '#E2DDD3',
-        'stone':      '#8A8278',
-        'gold':       '#B8882E',
+        'stone':      '#68615A',
+        'gold':       '#7C5C1D',
       },
       fontFamily: {
         display: ['Fraunces', 'Georgia', 'serif'],

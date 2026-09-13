@@ -22,6 +22,7 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
@@ -39,17 +40,25 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 
     <meta name="geo.region" content="US-MT" />
     <meta name="geo.placename" content="Montana" />
-    <link rel="icon" type="image/svg+xml" href="/BugTransparentLogo.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <!-- Google Fonts — preconnect for speed -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Loaded without blocking first paint; display=swap renders fallbacks until ready -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap"
+      />
+    </noscript>
 
     <!-- LocalBusiness schema -->
     <script type="application/ld+json">
@@ -98,7 +107,6 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
     </script>
 
     <slot name="head" />
-    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
     <style>
       body { animation: pageFadeIn 0.3s ease both; }
       @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -109,18 +117,28 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
     <div class="grain-overlay" aria-hidden="true"></div>
     <slot />
 
-    <script>
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
+    <!-- Inline (not a hoisted module) so it runs before first paint with no extra request -->
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
             if (entry.isIntersecting) {
               entry.target.classList.add('visible');
+              io.unobserve(entry.target);
             }
           });
-        },
-        { threshold: 0.08 }
-      );
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+        }, { threshold: 0.08 });
+        var fold = window.innerHeight;
+        els.forEach(function (el) {
+          if (el.getBoundingClientRect().top < fold) el.classList.add('visible', 'instant');
+          else io.observe(el);
+        });
+      })();
     </script>
   </body>
 </html>
