@@ -1,55 +1,39 @@
 ---
 const tiers = [
   {
-    name:     'Hatch',
-    price:    '$750',
-    delivery: '1 week',
-    desc:     'For new Montana businesses that need a professional presence fast.',
+    name:     'Starter',
+    price:    '$59',
+    period:   '/mo',
+    delivery: '$0 upfront',
+    desc:     'A professional one-page site for Montana businesses that just need to look legit online.',
     features: [
-      'Up to 5 pages',
+      'Landing-page-style site, up to 5 sections',
       'Mobile responsive',
-      'Contact form',
-      'Basic local SEO',
-      'Cloudflare hosting setup',
-      '2 revision rounds',
-      '14-day post-launch support',
+      'Contact info + click-to-call/email',
+      'Domain, hosting & SSL setup',
+      'Basic SEO setup',
+      'Maintenance & uptime support',
+      'Minor content updates',
     ],
     cta:      { href: '/contact/', label: 'Get Started' },
     featured: false,
   },
   {
-    name:     'Rise',
-    price:    '$1,500',
-    delivery: '2 weeks',
-    desc:     'For established Montana businesses ready to grow.',
+    name:     'Business',
+    price:    '$99',
+    period:   '/mo',
+    delivery: '$0 upfront',
+    desc:     'For Montana businesses that need a full, multi-page website — the most popular plan.',
     features: [
-      'Up to 8 pages',
-      'Cal.com booking integration',
-      'Full local SEO + Google Business Profile setup',
-      'LocalBusiness schema markup',
-      'Copywriting included',
-      '1 AI automation',
-      '3 revision rounds',
-      '30-day post-launch support',
+      'Everything in Starter',
+      'Up to 5 pages',
+      'Dedicated service pages',
+      'About & contact pages',
+      'Expanded on-page SEO',
+      '1 revision round',
     ],
     cta:      { href: '/contact/', label: 'Get Started' },
     featured: true,
-  },
-  {
-    name:     'Full Current',
-    price:    '$3,000+',
-    delivery: '3–4 weeks',
-    desc:     'For Montana businesses serious about dominating their market online.',
-    features: [
-      'Custom page count',
-      'Advanced SEO & GAIO strategy',
-      'Up to 3 AI automations',
-      'Unlimited revisions during build',
-      'Monthly retainer option',
-      '60-day post-launch support',
-    ],
-    cta:      { href: '/contact/', label: 'Get a Quote' },
-    featured: false,
   },
 ];
 ---
@@ -58,9 +42,9 @@ const tiers = [
   <div class="section-container">
 
     <div class="pricing-hd reveal">
-      <p class="section-eyebrow">Website Design Pricing</p>
+      <p class="section-eyebrow">Website Pricing</p>
       <div class="pricing-hd-row">
-        <h2 class="section-headline">Transparent pricing.<br /><em>No surprises.</em></h2>
+        <h2 class="section-headline">$0 upfront.<br /><em>Simple monthly pricing.</em></h2>
         <a href="/pricing/" class="btn-ghost">
           See full details &amp; add-ons
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -70,7 +54,7 @@ const tiers = [
       </div>
     </div>
 
-    <div class="pricing-grid">
+    <div class="pricing-grid pricing-grid--two">
       {tiers.map((t, i) => (
         <div
           class:list={['pricing-card reveal', { 'pricing-card--dark': t.featured, 'pricing-card--glow-once': t.featured }]}
@@ -80,14 +64,8 @@ const tiers = [
 
           <div class="card-top">
             <p class="tier-name">{t.name}</p>
-            <p class="tier-price">{t.price}</p>
-            <p class="tier-delivery">
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style="display:inline;vertical-align:middle;margin-right:3px" aria-hidden="true">
-                <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M5.5 3v2.5L7 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-              </svg>
-              {t.delivery} turnaround
-            </p>
+            <p class="tier-price">{t.price}<span class="tier-period">{t.period}</span></p>
+            <p class="tier-delivery">{t.delivery} · 6-month minimum</p>
             <p class="tier-desc">{t.desc}</p>
           </div>
 
@@ -113,12 +91,12 @@ const tiers = [
       ))}
     </div>
 
-    <!-- Automations teaser -->
+    <!-- Add-ons teaser -->
     <div class="auto-teaser reveal">
       <span class="auto-teaser-label">Also:</span>
-      <span class="auto-teaser-text">AI Automations starting at <strong>$750</strong> — custom workflows built for your business.</span>
+      <span class="auto-teaser-text">Add booking, lead forms, Google Business Profile, Local SEO, or AI automation whenever you're ready — <strong>own the site outright</strong> anytime with a simple buyout.</span>
       <a href="/pricing/" class="auto-teaser-link">
-        See automations pricing
+        See add-ons &amp; buyout pricing
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
           <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -126,7 +104,7 @@ const tiers = [
     </div>
 
     <p class="pricing-footnote reveal">
-      Not sure which tier fits? <a href="/contact/" class="footnote-link">Let's talk — no commitment.</a>
+      Not sure which plan fits? <a href="/contact/" class="footnote-link">Let's talk — no commitment.</a>
     </p>
   </div>
 </section>
@@ -164,6 +142,13 @@ const tiers = [
   }
   @media (min-width: 1024px) {
     .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .pricing-grid--two {
+    max-width: 46rem;
+    margin: 0 auto;
+  }
+  @media (min-width: 1024px) {
+    .pricing-grid--two { grid-template-columns: repeat(2, 1fr); }
   }
 
   .pricing-card {
@@ -222,6 +207,12 @@ const tiers = [
     letter-spacing: -0.035em;
     line-height: 1;
     color: inherit;
+  }
+  .tier-period {
+    font-size: 1.125rem;
+    font-weight: 300;
+    opacity: 0.6;
+    margin-left: 0.125rem;
   }
   .tier-delivery {
     font-family: var(--font-body);

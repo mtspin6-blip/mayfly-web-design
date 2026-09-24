@@ -13,8 +13,8 @@ const deliverables = [
   { name: 'Mobile-First',   detail: '70% of your traffic is on a phone' },
   { name: 'Fast Loading',   detail: 'Lighthouse score 90+ — no slow-loading excuses' },
   { name: 'SEO-Ready',      detail: 'On-page optimization baked in from day one' },
-  { name: 'Easy Edits',     detail: 'Update text and photos yourself — no developer needed' },
-  { name: 'Hosting Setup',  detail: 'Cloudflare — $0–10/month, no vendor lock-in' },
+  { name: 'We Keep It Current', detail: 'Minor text and photo updates included every month — just ask' },
+  { name: 'Hosting Included', detail: 'Domain, hosting & SSL setup on Cloudflare — bundled into your plan' },
 ];
 
 const steps = [
@@ -28,19 +28,19 @@ const steps = [
 const faqs = [
   {
     q: 'How long does it take?',
-    a: '2–3 weeks start to finish — 1 week for discovery and design direction, 1–2 weeks to build, plus a revision round. Rush delivery is available at +20%.',
+    a: '1–2 weeks start to finish — discovery call, a build week, then a revision round before launch.',
   },
   {
     q: 'Do I own my website?',
-    a: 'Yes — you get full access to the code, the hosting account, and the domain. No monthly platform fees, no vendor lock-in. Your website is yours.',
+    a: 'Mayfly owns and maintains the site while your subscription is active — that\'s what keeps the monthly price low. You can buy it outright anytime (Starter $750, Business $1,500) and it\'s fully yours, no strings attached. Your domain is always your own asset.',
   },
   {
     q: 'What if I need website changes later?',
-    a: 'We offer add-on support packages, or we train you to make edits yourself during the handoff. Either way, you own your website code.',
+    a: 'Small text and photo updates are included every month. Bigger changes — new pages, sections, or functionality — are quoted add-ons, so your monthly rate stays predictable.',
   },
   {
-    q: 'What does a custom website cost in Montana?',
-    a: 'Website design starts at $750 for a 5-page site (Hatch tier) and goes up to $3,000+ for full custom builds. All pricing is flat-rate — no hourly surprises.',
+    q: 'What does a website cost in Montana?',
+    a: '$0 upfront. Starter is $59/month for a one-page site, Business is $99/month for up to 5 pages. Both have a 6-month minimum, then continue month-to-month — or save with an annual plan.',
   },
 ];
 
@@ -74,31 +74,35 @@ const serviceSchema = {
   "areaServed": ["Missoula, MT", "Bozeman, MT", "Great Falls, MT", "Billings, MT", "Montana"],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Website Design Tiers",
+    "name": "Website Plans",
     "itemListElement": [
       {
         "@type": "Offer",
-        "name": "Hatch",
-        "description": "5-page website with basic SEO and hosting setup",
-        "price": "750",
+        "name": "Starter",
+        "description": "One-page website, $0 upfront, 6-month minimum",
+        "price": "59",
         "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "USD",
+          "price": "59",
+          "billingDuration": "P1M"
+        }
       },
       {
         "@type": "Offer",
-        "name": "Rise",
-        "description": "8-page website with full local SEO, GBP setup, and 1 AI automation",
-        "price": "1500",
+        "name": "Business",
+        "description": "Up to 5-page website with expanded SEO, $0 upfront, 6-month minimum",
+        "price": "99",
         "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      {
-        "@type": "Offer",
-        "name": "Full Current",
-        "description": "Custom pages with advanced SEO & GAIO strategy and up to 3 AI automations",
-        "price": "3000",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "USD",
+          "price": "99",
+          "billingDuration": "P1M"
+        }
       }
     ]
   }
@@ -107,7 +111,7 @@ const serviceSchema = {
 
 <BaseLayout
   title="Website Design for Montana Businesses | Mayfly Web Design"
-  description="Professional websites starting at $750. Mobile-first, fast-loading, and built to convert. Serving Montana statewide — Missoula, Bozeman, Great Falls, Billings."
+  description="$0 upfront websites from $59/month. Mobile-first, fast-loading, and built to convert. Serving Montana statewide — Missoula, Bozeman, Great Falls, Billings."
 >
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} slot="head"></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
@@ -205,11 +209,11 @@ const serviceSchema = {
       <div class="section-container pricing-teaser-inner reveal">
         <div>
           <p class="section-eyebrow">Investment</p>
-          <p class="teaser-price">Starting at $750</p>
-          <p class="teaser-note">Hatch · Rise · Full Current — flat-rate, no surprises</p>
+          <p class="teaser-price">$59/mo — $0 upfront</p>
+          <p class="teaser-note">Starter · Business — no big upfront bill, cancel or buy out anytime</p>
         </div>
         <a href="/pricing/" class="btn-secondary teaser-cta">
-          See Full Pricing &amp; Tiers
+          See Full Pricing &amp; Plans
           <span class="btn-arrow" aria-hidden="true">→</span>
         </a>
       </div>

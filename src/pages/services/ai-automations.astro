@@ -40,7 +40,7 @@ const faqs = [
   },
   {
     q: 'What do custom AI automations cost for a Montana business?',
-    a: 'A single workflow starts at $750. A stack of 3 automations with CRM integration is $1,500. Full custom AI automation systems start at $3,000. All flat-rate, no hourly surprises.',
+    a: 'Automation pricing is custom, scoped to your workflow — but common add-ons give you a sense of range: booking is $99 setup + $29/mo, a lead form is $49 setup + $9/mo. Book a call and we\'ll quote your specific automation.',
   },
 ];
 
@@ -74,29 +74,40 @@ const serviceSchema = {
   "areaServed": ["Missoula, MT", "Bozeman, MT", "Great Falls, MT", "Billings, MT", "Montana"],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "AI Automation Tiers",
+    "name": "Automation Add-Ons",
     "itemListElement": [
       {
         "@type": "Offer",
-        "name": "Single Flow",
-        "description": "1 custom automation workflow with full build, testing, and 30-day support",
-        "price": "750",
+        "name": "Booking Integration",
+        "description": "Appointment scheduling connected to your website",
+        "price": "99",
         "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "USD",
+          "price": "29",
+          "billingDuration": "P1M"
+        }
       },
       {
         "@type": "Offer",
-        "name": "Automation Stack",
-        "description": "3 custom automation workflows with CRM integration and 60-day support",
-        "price": "1500",
+        "name": "Lead / Contact Form",
+        "description": "Advanced lead-capture form beyond basic contact info",
+        "price": "49",
         "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "USD",
+          "price": "9",
+          "billingDuration": "P1M"
+        }
       },
       {
         "@type": "Offer",
-        "name": "Full System",
-        "description": "Unlimited automation workflows with custom AI integration and ongoing monitoring",
-        "price": "3000",
+        "name": "Custom AI / Automation",
+        "description": "Lead follow-up, review requests, CRM integrations, and other custom workflows — quoted per project",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       }
@@ -107,7 +118,7 @@ const serviceSchema = {
 
 <BaseLayout
   title="AI Automations for Montana Small Businesses | Mayfly Web Design"
-  description="Automate your lead follow-up, bookings, and review requests. Montana-built, affordable, and done for you. Starting at $750."
+  description="Automate your lead follow-up, bookings, and review requests. Montana-built, affordable, and done for you. Custom pricing, scoped to your workflow."
 >
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} slot="head"></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
@@ -261,11 +272,11 @@ const serviceSchema = {
       <div class="section-container pricing-teaser-inner reveal">
         <div>
           <p class="section-eyebrow">Investment</p>
-          <p class="teaser-price">Starting at $750</p>
-          <p class="teaser-note">Single Flow · Automation Stack · Full System — flat-rate, done for you</p>
+          <p class="teaser-price">Custom pricing</p>
+          <p class="teaser-note">Booking from $99+$29/mo · Lead forms from $49+$9/mo · scoped to your workflow</p>
         </div>
         <a href="/pricing/" class="btn-secondary teaser-cta">
-          See Full Automations Pricing
+          See Add-On Pricing
           <span class="btn-arrow" aria-hidden="true">→</span>
         </a>
       </div>

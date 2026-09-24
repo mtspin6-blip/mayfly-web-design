@@ -54,15 +54,15 @@ The pricing is hourly with no cap. This is how a $2,000 project becomes a $12,00
 
 ## What a Fair Montana Pricing Structure Looks Like
 
-A fair pricing structure is transparent. It tells you what is included, what costs more, and what the timeline looks like. Here is the structure we use, which is built specifically for Montana small businesses.
+A fair pricing structure is transparent. It tells you what is included, what costs more, and what happens if you want to leave. Here is the structure we use, which is built specifically for Montana small businesses — and it looks a little different from the flat-rate quotes above.
 
-A basic five-page site with mobile optimization, contact form, and local SEO setup runs $750. This is the right starting point for a brand-new business or a sole operator who needs a real website without a big investment.
+Instead of a big upfront bill, a one-page professional site with mobile optimization, contact info, and basic SEO setup runs $59 a month, $0 upfront. This is the right starting point for a brand-new business or a sole operator who needs a real website without a big investment.
 
-A more complete eight-page site with full SEO, schema markup, automation integrations, and Google Business Profile setup runs $1,800. This is the sweet spot for established small businesses that need a website actually working for them.
+A more complete site — up to five pages, dedicated service pages, an About page, and expanded on-page SEO — runs $99 a month, also $0 upfront. This is the sweet spot for established small businesses that need a website actually working for them.
 
-A custom site with advanced SEO, AI search optimization, multiple automations, and ongoing support runs $3,500 and up. This is for businesses ready to make their website a real growth lever.
+Both plans have a 6-month minimum, then continue month-to-month, and both can be paid annually for a discount. If you'd rather own the site outright, a buyout is available anytime — $750 for the one-page plan, $1,500 for the multi-page plan. Booking, lead forms, payments, Google Business Profile, Local SEO, and AI automation are all available as add-ons once your site is live, so you never pay for more than you need on day one.
 
-These prices intentionally undercut what national agencies charge while still delivering work that meets professional standards. The thinking is simple. Montana small businesses do not need agency overhead. They need work that fits their market.
+This structure intentionally removes the upfront barrier that keeps small businesses on a $500 template site or no site at all. The thinking is simple. Montana small businesses do not need a big design bill. They need a real website they can start with today.
 
 ## Where to Start
 
