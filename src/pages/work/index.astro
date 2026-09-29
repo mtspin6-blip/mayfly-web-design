@@ -7,7 +7,7 @@ import FinalCTA from '../../components/sections/FinalCTA.astro';
 import ScaleFrames from '../../components/work/ScaleFrames.astro';
 import LarkspurMockup from '../../components/work/LarkspurMockup.astro';
 import NinebarkMockup from '../../components/work/NinebarkMockup.astro';
-import CairnMockup from '../../components/work/CairnMockup.astro';
+import QuiverMockup from '../../components/work/QuiverMockup.astro';
 import { projects } from '../../data/projects.js';
 import riverlineShot from '../../assets/work/riverline-dashboard.png';
 
@@ -16,7 +16,7 @@ const byslug = Object.fromEntries(projects.map((p) => [p.slug, p]));
 
 <BaseLayout
   title="Our Work | Mayfly Web Design — Montana"
-  description="Website concepts for Montana businesses plus two shipped products — Riverline and Cairn. Portfolio of web design, AI automation, and SEO work by Mayfly Web Design."
+  description="Website concepts for Montana businesses plus two products we built ourselves — Riverline and Quiver. Portfolio of web design, AI automation, and SEO work by Mayfly Web Design."
 >
   <Fragment slot="head">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
@@ -28,7 +28,7 @@ const byslug = Object.fromEntries(projects.map((p) => [p.slug, p]));
     '@type': 'CollectionPage',
     name: 'Our Work — Mayfly Web Design Portfolio',
     description:
-      'Website concepts for Montana construction, hospitality, and service businesses, plus two shipped products: Riverline and Cairn.',
+      'Website concepts for Montana construction, hospitality, and service businesses, plus two products we built ourselves: Riverline and Quiver.',
     url: 'https://mayflywebdesign.com/work/',
     isPartOf: { '@type': 'WebSite', name: 'Mayfly Web Design', url: 'https://mayflywebdesign.com' },
     hasPart: projects.map((p) => ({
@@ -53,7 +53,7 @@ const byslug = Object.fromEntries(projects.map((p) => [p.slug, p]));
         </h1>
         <p class="work-sub reveal" style="transition-delay:0.16s">
           Two concept builds for the kind of Montana companies we work with, and two
-          products we designed and shipped ourselves. Click into any of them — the
+          products we designed and built ourselves. Click into any of them — the
           thinking is all there, and none of it is padded with fake numbers.
         </p>
       </div>
@@ -136,24 +136,24 @@ const byslug = Object.fromEntries(projects.map((p) => [p.slug, p]));
             </div>
           </a>
 
-          <!-- Cairn -->
-          <a href="/work/cairn/" class="wc reveal" style="transition-delay:0.24s">
+          <!-- Quiver -->
+          <a href="/work/quiver/" class="wc reveal" style="transition-delay:0.24s">
             <div class="wc-frame">
               <div class="wc-chrome" aria-hidden="true">
                 <span></span><span></span><span></span>
-                <em>Cairn — iOS</em>
+                <em>Quiver — iOS</em>
               </div>
               <div class="wc-viewport" data-design-w="1280">
-                <div class="wc-scaler"><CairnMockup /></div>
+                <div class="wc-scaler"><QuiverMockup /></div>
               </div>
             </div>
             <div class="wc-meta">
-              <span class="wc-tag wc-tag--shipped">{byslug['cairn'].statusLabel}</span>
-              <h2 class="wc-title">{byslug['cairn'].name}</h2>
+              <span class="wc-tag wc-tag--shipped">{byslug['quiver'].statusLabel}</span>
+              <h2 class="wc-title">{byslug['quiver'].name}</h2>
               <p class="wc-industry">
-                {byslug['cairn'].industry} · {byslug['cairn'].location}
+                {byslug['quiver'].industry} · {byslug['quiver'].location}
               </p>
-              <p class="wc-desc">{byslug['cairn'].cardBlurb}</p>
+              <p class="wc-desc">{byslug['quiver'].cardBlurb}</p>
               <span class="wc-more">View case study<i>→</i></span>
             </div>
           </a>

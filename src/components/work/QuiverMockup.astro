@@ -1,0 +1,337 @@
+---
+/**
+ * Quiver — product composition: the share-sheet save, the format breakdown,
+ * and the payoff (an AI tool drafting scripts from the library over MCP).
+ *
+ * Ported from the quivercontent.app landing screens and built from Quiver's own
+ * design tokens (Cairn/design/tokens.json, the "Sky" system): navy ink on an air
+ * background, one sky moment per screen, butter for status, marker behind quoted
+ * on-screen text. Young Serif for titles, Newsreader for the user's own notes,
+ * Schibsted Grotesk for everything else. Icons are Quiver's own 24-grid set.
+ * No frame of anyone's real video is ever shown — matching the app's own rule.
+ */
+import appIcon from '../../assets/work/quiver-app-icon.svg';
+
+const ic = {
+  close:     '<path d="M6 6l12 12M18 6L6 18"/>',
+  folder:    '<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>',
+  posted:    '<circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.3l2.5 2.5 5-5"/>',
+  back:      '<path d="M15 5l-7 7 7 7"/>',
+  ext:       '<path d="M7 17L17 7M9 7h8v8"/>',
+  format:    '<rect x="6.5" y="3" width="11" height="18" rx="2.5"/><path d="M6.5 14.5h11M10.5 18h3"/>',
+  pacing:    '<circle cx="6.5" cy="6.5" r="2.7"/><circle cx="6.5" cy="17.5" r="2.7"/><path d="M8.6 8.3L20 18M8.6 15.7L20 6"/>',
+  hook:      '<circle cx="14" cy="4" r="1.6"/><path d="M14 5.6v8.9a4.5 4.5 0 0 1-9 0V11.5l2.6 2.6"/>',
+  structure: '<rect x="3.5" y="4.5" width="17" height="4" rx="1.2"/><rect x="3.5" y="10" width="11" height="4" rx="1.2"/><rect x="3.5" y="15.5" width="14" height="4" rx="1.2"/>',
+  cta:       '<path d="M4 10v4a1 1 0 0 0 1 1h2l6 4.5V4.5L7 9H5a1 1 0 0 0-1 1zM16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/>',
+  captions:  '<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M7 11h4M13 11h4M7 14.5h6M15 14.5h2"/>',
+  clock:     '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5l3 2"/>',
+};
+
+const tiktok = 'M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z';
+
+const breakdown = [
+  { icon: 'format',    k: 'Format',    v: 'Listicle' },
+  { icon: 'pacing',    k: 'Pacing',    v: 'Cut every 2s' },
+  { icon: 'hook',      k: 'Hook',      v: 'Number first' },
+  { icon: 'structure', k: 'Structure', v: '5 tips, 1 per cut' },
+  { icon: 'cta',       k: 'CTA',       v: 'Follow for part 2' },
+  { icon: 'captions',  k: 'On-screen', v: '6 captions' },
+] as const;
+
+const svg = (name: keyof typeof ic, size = 15) =>
+  `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic[name]}</svg>`;
+const tt = (size: number) =>
+  `<span class="qv-tt" style="width:${size}px;height:${size}px"><svg width="${Math.round(size * 0.58)}" height="${Math.round(size * 0.58)}" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="${tiktok}"/></svg></span>`;
+---
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Newsreader:opsz@6..72&family=Schibsted+Grotesk:wght@400;600;700;800&display=swap"
+/>
+
+<div class="qv" aria-hidden="true">
+  <!-- ── Phone 1: the share-sheet save ─────────────────────── -->
+  <div class="qv-col">
+    <span class="qv-step">01 · Save from the share sheet</span>
+    <div class="qv-phone">
+      <div class="qv-island"></div>
+      <div class="qv-screen qv-screen--video">
+        <div class="qv-video">
+          <div class="qv-vcap"><span>5 tips to grow</span><span>your social media</span></div>
+          <div class="qv-vmeta"><b>@creatorlab</b><span>5 things I wish I knew at 1k followers</span></div>
+        </div>
+        <div class="qv-dim"></div>
+        <div class="qv-sheet">
+          <div class="qv-grab"></div>
+          <div class="qv-row">
+            <img src={appIcon.src} width="28" height="28" alt="" class="qv-appicon" />
+            <span class="qv-strong">Save to Quiver</span>
+            <span class="qv-muted qv-ml" set:html={svg('close', 18)} />
+          </div>
+          <div class="qv-field"><span class="qv-note">5 tips, one per cut. Try the number-first open.</span></div>
+          <div class="qv-row qv-row--chips">
+            <span class="qv-chip qv-chip--sel"><Fragment set:html={svg('folder', 13)} />Growth</span>
+            <span class="qv-chip"><Fragment set:html={svg('folder', 13)} />Hooks</span>
+          </div>
+          <span class="qv-btn">Save</span>
+          <p class="qv-sheet-note"><Fragment set:html={svg('clock', 13)} />Back to scrolling in under a second</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Phone 2: the breakdown ─────────────────────────────── -->
+  <div class="qv-col">
+    <span class="qv-step">02 · The format, broken down</span>
+    <div class="qv-phone">
+      <div class="qv-island"></div>
+      <div class="qv-screen">
+        <div class="qv-src">
+          <Fragment set:html={svg('back', 18)} />
+          <Fragment set:html={tt(20)} />
+          <span class="qv-label">TikTok · 0:34</span>
+          <span class="qv-ml" set:html={svg('ext', 14)} />
+        </div>
+        <p class="qv-nhero">5 tips, one per cut. Number on screen first.</p>
+        <div class="qv-row qv-row--chips qv-row--tight">
+          <span class="qv-chip"><Fragment set:html={svg('folder', 13)} />Growth</span>
+          <span class="qv-chip">0:34</span>
+        </div>
+        <p class="qv-caps">Breakdown</p>
+        <div class="qv-grid">
+          {breakdown.map((b) => (
+            <div class="qv-bcard">
+              <div class="qv-k"><Fragment set:html={svg(b.icon, 13)} />{b.k}</div>
+              <div class="qv-v">{b.v}</div>
+            </div>
+          ))}
+        </div>
+        <div class="qv-hookq">
+          <p class="qv-caps">Hook · on screen</p>
+          <p class="qv-q"><span class="qv-marker">5 tips to grow your social media</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Panel 3: the payoff ────────────────────────────────── -->
+  <div class="qv-col qv-col--wide">
+    <span class="qv-step">03 · Used in the AI tool you already have</span>
+    <div class="qv-chat">
+      <div class="qv-chat-bar">
+        <span class="qv-claude">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#D97757" aria-hidden="true"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>
+          Claude
+        </span>
+        <span class="qv-mcp"><img src={appIcon.src} width="14" height="14" alt="" />Quiver · MCP connected</span>
+      </div>
+
+      <div class="qv-chat-body">
+        <div class="qv-msg qv-msg--user">
+          Write 3 scripts using the hooks I saved this month, then add them to my
+          content doc.
+        </div>
+
+        <div class="qv-tool"><Fragment set:html={svg('posted', 13)} /><span><b>search_saves</b>("hooks, this month") → 11 saves</span></div>
+        <div class="qv-tool"><Fragment set:html={svg('posted', 13)} /><span><b>get_save_details</b> · 3 saves</span></div>
+
+        <div class="qv-msg qv-msg--ai">
+          Three scripts, each on the shape of a hook you saved:
+          <ol>
+            <li><b>The price-first open</b>, for software budgets</li>
+            <li><b>The two-second-cut recipe</b>, for your morning routine</li>
+            <li><b>The comment-bait ending</b>, for your launch week</li>
+          </ol>
+        </div>
+
+        <div class="qv-doc">
+          <Fragment set:html={svg('posted', 15)} />
+          <span><b>Content doc</b> · 3 scripts added</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="qv-clients">
+      <span class="qv-caps">Works with</span>
+      <span>Claude</span><span>ChatGPT</span><span>Cursor</span><span>any MCP tool</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .qv {
+    /* Quiver's own tokens (Sky system, light theme) */
+    --bg:        #F7F9FC;
+    --surface:   #FFFFFF;
+    --sunk:      #E9EFF6;
+    --ink:       #14213D;
+    --muted:     #56657D;
+    --rule:      #DFE6EE;
+    --sky:       #6CBEF5;
+    --butter:    #FFEF86;
+    --marker:    #BFE3FA;
+    --serif:     'Young Serif', Georgia, serif;
+    --note:      'Newsreader', Georgia, serif;
+    --sans:      'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+    width: 1280px;
+    min-height: 800px;
+    box-sizing: border-box;
+    padding: 34px 40px 40px;
+    display: grid;
+    grid-template-columns: 300px 300px 1fr;
+    gap: 26px;
+    background:
+      radial-gradient(600px 420px at 8% 92%, rgba(108,190,245,.28), transparent 70%),
+      radial-gradient(520px 380px at 98% 6%, rgba(255,239,134,.35), transparent 70%),
+      var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+  }
+  .qv *, .qv *::before, .qv *::after { box-sizing: border-box; }
+  .qv p { margin: 0; }
+
+  .qv-col { display: flex; flex-direction: column; min-width: 0; }
+  .qv-step {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 14px;
+  }
+  .qv-caps {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .qv-muted { color: var(--muted); }
+  .qv-ml { margin-left: auto; display: inline-flex; }
+  .qv-strong { font-size: 15px; font-weight: 700; }
+  .qv-label { font-size: 12.5px; font-weight: 600; }
+
+  /* ── Phone shell ───────────────────────────────────────── */
+  .qv-phone {
+    position: relative; width: 300px; height: 620px;
+    border-radius: 46px; background: var(--ink); padding: 10px;
+    box-shadow: 0 30px 60px -28px rgba(20,33,61,.45);
+  }
+  .qv-island {
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+    width: 92px; height: 26px; border-radius: 14px; background: #000; z-index: 3;
+  }
+  .qv-screen {
+    position: relative; height: 100%; border-radius: 37px; overflow: hidden;
+    background: var(--bg); padding: 58px 16px 16px;
+  }
+  .qv-screen--video { padding: 0; background: #0E1522; }
+
+  /* ── 01 · video + sheet ─────────────────────────────────── */
+  .qv-video {
+    position: absolute; inset: 0;
+    /* An abstract stand-in — never a frame of anyone's real post. */
+    background:
+      radial-gradient(160px 140px at 55% 36%, rgba(255,239,134,.55), transparent 70%),
+      linear-gradient(170deg, #7CC8F7 0%, #3D6FA8 55%, #14213D 100%);
+  }
+  .qv-vcap {
+    position: absolute; top: 74px; left: 0; right: 0; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .qv-vcap span {
+    background: #fff; color: #111; font-size: 13px; font-weight: 800;
+    padding: 2px 7px; border-radius: 4px;
+  }
+  .qv-vmeta {
+    position: absolute; left: 16px; top: 250px; color: #fff; font-size: 11px;
+    display: flex; flex-direction: column; gap: 2px; opacity: .9;
+  }
+  .qv-dim { position: absolute; inset: 0; background: rgba(14,21,34,.35); }
+  .qv-sheet {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--surface); border-radius: 22px 22px 0 0;
+    padding: 10px 16px 20px;
+    background-image: linear-gradient(180deg, rgba(108,190,245,.16), transparent 70px);
+    box-shadow: 0 -10px 30px rgba(14,21,34,.25);
+  }
+  .qv-grab { width: 36px; height: 5px; border-radius: 3px; background: var(--rule); margin: 0 auto 12px; }
+  .qv-row { display: flex; align-items: center; gap: 10px; }
+  .qv-row--chips { gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .qv-row--tight { margin: 0 0 16px; }
+  .qv-appicon { border-radius: 7px; display: block; }
+  .qv-field {
+    margin-top: 12px; border: 1px solid var(--rule); border-radius: 8px;
+    padding: 10px 12px; min-height: 64px; background: var(--surface);
+  }
+  .qv-note { font-family: var(--note); font-size: 16px; line-height: 1.25; }
+  .qv-chip {
+    display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 10px;
+    border-radius: 8px; background: var(--sunk); font-size: 12px; font-weight: 600;
+  }
+  .qv-chip--sel { background: var(--ink); color: #fff; }
+  .qv-btn {
+    display: flex; align-items: center; justify-content: center; margin-top: 14px;
+    height: 44px; border-radius: 8px; background: var(--ink); color: #fff;
+    font-size: 15px; font-weight: 700;
+  }
+  .qv-sheet-note {
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    margin-top: 10px !important; font-size: 11.5px; color: var(--muted);
+  }
+
+  /* ── 02 · breakdown ─────────────────────────────────────── */
+  .qv-src { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .qv-tt { display: inline-flex; align-items: center; justify-content: center; border-radius: 5px; background: #000; }
+  .qv-nhero { font-family: var(--note); font-size: 23px; line-height: 1.17; margin-bottom: 12px !important; }
+  .qv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0 14px; }
+  .qv-bcard {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+    padding: 9px 10px 10px;
+  }
+  .qv-k {
+    display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  }
+  .qv-v { font-size: 13.5px; font-weight: 700; margin-top: 5px; }
+  .qv-bcard:nth-child(3) { background: var(--sky); border-color: var(--sky); }
+  .qv-bcard:nth-child(3) .qv-k { color: var(--ink); }
+  .qv-hookq { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 10px 12px; }
+  .qv-q { font-family: var(--serif); font-size: 16px; line-height: 1.35; margin-top: 6px !important; }
+  .qv-marker { background: var(--marker); padding: 1px 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+  /* ── 03 · payoff ────────────────────────────────────────── */
+  .qv-chat {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+    overflow: hidden; box-shadow: 0 24px 50px -30px rgba(20,33,61,.35);
+  }
+  .qv-chat-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; border-bottom: 1px solid var(--rule); background: #FBFAF7;
+  }
+  .qv-claude { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; }
+  .qv-mcp {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600;
+    background: var(--sunk); padding: 4px 9px; border-radius: 8px;
+  }
+  .qv-mcp img { border-radius: 3px; }
+  .qv-chat-body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .qv-msg { font-size: 14px; line-height: 1.5; border-radius: 12px; padding: 11px 14px; }
+  .qv-msg--user { align-self: flex-end; max-width: 86%; background: var(--sunk); }
+  .qv-msg--ai { background: var(--surface); padding-left: 0; }
+  .qv-msg ol { margin: 8px 0 0; padding-left: 20px; }
+  .qv-msg li { margin: 3px 0; }
+  .qv-tool {
+    display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
+    font-size: 12px; color: var(--muted); border: 1px solid var(--rule);
+    border-radius: 8px; padding: 5px 10px;
+  }
+  .qv-tool b { color: var(--ink); font-weight: 700; }
+  .qv-doc {
+    display: flex; align-items: center; gap: 8px; font-size: 13px;
+    background: var(--butter); border-radius: 10px; padding: 10px 12px;
+  }
+  .qv-clients {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 18px;
+  }
+  .qv-clients span:not(.qv-caps) {
+    font-size: 12.5px; font-weight: 600; padding: 5px 10px; border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--rule);
+  }
+</style>

@@ -1,0 +1,201 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import BrowserFrame from '../../components/work/BrowserFrame.astro';
+import QuiverMockup from '../../components/work/QuiverMockup.astro';
+import landing from '../../assets/work/quiver-landing.png';
+import problem from '../../assets/work/quiver-problem.png';
+
+const moves = [
+  {
+    h: 'Reposition without starting over',
+    p: `Quiver began life as Cairn, a personal recall tool. When the audience that cared
+        most turned out to be content creators, the product was renamed and rebuilt around
+        them — but the share extension, extraction pipeline, database, and MCP server all
+        carried over. A new name, a new design system, and new analysis on top of
+        infrastructure that already worked.`,
+  },
+  {
+    h: 'Protect the one-second save',
+    p: `The whole product dies if saving feels slow. The native iOS share extension writes
+        the save and dismisses immediately — you're back to scrolling in under a second.
+        Transcription, reading the on-screen text, and the format breakdown all happen
+        after the sheet is gone.`,
+  },
+  {
+    h: 'Describe the format, never show the video',
+    p: `Every save gets a breakdown — format, hook, structure, pacing, call to action, and
+        on-screen text — written plainly so a creator can reuse the shape. Quiver never
+        stores, plays, or shows a frame of anyone else's post; it links out to the
+        original. That rule shapes the product, the copy, and the App Store review.`,
+  },
+  {
+    h: 'Make the library work in any AI tool',
+    p: `The payoff isn't inside the app. A hosted MCP server exposes the whole library to
+        Claude, ChatGPT, Cursor, or any MCP client, so a creator can say "write three
+        scripts from the hooks I saved this month" and get drafts grounded in posts they
+        already know work. Every tool description is UX copy.`,
+  },
+  {
+    h: 'Measure the cost before setting the price',
+    p: `Early estimates of per-save cost disagreed with each other by roughly 17×, so the
+        price isn't set from a guess. Real processing cost gets measured against a real
+        library first; the plan and the 100-saves-a-month cap follow from that number,
+        and the cap is enforced in the database, not the client.`,
+  },
+];
+
+const spec = [
+  { dt: 'App',       dd: 'React Native + Expo, native iOS share extension, TypeScript strict' },
+  { dt: 'Backend',   dd: 'Node service on Railway, Supabase Postgres with row-level security and pgvector' },
+  { dt: 'Pipeline',  dd: 'Post → transcript + on-screen text → format breakdown → embedding → semantic search' },
+  { dt: 'AI access', dd: 'Hosted MCP server with OAuth — Claude, ChatGPT, Cursor, and other MCP clients' },
+  { dt: 'Design',    dd: 'Token-locked "Sky" system: three typefaces, a 30-icon custom set, Lottie mascot moments' },
+  { dt: 'Landing',   dd: 'Astro on Cloudflare, scroll-scrubbed product demo, Supabase-backed waitlist' },
+];
+---
+
+<CaseStudyLayout
+  slug="quiver"
+  title="Quiver — iOS App & AI Infrastructure | Mayfly Web Design"
+  description="Quiver is an iOS app for content creators: save posts from the share sheet, get each one's format broken down, and use the whole library in Claude, ChatGPT or any AI tool over MCP. Designed and built end to end by Mayfly Web Design."
+  schemaType="SoftwareApplication"
+>
+  <!-- The brief -->
+  <section class="cs-block cs-block--tight">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">What it is</p>
+        <div class="cs-prose">
+          <p>
+            Quiver is an iOS app for content creators. <strong>Save the posts that stop
+            your scroll, get a plain-language breakdown of how each one works, and bring
+            the whole library into Claude, ChatGPT, or any AI tool you use</strong> —
+            through a hosted MCP server.
+          </p>
+          <p>
+            Tap share on a TikTok, Reel, or Short, pick Quiver, add a note, and you're
+            back to scrolling. In the background Quiver reads what's said and what's on
+            screen, breaks down the hook, structure, pacing, and call to action, and files
+            it in a folder. Later, your AI tool can draft scripts from the formats you
+            already rate.
+          </p>
+          <p>
+            It started as <em>Cairn</em>, a personal recall tool, and was repositioned and
+            renamed in September 2026. The native app, backend, pipeline, and MCP server
+            carried over; the audience, analysis, design system, and every word of copy
+            are new.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The mockup -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The loop</p>
+        <div>
+          <BrowserFrame
+            url="Quiver — iOS"
+            width={1280}
+            height={800}
+            label="Save, break down, use — rendered from Quiver's own design tokens: navy ink on an air background, one sky moment per screen, butter for status, and a marker highlight behind quoted on-screen text."
+          >
+            <QuiverMockup />
+          </BrowserFrame>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The landing page -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The launch site</p>
+        <div>
+          <figure class="cs-shot">
+            <Image src={landing} alt="The Quiver landing page: the headline Save the good stuff. Turn it into what's next, a waitlist form, the Quiver mascot, and a phone showing the app's Library screen" widths={[640, 1000, 1440]} sizes="(min-width: 860px) 60vw, 92vw" />
+            <figcaption>
+              quivercontent.app — a liquid-gradient hero, the mascot, and the real Library
+              screen. Live screenshot.
+            </figcaption>
+          </figure>
+
+          <figure class="cs-shot">
+            <Image src={problem} alt="The problem section of the Quiver landing page on navy: You already find great content. You just have nowhere to put it, above three illustrated cards" widths={[640, 1000, 1440]} sizes="(min-width: 860px) 60vw, 92vw" />
+            <figcaption>
+              The problem band, before a sticky phone scroll-scrubs through saving, the
+              breakdown, and the library.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The moves -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">The decisions</p>
+        <div>
+          <h2 class="cs-h2 reveal">What the build actually required.</h2>
+          <div class="cs-moves">
+            {moves.map((m, i) => (
+              <div class="cs-move reveal" style={`transition-delay:${i * 0.06}s`}>
+                <span class="cs-move-n">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{m.h}</h3>
+                  <p>{m.p}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spec -->
+  <section class="cs-block cs-block--rule">
+    <div class="section-container">
+      <div class="cs-split">
+        <p class="cs-split-label">Under the hood</p>
+        <div>
+          <dl class="cs-spec reveal">
+            {spec.map((s) => (
+              <div class="cs-spec-item">
+                <dt>{s.dt}</dt>
+                <dd>{s.dd}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="cs-footnote">
+            The landing page and waitlist are live at quivercontent.app. The app runs on
+            device with the backend and MCP server deployed; the App Store launch is
+            planned for 1 December 2026.
+          </p>
+          <div class="cs-tags">
+            <a href="/services/ai-automations/" class="cs-tag">AI Automations</a>
+            <a href="/services/website-design/" class="cs-tag">Website Design</a>
+            <a href="/contact/" class="cs-tag">Talk about a build</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</CaseStudyLayout>
+
+<style>
+  .cs-footnote {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--color-muted);
+    margin-top: 1rem;
+  }
+</style>

@@ -17,7 +17,7 @@ Mayfly builds fast static websites (Astro, Cloudflare), automation workflows, an
 - [Larkspur Construction Group](https://mayflywebdesign.com/work/larkspur-construction/): Concept site for a Bozeman general contractor, built around recruiting.
 - [Ninebark Ranch](https://mayflywebdesign.com/work/ninebark-ranch/): Concept site for a Paradise Valley all-inclusive guest ranch.
 - [Riverline](https://mayflywebdesign.com/work/riverline/): Shipped fly-fishing conditions platform with an AI guide (riverline.app).
-- [Cairn](https://mayflywebdesign.com/work/cairn/): Shipped iOS app and MCP server that makes saved content retrievable by AI assistants.
+- [Quiver](https://mayflywebdesign.com/work/quiver/): iOS app for content creators (launching Dec 2026) — saves posts, breaks down their format, and exposes the library to Claude, ChatGPT and other AI tools over MCP. Launch site live at quivercontent.app.
 
 ## Guides
 

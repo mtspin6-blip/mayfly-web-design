@@ -4,6 +4,8 @@
  *
  * `status` is load-bearing and must stay honest:
  *   'shipped' — a real product, publicly live, screenshots are the real thing.
+ *   'building' — our own product, in active development; its public launch
+ *               site is live, the product itself isn't released yet.
  *   'concept' — an illustrative build for a Montana business type we target.
  *               No client, therefore no metrics, testimonials, or logos. Ever.
  */
@@ -48,15 +50,17 @@ export const projects = [
     accent:      '#1F5140',
   },
   {
-    slug:        'cairn',
-    name:        'Cairn',
+    slug:        'quiver',
+    name:        'Quiver',
     industry:    'iOS App & AI Infrastructure',
     location:    'Great Falls, MT',
-    status:      'shipped',
-    statusLabel: 'Shipped Product',
-    tagline:     'An iOS app that turns saved video into structured context Claude and ChatGPT can retrieve mid-conversation.',
-    scope:       ['iOS App', 'Backend & MCP Server', 'Design System'],
-    cardBlurb:   'Native share extension, transcription pipeline, semantic search, and a live MCP server AI assistants query directly.',
-    accent:      '#41697B',
+    status:      'building',
+    statusLabel: 'Launching Dec 2026',
+    tagline:     'An iOS app that breaks down the posts creators save — and hands the whole library to Claude, ChatGPT, or any AI tool.',
+    scope:       ['iOS App', 'Backend & MCP Server', 'Design System', 'Launch Site'],
+    liveUrl:     'https://quivercontent.app',
+    liveLabel:   'quivercontent.app',
+    cardBlurb:   'Share-sheet saving, AI format breakdowns that read on-screen text, and a live MCP server for Claude, ChatGPT, and Cursor.',
+    accent:      '#14213D',
   },
 ];
