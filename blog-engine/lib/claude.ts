@@ -80,7 +80,7 @@ export function buildCliInvocation(o: Pick<AskOptions, 'model' | 'system' | 'web
 
 interface CliResult { is_error?: boolean; result?: string; usage?: { input_tokens?: number; output_tokens?: number; server_tool_use?: { web_search_requests?: number } } }
 
-const LIMIT_RE = /(usage limit|rate limit|limit reached|too many requests|overloaded|quota)/i;
+const LIMIT_RE = /(usage limit|session limit|hit your|resets |rate limit|limit reached|too many requests|overloaded|quota)/i;
 const AUTH_RE = /(authenticate|oauth|not logged in|login|unauthorized|invalid token)/i;
 
 function runClaude(o: AskOptions): Promise<CliResult> {
