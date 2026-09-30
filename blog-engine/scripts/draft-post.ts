@@ -1,5 +1,6 @@
 // Brief (with web research) then draft. Both are model calls; everything the model returns is treated as untrusted.
 import YAML from 'yaml';
+import { repairYaml } from '../lib/post.js';
 import { type Config } from '../lib/config.js';
 import { Budget, ask, askJson, splitDelimited } from '../lib/claude.js';
 import { slugify, type Post, type Frontmatter } from '../lib/post.js';
@@ -52,7 +53,7 @@ export async function makeBrief(c: DraftContext): Promise<Brief> {
 /** Parse writer/reviser output into a Post, forcing every field the pipeline (not the model) owns. */
 export function buildPost(raw: string, c: { cfg: Config; item: { keyword: string; pillar: string }; format: string; brief: Brief; slug: string; prior?: Post }): Post {
   const { frontmatter, body: rawBody } = splitDelimited(raw);
-  const fm = YAML.parse(frontmatter) as Frontmatter;
+  const fm = YAML.parse(repairYaml(frontmatter)) as Frontmatter;
   let body = rawBody;
 
   // Strip any external link the brief didn't supply (the model may not invent sources).

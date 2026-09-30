@@ -8,4 +8,5 @@ node_modules/
 # blog engine scratch
 blog-engine/data/cache/
 blog-engine/data/last-run.json
+blog-engine/data/rejected/
 reports/ALERT.md

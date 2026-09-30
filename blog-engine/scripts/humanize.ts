@@ -1,5 +1,6 @@
 // Rhythm/voice rewrite pass. Runs after the draft and before the editor. Facts, links and numbers must survive unchanged.
 import YAML from 'yaml';
+import { repairYaml } from '../lib/post.js';
 import type { Config } from '../lib/config.js';
 import { Budget, ask, splitDelimited } from '../lib/claude.js';
 import type { Post } from '../lib/post.js';
@@ -24,7 +25,7 @@ export async function humanize(post: Post, cfg: Config, budget: Budget): Promise
   if (nums(out.body) !== nums(post.body)) return { post, kept: false, note: 'humanize changed numbers; reverted' };
   const ratio = wordCount(out.body) / Math.max(1, wordCount(post.body));
   if (ratio < 0.7 || ratio > 1.15) return { post, kept: false, note: `humanize changed length x${ratio.toFixed(2)}; reverted` };
-  const fm = YAML.parse(out.frontmatter) as Partial<Post['fm']>;
+  const fm = YAML.parse(repairYaml(out.frontmatter)) as Partial<Post['fm']>;
   const next: Post = { ...post, body: out.body };
   const d = String(fm.description ?? '');
   if (d.length >= 140 && d.length <= 155) next.fm = { ...next.fm, description: d };

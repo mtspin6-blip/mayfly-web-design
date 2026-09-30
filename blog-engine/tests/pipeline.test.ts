@@ -247,3 +247,15 @@ test('a token pasted with a line break or spaces is cleaned before use', () => {
   const { env } = buildCliInvocation({ model: 'm', system: 's' }, { CLAUDE_CODE_OAUTH_TOKEN: 'sk-ant-oat01-abc\ndef ghi\r\n' });
   assert.equal(env.CLAUDE_CODE_OAUTH_TOKEN, 'sk-ant-oat01-abcdefghi');
 });
+
+test('YAML repair quotes titles with colons and keeps valid values', async () => {
+  const { repairYaml } = await import('../lib/post.js');
+  const YAML = (await import('yaml')).default;
+  const fixed = YAML.parse(repairYaml('title: How to Start an Online Booking Business: 7 Steps\ndescription: How to get reviews this week: find your link, ask\ncta: "Book a call"\nreadTime: 5 min read\nsources:\n  - title: Google: helpful content\n    url: https://developers.google.com/x\nfaq:\n  - q: Why? Because: reasons\n    a: Ok.\ndate: 2026-10-06')) as Record<string, unknown>;
+  assert.equal(fixed.title, 'How to Start an Online Booking Business: 7 Steps');
+  assert.equal(fixed.description, 'How to get reviews this week: find your link, ask');
+  assert.equal(fixed.cta, 'Book a call');
+  assert.equal(fixed.readTime, '5 min read');
+  assert.equal((fixed.sources as { title: string }[])[0].title, 'Google: helpful content');
+  assert.equal((fixed.faq as { q: string }[])[0].q, 'Why? Because: reasons');
+});

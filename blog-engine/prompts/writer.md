@@ -33,6 +33,7 @@ Also banned: em dashes and en dashes anywhere, emoji, more than one exclamation 
 Formatting: at most one bulleted list per ~400 words. Do not bold random phrases. Vary paragraph openers. No three sentences in a row starting with the same word.
 
 # Output format (exactly, no extra text)
+In the frontmatter, wrap every text value (title, description, excerpt, cta, each source title, each faq q and a) in double quotes. Titles often contain a colon; unquoted they break the file.
 ===FRONTMATTER===
 title: ...
 description: ...

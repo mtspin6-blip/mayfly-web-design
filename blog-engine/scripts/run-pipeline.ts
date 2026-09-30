@@ -10,7 +10,10 @@ import { arg, gateContext } from '../lib/pipeline.js';
 import { pickTopic } from './pick-topic.js';
 import { makeBrief, writeDraft } from './draft-post.js';
 import { humanize } from './humanize.js';
-import { editorLoop } from './editor-loop.js';
+import { editorLoop, RejectedDraft } from './editor-loop.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { serializePost } from '../lib/post.js';
 import { factCheck } from './fact-check.js';
 import { runAllGates } from './quality-gate.js';
 import { publish } from './publish.js';
@@ -51,7 +54,7 @@ export async function runPipeline(o: { dryRun: boolean; now: boolean; site: bool
 
       const loop = await editorLoop({ post, brief, item, format, cfg, budget, ctx });
       loop.log.forEach((l) => console.log(l));
-      if (!loop.ok) throw new Error(`editor loop failed: ${loop.log.at(-1)}`);
+      if (!loop.ok) throw new RejectedDraft(`editor loop failed: ${loop.log.at(-1)}`, loop.post, loop.gates.map((g) => `${g.ok ? 'PASS' : 'FAIL'} ${g.id}: ${g.detail}`).join('\n') + '\n\n' + loop.log.join('\n'));
       post = loop.post;
 
       const fc = await factCheck(post, cfg, budget, o.fetcher);
@@ -74,6 +77,12 @@ export async function runPipeline(o: { dryRun: boolean; now: boolean; site: bool
       return { ok: true, published: res.slug, reason: `published ${res.slug}` };
     } catch (e) {
       lastFailure = (e as Error).message;
+      if (e instanceof RejectedDraft) {
+        const dir = enginePath('data/rejected');
+        fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(path.join(dir, `${e.post.slug}.md`), `<!--\n${e.report}\n-->\n\n${serializePost(e.post)}`);
+        console.log(`saved rejected draft + gate report: blog-engine/data/rejected/${e.post.slug}.md`);
+      }
       console.error(`rejected "${item.keyword}": ${lastFailure}`);
       if (e instanceof BudgetExceeded) { lastFailure = `${e instanceof UsageLimit ? 'usage-limit' : 'budget'}: ${lastFailure}`; break; }
       skip.push(item.keyword);

@@ -59,6 +59,15 @@ jobs:
             npm run engine:run
           fi
 
+      - name: Keep rejected drafts for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rejected-drafts
+          path: blog-engine/data/rejected/
+          if-no-files-found: ignore
+          retention-days: 14
+
       - name: Push
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
         run: |

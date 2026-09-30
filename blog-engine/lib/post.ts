@@ -31,6 +31,27 @@ export interface Post {
   body: string;
 }
 
+/**
+ * Models often write `title: How to X: 7 steps` or values starting with a quote/backtick, which is invalid YAML.
+ * Quote any plain scalar that would break parsing. Already-quoted, block, list and flow values are left alone.
+ */
+export function repairYaml(text: string): string {
+  return text
+    .split('\n')
+    .map((line) => {
+      const m = line.match(/^(\s*(?:-\s+)?[A-Za-z_][\w-]*):[ \t]+(.*\S)\s*$/);
+      if (!m) return line;
+      const [, key, val] = m;
+      if (/^["'\[{|>&*!%@`]/.test(val) && !/^["'].*["']$/.test(val) === false) return line;
+      if (/^(["'\[{|>])/.test(val)) return line;
+      if (/: |:$| #|^[-?]\s|^['"`@%&*!]/.test(val) || /^\d{4}-\d{2}-\d{2}$/.test(val) === false && /[#]/.test(val) && / #/.test(val)) {
+        return `${key}: "${val.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+      }
+      return line;
+    })
+    .join('\n');
+}
+
 export function parsePost(slug: string, raw: string): Post {
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
   if (!m) throw new Error(`Post ${slug} has no frontmatter`);
