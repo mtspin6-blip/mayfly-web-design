@@ -4,7 +4,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/layout/Header.astro';
 import Footer from '../../../components/layout/Footer.astro';
 import FinalCTA from '../../../components/sections/FinalCTA.astro';
-import { PILLARS, SITE_URL, pillarOf } from '../../../lib/site';
+import { PILLARS, SITE_URL, pillarOf, HUB_MIN_POSTS } from '../../../lib/site';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('blog', (p) => !p.data.draft && !p.data.noindex)).sort(
@@ -51,6 +51,7 @@ const schema = [
 
 <BaseLayout
   title={info.title}
+  noindex={posts.length < HUB_MIN_POSTS}
   description={`${info.blurb} Guides from Mayfly Web Design in Missoula, Montana.`.slice(0, 155)}
 >
   {schema.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} slot="head"></script>)}

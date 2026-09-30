@@ -35,6 +35,9 @@ export const PILLARS = {
   },
 } as const;
 
+/** A topic hub is noindexed (and left out of the sitemap) until it has this many posts, to avoid thin pages. */
+export const HUB_MIN_POSTS = 3;
+
 export type PillarSlug = keyof typeof PILLARS;
 
 // Existing posts predate the `pillar` field; map their category to a pillar.

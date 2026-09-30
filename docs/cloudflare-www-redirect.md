@@ -1,5 +1,9 @@
 # One-time: redirect www to the bare domain (Cloudflare)
 
+STATUS 2026-09-30: `curl -sI https://www.mayflywebdesign.com/blog/` already returned `301` to the bare domain, so this
+may already be set up (check Cloudflare **Rules -> Redirect Rules**, or Pages **Custom domains**). If the curl check
+below passes, skip the steps.
+
 Why: Google was indexing both `www.mayflywebdesign.com` and `mayflywebdesign.com`, which splits
 ranking signals. The site now canonicalizes everything to `https://mayflywebdesign.com/`, but a
 real 301 redirect finishes the job. Cloudflare Pages can't do host-level redirects from
