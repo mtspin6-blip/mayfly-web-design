@@ -23,7 +23,7 @@ export interface Config {
     bookingUrl: string;
   };
   models: { brief: string; draft: string; humanize: string; editor: string; factCheck: string; research: string };
-  budget: { maxTokensPerRun: number; monthlySpendCapUsd: number; webSearchCostUsd: number; maxWebSearchesPerRun: number };
+  budget: { maxTokensPerRun: number; maxModelCallsPerRun: number; monthlyModelCallCap: number; maxWebSearchesPerRun: number };
   cadence: { publishHourMT: number; jitterHours: number; rampWeeks: number; healthyChecksToRamp: number; maxSamePillarShareOfLast10: number };
   weights: { demand: number; intent: number; winnability: number; local: number; cannibalization: number; gscShiftAfterDays: number; gscHeavyDemandWeight: number };
   gates: {

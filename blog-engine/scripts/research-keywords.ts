@@ -1,7 +1,7 @@
 // Free keyword research: seeds + GSC/Bing + Google autocomplete (+ optional Trends) -> analysis -> score -> cluster -> backlog.
 // Usage: npm run engine:research [-- --offline] [-- --deep] [-- --trends]
 import { loadConfig, type Config } from '../lib/config.js';
-import { Budget, askJson } from '../lib/claude.js';
+import { Budget, askJson, claudeAvailable } from '../lib/claude.js';
 import { loadBacklog, saveBacklog, loadPublished, type BacklogItem, type Pillar } from '../lib/state.js';
 import { loadPosts } from '../lib/post.js';
 import { expandSeed, bingQueryStats, bingRelatedKeywords, trendsInterest } from '../lib/sources.js';
@@ -109,7 +109,7 @@ export function cluster(items: { c: Cand; score: number }[]): { c: Cand; score: 
 async function main() {
   const cfg = loadConfig();
   const budget = new Budget(cfg);
-  const offline = arg('offline') || (!process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN);
+  const offline = arg('offline') || !claudeAvailable();
   const seeds = readJson<{ seeds: { keyword: string; pillar: Pillar }[] }>(enginePath('seeds.json'), { seeds: [] }).seeds;
   const cands = new Map<string, Cand>();
   const upsert = (keyword: string, pillar: Pillar, source: string, patch: Partial<Cand> = {}) => {
@@ -204,7 +204,7 @@ async function main() {
   next.sort((a, b) => b.score - a.score);
   saveBacklog(next);
   console.log(`backlog: ${next.length} clustered keywords written (${next.filter((n) => n.status === 'new').length} new). Analysis: ${relevant.filter((c) => c.analysis === 'model').length} by model, ${relevant.filter((c) => c.analysis === 'heuristic').length} by heuristic.`);
-  console.log(`spend this run: $${budget.runUsd.toFixed(3)}, ${budget.searches} searches`);
+  console.log(`model calls this run: ${budget.runCalls}, ${budget.searches} searches`);
 }
 
 if (process.argv[1]?.endsWith('research-keywords.ts')) main().catch((e) => { console.error(e); process.exit(1); });

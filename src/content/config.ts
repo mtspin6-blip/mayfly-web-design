@@ -13,7 +13,7 @@ const blog = defineCollection({
     updatedDate: z.string().optional(),
     category: z.string(),
     readTime: z.string(),
-    author: z.string().default('Mitchell Spinetta'),
+    author: z.string().default('Mayfly Web Design'),
     image: image().optional(),
     pillar: z.enum([
       'website-cost', 'local-seo', 'ai-search', 'niche-guides', 'automations', 'website-problems',

@@ -20,11 +20,11 @@ Follow [cloudflare-www-redirect.md](./cloudflare-www-redirect.md). Do this befor
 6. GitHub repo -> **Settings -> Secrets and variables -> Actions** -> new secret `GSC_SERVICE_ACCOUNT_JSON` = the entire contents of the JSON file.
 7. Delete the downloaded file. Never commit it.
 
-## 4. Other secrets (GitHub -> Settings -> Secrets and variables -> Actions)
+## 4. Secrets (GitHub -> Settings -> Secrets and variables -> Actions)
 
 | Secret | Where to get it | Required |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | console.anthropic.com -> API keys. Set a monthly spend limit there too. | Yes |
+| `CLAUDE_CODE_OAUTH_TOKEN` | On your computer run `claude setup-token`, sign in to your Claude account, copy the token it prints. **No API key, no extra charges:** usage counts against your Claude plan's limits. | Yes |
 | `GSC_SERVICE_ACCOUNT_JSON` | Step 3 | For indexing checks and real keyword data |
 | `BING_WEBMASTER_API_KEY` | Bing Webmaster Tools -> Settings -> API access (site must be verified; you can import it from Search Console) | Optional |
 | `INDEXNOW_KEY` | Run `openssl rand -hex 16`. Also add it as a **Cloudflare Pages environment variable** named `INDEXNOW_KEY` (Production) and redeploy, so `/<key>.txt` is served. | Optional |
@@ -40,7 +40,18 @@ npm run engine:baseline
 npm run engine:research -- --deep
 ```
 
-`engine:research` uses Claude for intent and winnability when `ANTHROPIC_API_KEY` is set; otherwise it uses heuristics. The committed backlog was built with heuristics, so re-run it once you have a key.
+`engine:research` uses Claude (your account, via Claude Code) for intent and winnability when it's signed in; otherwise it uses heuristics. The committed backlog was built with heuristics, so re-run it once you're signed in.
+
+## 5b. How it uses your Claude account (and why there's no API key)
+GitHub's scheduler runs on GitHub's computers, so it has to sign in as you. The workflows install Claude Code and
+sign in with the long-lived token from `claude setup-token`. Every model step (brief, draft, rewrite, editor,
+fact-check, web research) runs through Claude Code under your plan. Nothing is billed per token. The code
+deliberately strips `ANTHROPIC_API_KEY` from the environment before each call, so a stray key can't cause API charges.
+
+- If you hit your plan's usage limit mid-run, the run stops cleanly, the topic is **not** marked rejected, and the next hourly run tries again.
+- Guard rails against eating your plan: max 40 model calls per run and 400 per month (`budget` in `config.json`).
+- To use less of your limit, set `models.brief` and `models.draft` to `claude-sonnet-5-5` in `config.json`.
+- Anthropic documents this token route for Claude Code in GitHub Actions. Check that your plan's terms cover automated use.
 
 ## 6. Rehearse, then go live
 1. GitHub -> Actions -> **blog-publish** -> Run workflow -> leave **dry run** ticked. Read the log: brief, draft, editor scores, gates.

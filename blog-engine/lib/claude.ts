@@ -1,107 +1,125 @@
-// Thin wrapper around the Anthropic SDK: spend caps, web search, delimited/JSON output parsing, and a mock for tests.
-import Anthropic from '@anthropic-ai/sdk';
+// Model access via Claude Code headless mode (`claude -p`), signed in with YOUR Claude account.
+// Usage counts against your plan's limits. There is no API key and no per-token billing: the API key
+// variables are stripped from the child process so a stray key can never turn this into API spend.
+import { spawn, spawnSync } from 'node:child_process';
 import { Config } from './config.js';
-import { STATE_FILES } from './state.js';
-import { readJson, writeJson } from './paths.js';
-
-// $ per million tokens (first-party API list prices).
-const PRICES: Record<string, { in: number; out: number }> = {
-  'claude-opus-5-5': { in: 4, out: 20 },
-  'claude-opus-5': { in: 5, out: 25 },
-  'claude-sonnet-5-5': { in: 2, out: 10 },
-  'claude-sonnet-5': { in: 2, out: 10 },
-  'claude-haiku-4-5': { in: 1, out: 5 },
-};
+import { enginePath, readJson, writeJson } from './paths.js';
 
 export class BudgetExceeded extends Error {}
+/** Plan usage limit hit. Not the post's fault: the run stops without rejecting the topic. */
+export class UsageLimit extends BudgetExceeded {}
 
-interface Ledger { month: string; usd: number; tokens: number }
+interface Ledger { month: string; calls: number; tokens: number }
+const LEDGER = enginePath('data/usage-ledger.json');
 const monthKey = () => new Date().toISOString().slice(0, 7);
 
+/** Counts model calls and tokens per run and per month so a runaway loop can't burn the whole plan. */
 export class Budget {
   runTokens = 0;
-  runUsd = 0;
+  runCalls = 0;
   searches = 0;
   constructor(private cfg: Config) {}
 
   private ledger(): Ledger {
-    const l = readJson<Ledger>(STATE_FILES.spend, { month: monthKey(), usd: 0, tokens: 0 });
-    return l.month === monthKey() ? l : { month: monthKey(), usd: 0, tokens: 0 };
+    const l = readJson<Ledger>(LEDGER, { month: monthKey(), calls: 0, tokens: 0 });
+    return l.month === monthKey() ? l : { month: monthKey(), calls: 0, tokens: 0 };
   }
 
   assertAvailable(): void {
-    if (this.runTokens >= this.cfg.budget.maxTokensPerRun) throw new BudgetExceeded(`per-run token budget ${this.cfg.budget.maxTokensPerRun} reached`);
-    if (this.ledger().usd >= this.cfg.budget.monthlySpendCapUsd) throw new BudgetExceeded(`monthly spend cap $${this.cfg.budget.monthlySpendCapUsd} reached`);
+    const b = this.cfg.budget;
+    if (this.runTokens >= b.maxTokensPerRun) throw new BudgetExceeded(`per-run token budget ${b.maxTokensPerRun} reached`);
+    if (this.runCalls >= b.maxModelCallsPerRun) throw new BudgetExceeded(`per-run call cap ${b.maxModelCallsPerRun} reached`);
+    if (this.ledger().calls >= b.monthlyModelCallCap) throw new BudgetExceeded(`monthly call cap ${b.monthlyModelCallCap} reached`);
   }
 
-  charge(model: string, usage: { input_tokens?: number; output_tokens?: number; cache_read_input_tokens?: number; cache_creation_input_tokens?: number }, searches = 0): void {
-    const price = PRICES[model] ?? PRICES['claude-opus-5-5'];
-    const inTok = (usage.input_tokens ?? 0) + (usage.cache_creation_input_tokens ?? 0) + (usage.cache_read_input_tokens ?? 0) * 0.1;
-    const outTok = usage.output_tokens ?? 0;
-    const usd = (inTok * price.in + outTok * price.out) / 1e6 + searches * this.cfg.budget.webSearchCostUsd;
-    this.runTokens += (usage.input_tokens ?? 0) + outTok;
-    this.runUsd += usd;
+  record(tokens: number, searches = 0): void {
+    this.runCalls += 1;
+    this.runTokens += tokens;
     this.searches += searches;
     const l = this.ledger();
-    writeJson(STATE_FILES.spend, { month: l.month, usd: +(l.usd + usd).toFixed(4), tokens: l.tokens + (usage.input_tokens ?? 0) + outTok });
-  }
-
-  searchesLeft(): number {
-    return Math.max(0, this.cfg.budget.maxWebSearchesPerRun - this.searches);
+    writeJson(LEDGER, { month: l.month, calls: l.calls + 1, tokens: l.tokens + tokens });
   }
 }
 
-// ---- mock support (tests and dry-run rehearsal without an API key) ----
+// ---- mock support (tests and rehearsal without any model access) ----
 export interface MockRequest { model: string; system: string; user: string; webSearch: boolean }
 type Mock = (req: MockRequest) => string | Promise<string>;
 let mock: Mock | undefined;
 export const setMockClaude = (fn: Mock | undefined) => { mock = fn; };
 
-let client: Anthropic | undefined;
-const getClient = () => (client ??= new Anthropic());
-
 export interface AskOptions {
   model: string;
   system: string;
   user: string;
-  maxTokens?: number;
+  maxTokens?: number; // kept for call-site compatibility; Claude Code manages output length itself
   effort?: 'low' | 'medium' | 'high';
   webSearch?: { maxUses: number };
   budget: Budget;
+}
+
+/** Build the `claude` invocation. Pure, so it can be tested without running anything. */
+export function buildCliInvocation(o: Pick<AskOptions, 'model' | 'system' | 'webSearch'>, env: NodeJS.ProcessEnv = process.env) {
+  const tools = o.webSearch ? 'WebSearch,WebFetch' : '';
+  const args = [
+    '-p',
+    '--model', o.model,
+    '--system-prompt', o.system,
+    '--tools', tools,
+    '--output-format', 'json',
+    '--no-session-persistence',
+    '--max-turns', String(o.webSearch ? o.webSearch.maxUses + 4 : 1),
+  ];
+  if (o.webSearch) args.push('--allowedTools', 'WebSearch', 'WebFetch');
+  const childEnv: NodeJS.ProcessEnv = { ...env };
+  // Never allow API billing: drop every API credential before the child starts.
+  for (const k of ['ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN', 'ANTHROPIC_BASE_URL', 'CLAUDE_CODE_USE_BEDROCK', 'CLAUDE_CODE_USE_VERTEX']) delete childEnv[k];
+  return { args, env: childEnv };
+}
+
+interface CliResult { is_error?: boolean; result?: string; usage?: { input_tokens?: number; output_tokens?: number; server_tool_use?: { web_search_requests?: number } } }
+
+const LIMIT_RE = /(usage limit|rate limit|limit reached|too many requests|overloaded|quota)/i;
+const AUTH_RE = /(authenticate|oauth|not logged in|login|unauthorized|invalid token)/i;
+
+function runClaude(o: AskOptions): Promise<CliResult> {
+  const { args, env } = buildCliInvocation(o);
+  return new Promise((resolve, reject) => {
+    const child = spawn('claude', args, { env, stdio: ['pipe', 'pipe', 'pipe'] });
+    let out = '', err = '';
+    const timer = setTimeout(() => { child.kill('SIGKILL'); reject(new Error('claude timed out after 12 minutes')); }, 12 * 60 * 1000);
+    child.stdout.on('data', (d) => (out += d));
+    child.stderr.on('data', (d) => (err += d));
+    child.on('error', (e) => { clearTimeout(timer); reject(new Error(`could not start claude CLI: ${e.message}. Install with: npm i -g @anthropic-ai/claude-code`)); });
+    child.on('close', () => {
+      clearTimeout(timer);
+      try { resolve(JSON.parse(out) as CliResult); }
+      catch { reject(new Error(`claude returned no JSON: ${(out || err).slice(0, 300)}`)); }
+    });
+    child.stdin.end(o.user);
+  });
 }
 
 export async function ask(o: AskOptions): Promise<string> {
   o.budget.assertAvailable();
   if (mock) return mock({ model: o.model, system: o.system, user: o.user, webSearch: !!o.webSearch });
 
-  const isHaiku = o.model.includes('haiku');
-  const messages: Anthropic.MessageParam[] = [{ role: 'user', content: o.user }];
-  const params: Record<string, unknown> = { model: o.model, max_tokens: o.maxTokens ?? 16000, system: o.system };
-  if (o.effort && !isHaiku) params.output_config = { effort: o.effort };
-  if (o.webSearch) {
-    const allowed = Math.min(o.webSearch.maxUses, o.budget.searchesLeft());
-    if (allowed > 0) {
-      params.tools = [{ type: isHaiku ? 'web_search_20250305' : 'web_search_20260209', name: 'web_search', max_uses: allowed }];
-    }
+  const res = await runClaude(o);
+  const text = (res.result ?? '').trim();
+  if (res.is_error) {
+    if (LIMIT_RE.test(text)) throw new UsageLimit(`Claude plan usage limit: ${text.slice(0, 160)}`);
+    if (AUTH_RE.test(text)) throw new UsageLimit(`Claude sign-in problem (check CLAUDE_CODE_OAUTH_TOKEN): ${text.slice(0, 160)}`);
+    throw new Error(`claude error: ${text.slice(0, 300)}`);
   }
+  o.budget.record((res.usage?.input_tokens ?? 0) + (res.usage?.output_tokens ?? 0), res.usage?.server_tool_use?.web_search_requests ?? 0);
+  if (!text) throw new Error('claude returned an empty result');
+  return text;
+}
 
-  let text = '';
-  for (let turn = 0; turn < 6; turn++) {
-    const res = await getClient().messages.create({ ...params, messages } as never) as Anthropic.Message;
-    const searches = (res.usage as { server_tool_use?: { web_search_requests?: number } }).server_tool_use?.web_search_requests ?? 0;
-    o.budget.charge(o.model, res.usage as never, searches);
-    if (res.stop_reason === 'refusal') throw new Error('model refused this request (safety classifier); topic skipped');
-    text += res.content.filter((b): b is Anthropic.TextBlock => b.type === 'text').map((b) => b.text).join('');
-    if (res.stop_reason === 'pause_turn') {
-      // Server tool loop hit its iteration cap; hand the partial turn back to continue.
-      messages.push({ role: 'assistant', content: res.content });
-      o.budget.assertAvailable();
-      continue;
-    }
-    if (res.stop_reason === 'max_tokens') throw new Error('response hit max_tokens; output truncated');
-    return text.trim();
-  }
-  throw new Error('too many pause_turn continuations');
+/** True when this environment can reach Claude: a long-lived token (CI) or a logged-in local CLI. */
+export function claudeAvailable(): boolean {
+  if (process.env.CLAUDE_CODE_OAUTH_TOKEN) return true;
+  if (process.env.CI) return false;
+  return spawnSync('claude', ['--version'], { stdio: 'ignore' }).status === 0;
 }
 
 /** Extract the first balanced JSON object from model text (tolerates prose or code fences around it). */

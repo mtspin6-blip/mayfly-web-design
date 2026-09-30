@@ -50,7 +50,7 @@ export const STATE_FILES = {
   published: enginePath('published-log.json'),
   backlog: enginePath('keyword-backlog.json'),
   health: enginePath('health-state.json'),
-  spend: enginePath('data/spend-ledger.json'),
+  spend: enginePath('data/usage-ledger.json'),
   seeds: enginePath('seeds.json'),
 };
 

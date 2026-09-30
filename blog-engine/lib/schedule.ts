@@ -92,7 +92,8 @@ export function decide(opts: { now: Date; cfg: Config; health: HealthState; log:
   if (!next || next.slot !== slotKey) next = { slot: slotKey, at: pickTarget(mt.date, cfg, opts.rng).toISOString() };
   if (opts.ignoreSlot) return { publish: true, reason: 'manual run (slot ignored, hard caps still enforced)', nextPublishAt: next };
 
-  const attempts = health.runs.filter((r) => r.reason?.startsWith(`slot ${slotKey}`)).length;
+  // Plan-limit stops aren't real attempts: the next hourly run may try again once the limit resets.
+  const attempts = health.runs.filter((r) => r.reason?.startsWith(`slot ${slotKey}`) && !r.reason.includes('usage-limit')).length;
   if (attempts >= 2) return { publish: false, reason: `already attempted slot ${slotKey} twice`, nextPublishAt: next };
   if (now.getTime() < Date.parse(next.at)) return { publish: false, reason: `waiting for jittered target ${next.at}`, nextPublishAt: next };
   return { publish: true, reason: `slot ${slotKey} due (${cadence})`, nextPublishAt: next };

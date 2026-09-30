@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import YAML from 'yaml';
 import { loadConfig } from '../lib/config.js';
-import { Budget, askJson } from '../lib/claude.js';
+import { Budget, askJson, claudeAvailable } from '../lib/claude.js';
 import { loadPosts, serializePost, type Post } from '../lib/post.js';
 import { loadPublished, savePublished } from '../lib/state.js';
 import { searchAnalytics, gscConfigured, isoDay, daysAgo } from '../lib/gsc.js';
@@ -28,7 +28,7 @@ async function main() {
   const posts = loadPosts().filter((p) => !p.fm.draft);
   const today = new Date().toISOString().slice(0, 10);
   const report: string[] = [];
-  const hasModel = !!(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN);
+  const hasModel = claudeAvailable();
 
   // ---- GSC data ----
   const perf = new Map<string, { impressions: number; ctr: number; position: number }>();
@@ -144,7 +144,7 @@ async function main() {
   }
 
   console.log(report.join('\n') || 'nothing to change this month');
-  console.log(`spend: $${budget.runUsd.toFixed(3)}`);
+  console.log(`model calls: ${budget.runCalls}`);
 }
 
 if (process.argv[1]?.endsWith('refresh.ts')) main().catch((e) => { console.error(e); process.exit(1); });

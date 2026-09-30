@@ -25,9 +25,9 @@ Rules for anyone (human or model) editing it:
 3. **Never fabricate:** no clients, testimonials, case studies, results, invented quotes or personal stories. First-person material only from `blog-engine/notes/inbox.md`.
 4. Every statistic needs a cited source; the gates and fact-checker enforce it. Don't loosen a gate to make a draft pass. Fix the draft.
 5. Changing a gate, prompt or threshold? Add or update a test in `blog-engine/tests/`. The good fixture (`tests/fixtures/good-post.md`) must keep passing every gate.
-6. Model calls go through `lib/claude.ts` (spend caps, refusal handling). Models: `claude-opus-5-5` for brief/draft, `claude-sonnet-5-5` for humanize/editor/research, `claude-haiku-4-5` for fact-check. Don't pass `temperature`, prefill, `budget_tokens`, or a forced `tool_choice` (all rejected by these models).
+6. Model calls go through `lib/claude.ts`, which runs Claude Code headless under Mitchell's Claude account (`CLAUDE_CODE_OAUTH_TOKEN`). **There is no API key and there must never be one**: API credentials are stripped from the child process so nothing can bill per token. Call caps and usage-limit handling live there. Models: `claude-opus-5-5` for brief/draft, `claude-sonnet-5-5` for humanize/editor/research, `claude-haiku-4-5` for fact-check.
 7. The repo is **public**. Nothing private in `blog-engine/`, `notes/`, or alert issues.
 
 ## Known follow-ups
 - `npm run engine:audit` shows the 5 posts written before the engine have 39 statistics with no cited source and no `sources`/`faq`. Fix or source them.
-- The committed keyword backlog was built with heuristics (no API key when it was made). Re-run `npm run engine:research -- --deep` once `ANTHROPIC_API_KEY` is available.
+- The committed keyword backlog was built with heuristics (no Claude access when it was made). Re-run `npm run engine:research -- --deep` once Claude Code is signed in.

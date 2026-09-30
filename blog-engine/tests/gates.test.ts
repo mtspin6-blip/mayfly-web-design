@@ -157,7 +157,7 @@ test('missing frontmatter fields fail schema', () => {
   delete p.fm.pillar;
   assert.equal(byId(run(p), 'schema').ok, false);
   const q = clone(goodPost());
-  q.fm.author = 'Mayfly Web Design';
+  q.fm.author = 'Someone Else';
   assert.equal(byId(run(q), 'schema').ok, false);
 });
 

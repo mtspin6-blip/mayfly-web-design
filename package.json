@@ -23,7 +23,6 @@
     "engine:typecheck": "tsc -p blog-engine/tsconfig.json"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.129.0",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.0",

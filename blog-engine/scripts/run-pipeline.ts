@@ -1,7 +1,7 @@
 // The weekly job: decide whether to publish now, then brief -> draft -> humanize -> editor loop -> fact-check -> gates -> publish.
 // Flags: --dry-run (everything except commit), --now (ignore the day/slot/jitter check; caps still apply), --no-site (skip build/Lighthouse)
 import { loadConfig } from '../lib/config.js';
-import { Budget, BudgetExceeded } from '../lib/claude.js';
+import { Budget, BudgetExceeded, UsageLimit } from '../lib/claude.js';
 import { loadBacklog, saveBacklog, loadPublished, loadHealth, saveHealth } from '../lib/state.js';
 import { loadPosts } from '../lib/post.js';
 import { decide } from '../lib/schedule.js';
@@ -70,12 +70,12 @@ export async function runPipeline(o: { dryRun: boolean; now: boolean; site: bool
         health.runs.push({ at: new Date().toISOString(), ok: true, reason: `slot ${slotKey} published ${res.slug}` });
         saveHealth(health);
       }
-      console.log(`spend: $${budget.runUsd.toFixed(3)}, ${budget.runTokens} tokens, ${budget.searches} searches`);
+      console.log(`usage: ${budget.runCalls} model calls, ${budget.runTokens} tokens, ${budget.searches} searches`);
       return { ok: true, published: res.slug, reason: `published ${res.slug}` };
     } catch (e) {
       lastFailure = (e as Error).message;
       console.error(`rejected "${item.keyword}": ${lastFailure}`);
-      if (e instanceof BudgetExceeded) { lastFailure = `budget: ${lastFailure}`; break; }
+      if (e instanceof BudgetExceeded) { lastFailure = `${e instanceof UsageLimit ? 'usage-limit' : 'budget'}: ${lastFailure}`; break; }
       skip.push(item.keyword);
       if (!o.dryRun) {
         const backlog = loadBacklog();
@@ -85,7 +85,8 @@ export async function runPipeline(o: { dryRun: boolean; now: boolean; site: bool
     }
   }
   if (!o.dryRun) {
-    health.runs.push({ at: new Date().toISOString(), ok: false, reason: `slot ${slotKey} failed: ${lastFailure.slice(0, 200)}` });
+    const limited = lastFailure.startsWith('usage-limit');
+    health.runs.push({ at: new Date().toISOString(), ok: false, reason: `slot ${slotKey} ${limited ? 'usage-limit' : 'failed'}: ${lastFailure.slice(0, 200)}` });
     health.runs = health.runs.slice(-60);
     saveHealth(health);
   }

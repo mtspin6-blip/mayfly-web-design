@@ -1,4 +1,4 @@
-// Optional: refine voice/voice-profile.md from real writing samples in voice/samples/. Needs ANTHROPIC credentials.
+// Optional: refine voice/voice-profile.md from real writing samples in voice/samples/. Uses your Claude account (Claude Code), no API key.
 import fs from 'node:fs';
 import { loadConfig } from '../lib/config.js';
 import { Budget, ask } from '../lib/claude.js';

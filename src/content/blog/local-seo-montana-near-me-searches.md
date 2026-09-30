@@ -6,7 +6,7 @@ excerpt: "Near me searches drive a huge share of local business in Montana. Here
 date: "2026-05-10"
 category: "SEO"
 readTime: "4 min read"
-author: "Mitchell Spinetta"
+author: "Mayfly Web Design"
 image: ../../assets/troy-olson-CGFsPbYYN2c-unsplash.jpg
 ---
 

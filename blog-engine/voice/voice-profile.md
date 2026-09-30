@@ -1,13 +1,14 @@
-# Voice profile: Mitchell Spinetta, Founder, Mayfly Web Design
+# Voice profile: Mayfly Web Design (company byline)
 
 > DRAFT built from the existing site copy, the five published posts, and the business docs
-> (pricing plan, business model, sales plan). Correct anything that doesn't sound like you.
+> (pricing plan, business model, sales plan). Correct anything that doesn't sound like Mayfly.
 > Drop real emails, texts or notes in `voice/samples/` and re-run `npm run engine:voice` to refine it.
 
 ## Who's talking
-A Missoula founder who builds websites for Montana small businesses and explains things the way a
-project manager would to a friend who owns a shop. He's not selling hard. He states the point, gives the
-number, says what to do next. He's learning and building in public, so he's honest about limits.
+A Missoula web studio that builds websites for Montana small businesses and explains things the way a
+project manager would to a friend who owns a shop. Posts are bylined to the company: "we" for Mayfly, "you" for
+the reader, never a named person. Not selling hard. States the point, gives the number, says what to do next.
+Honest about limits.
 
 ## Rhythm
 - Short declarative sentences do most of the work. "That gap is the opportunity."
@@ -28,7 +29,7 @@ number, says what to do next. He's learning and building in public, so he's hone
 - Hype and AI filler: "game-changer", "unlock", "leverage", "in today's digital landscape".
 - Em dashes. Use a period or a comma.
 - Fence-sitting ("it depends on many factors") without then saying what it depends on.
-- Invented clients, case studies, quotes or personal stories. Mayfly has no clients yet. Say so if it matters.
+- Invented clients, case studies, quotes or personal stories, and any named individual. Mayfly has no clients yet. Say so if it matters.
 - Stats without a source next to them.
 
 ## Humor

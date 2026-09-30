@@ -43,7 +43,7 @@ validation, and mobile Lighthouse (median of 3) of at least 90.
 | `npm run engine:baseline` | Import Search Console CSVs from `blog-engine/data/baseline/` into the backlog |
 | `npm run engine:research` | Expand seeds, score, cluster, write `keyword-backlog.json` (add `-- --deep`, `-- --offline`) |
 | `npm run engine:pick` | Show the next topic without writing anything |
-| `npm run engine:dry-run` | Full pipeline except the commit (needs `ANTHROPIC_API_KEY`) |
+| `npm run engine:dry-run` | Full pipeline except the commit (needs Claude Code signed in: locally `claude`, in GitHub `CLAUDE_CODE_OAUTH_TOKEN`) |
 | `npm run engine:run` | The real scheduled run (respects slot, caps, paused) |
 | `npm run engine:health` | Weekly circuit breaker (`-- --dry-run --simulate bad-index` to rehearse) |
 | `npm run engine:refresh` | Monthly CTR tests, striking-distance FAQs, freshness, prune |
@@ -79,7 +79,7 @@ blog-engine/
   prompts/    writer, brief, editor-rubric, factcheck, humanize, revise, keyword-analysis
   voice/      voice-profile.md and samples/
   notes/      inbox.md (public, see below)
-  data/       baseline CSVs, spend ledger, caches
+  data/       baseline CSVs, usage ledger, caches
   tests/
 ```
 

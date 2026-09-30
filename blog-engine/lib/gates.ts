@@ -219,15 +219,15 @@ export function gateSchema(p: Post): GateResult {
     .filter((k) => !f[k] || String(f[k]).trim() === '');
   if (missing.length) return fail('schema', `frontmatter missing: ${missing.join(', ')}`);
   if (Number.isNaN(Date.parse(f.date))) return fail('schema', 'date is not a valid date');
-  if (f.author !== 'Mitchell Spinetta') return fail('schema', 'author must be Mitchell Spinetta (Person schema)');
-  const blogPosting = { '@type': 'BlogPosting', headline: f.title, datePublished: f.date, author: { '@type': 'Person', name: f.author } };
+  if (f.author !== 'Mayfly Web Design') return fail('schema', 'author must be Mayfly Web Design (posts are bylined to the company)');
+  const blogPosting = { '@type': 'BlogPosting', headline: f.title, datePublished: f.date, author: { '@type': 'Organization', name: f.author } };
   const breadcrumb = { '@type': 'BreadcrumbList', itemListElement: [1, 2, 3, 4].map((position) => ({ '@type': 'ListItem', position })) };
   try {
     JSON.parse(JSON.stringify([blogPosting, breadcrumb]));
   } catch {
     return fail('schema', 'JSON-LD failed to serialize');
   }
-  return pass('schema', 'BlogPosting/Person/FAQPage/BreadcrumbList inputs valid');
+  return pass('schema', 'BlogPosting/Organization/FAQPage/BreadcrumbList inputs valid');
 }
 
 export function gateReadability(p: Post, cfg: Config): GateResult {

@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { loadConfig } from '../lib/config.js';
-import { Budget, ask } from '../lib/claude.js';
+import { Budget, ask, claudeAvailable } from '../lib/claude.js';
 import { loadPublished } from '../lib/state.js';
 import { loadPosts } from '../lib/post.js';
 import { searchAnalytics, inspectUrl, gscConfigured, isoDay, daysAgo } from '../lib/gsc.js';
@@ -14,7 +14,7 @@ import { arg } from '../lib/pipeline.js';
 const pct = (n: number) => `${(n * 100).toFixed(2)}%`;
 
 async function citationCheck(cfg = loadConfig()): Promise<{ lines: string[]; cited: number; total: number } | null> {
-  if (!(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN)) return null;
+  if (!claudeAvailable()) return null;
   const queries = readJson<{ queries: string[] }>(enginePath('data/citation-queries.json'), { queries: [] }).queries.slice(0, 10);
   const budget = new Budget(cfg);
   const lines: string[] = [];
@@ -74,7 +74,7 @@ async function main() {
     const cc = await citationCheck();
     out.push('## AI citation check (10 fixed queries)', '');
     if (cc) out.push(`Cited on ${cc.cited} of ${cc.total} queries.`, '', '| Query | Result |', '|---|---|', ...cc.lines, '');
-    else out.push('_Skipped: no Anthropic credentials in this environment._', '');
+    else out.push("_Skipped: Claude is not available in this environment._", '');
   }
 
   fs.mkdirSync(REPORTS_DIR, { recursive: true });

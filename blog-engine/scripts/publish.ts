@@ -83,8 +83,6 @@ export function publish(o: PublishOpts): { slug: string; committed: boolean; bac
     '',
     'gates:',
     o.gateText,
-    '',
-    'Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>',
   ].join('\n');
   git('commit', '-m', msg);
   return { slug: post.slug, committed: true, backlinked };

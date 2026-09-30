@@ -9,7 +9,7 @@ import { factCheck } from '../scripts/fact-check.js';
 import { backlinkTargets, addBackLink } from '../scripts/publish.js';
 import { pickTopic, pickFormat } from '../scripts/pick-topic.js';
 import { humanize } from '../scripts/humanize.js';
-import { Budget } from '../lib/claude.js';
+import { Budget, buildCliInvocation, ask, UsageLimit } from '../lib/claude.js';
 import { loadConfig } from '../lib/config.js';
 import { parseQueriesCsv } from '../scripts/import-baseline.js';
 import { goodPost, clone } from './helpers.js';
@@ -40,8 +40,8 @@ function mockModel(over: { editor?: unknown; claims?: unknown } = {}) {
         internalLinks: [], faqCandidates: [], cta: 'Book a free call', category: 'Web Design',
       });
     }
-    if (req.system.includes('ghostwriting') || req.system.includes('revising your draft')) {
-      calls.push(req.system.includes('ghostwriting') ? 'write' : 'revise');
+    if (req.system.includes('published by Mayfly Web Design') || req.system.includes('revising your draft')) {
+      calls.push(req.system.includes('published by Mayfly Web Design') ? 'write' : 'revise');
       return `===FRONTMATTER===\n${fmText}\n===BODY===\n${bodyText}`;
     }
     if (req.system.includes('Rewrite the draft below')) { calls.push('humanize'); return req.user; }
@@ -207,4 +207,38 @@ test('niche lock restricts niche-guides topics once set', () => {
   const mk = (keyword: string, pillar: BacklogItem['pillar'], score: number): BacklogItem => ({ keyword, cluster: { primary: keyword, secondary: [] }, score, intent: 'informational', pillar, sources: [], status: 'new' });
   const backlog = [mk('brewery website must haves', 'niche-guides', 90), mk('outfitter website checklist', 'niche-guides', 50)];
   assert.equal(pickTopic({ cfg, backlog, published: [], usedKeywords: [] })?.item.keyword, 'outfitter website checklist');
+});
+
+test('Claude Code invocation never carries an API key (no API billing possible)', () => {
+  const { args, env } = buildCliInvocation(
+    { model: 'claude-opus-5-5', system: 'sys', webSearch: { maxUses: 5 } },
+    { PATH: '/bin', ANTHROPIC_API_KEY: 'sk-ant-x', ANTHROPIC_AUTH_TOKEN: 't', ANTHROPIC_BASE_URL: 'https://x', CLAUDE_CODE_OAUTH_TOKEN: 'sub-token' },
+  );
+  assert.equal(env.ANTHROPIC_API_KEY, undefined);
+  assert.equal(env.ANTHROPIC_AUTH_TOKEN, undefined);
+  assert.equal(env.ANTHROPIC_BASE_URL, undefined);
+  assert.equal(env.CLAUDE_CODE_OAUTH_TOKEN, 'sub-token', 'subscription token is kept');
+  assert.ok(args.includes('-p') && args.includes('--no-session-persistence'));
+  assert.deepEqual(args.slice(args.indexOf('--tools'), args.indexOf('--tools') + 2), ['--tools', 'WebSearch,WebFetch']);
+  const noTools = buildCliInvocation({ model: 'm', system: 's' }, {});
+  assert.deepEqual(noTools.args.slice(noTools.args.indexOf('--tools'), noTools.args.indexOf('--tools') + 2), ['--tools', '']);
+  assert.ok(!noTools.args.includes('--allowedTools'));
+});
+
+test('a usage-limit stop ends the run without rejecting the topic', async () => {
+  setMockClaude(() => { throw new UsageLimit('Claude plan usage limit reached'); });
+  const r = await runPipeline({ dryRun: true, now: true, site: false, fetcher: okFetch });
+  assert.equal(r.ok, false);
+  assert.match(r.reason, /usage-limit/);
+  setMockClaude(undefined);
+});
+
+test('call caps stop a runaway loop', async () => {
+  const cfg = loadConfig();
+  const b = new Budget({ ...cfg, budget: { ...cfg.budget, maxModelCallsPerRun: 1 } });
+  setMockClaude(() => 'ok');
+  await ask({ model: 'm', system: 's', user: 'u', budget: b });
+  b.record(10);
+  await assert.rejects(ask({ model: 'm', system: 's', user: 'u', budget: b }), /call cap/);
+  setMockClaude(undefined);
 });

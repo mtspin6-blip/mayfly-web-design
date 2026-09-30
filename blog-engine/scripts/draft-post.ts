@@ -79,7 +79,7 @@ export function buildPost(raw: string, c: { cfg: Config; item: { keyword: string
       date: c.prior?.fm.date ?? mtParts(new Date()).date,
       category,
       readTime: `${Math.max(3, Math.round(wc / 200))} min read`,
-      author: 'Mitchell Spinetta',
+      author: 'Mayfly Web Design',
       pillar: c.item.pillar,
       format: c.format,
       primaryKeyword: c.item.keyword,

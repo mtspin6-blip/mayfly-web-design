@@ -2,7 +2,7 @@
   "paused": true,
   "pausedReason": "Ships paused. Flip to false after: Cloudflare www redirect added, secrets set, baseline CSVs imported.",
   "disclosure": { "enabled": false, "text": "" },
-  "site": { "url": "https://mayflywebdesign.com", "author": "Mitchell Spinetta" },
+  "site": { "url": "https://mayflywebdesign.com", "author": "Mayfly Web Design" },
   "offer": {
     "starter": { "monthly": 59, "annual": 599, "buyout": 750 },
     "business": { "monthly": 99, "annual": 999, "buyout": 1500 },
@@ -28,9 +28,10 @@
     "research": "claude-sonnet-5-5"
   },
   "budget": {
-    "maxTokensPerRun": 400000,
-    "monthlySpendCapUsd": 40,
-    "webSearchCostUsd": 0.01,
+    "note": "No API billing: usage counts against your Claude plan. These caps stop a runaway loop from eating the plan.",
+    "maxTokensPerRun": 600000,
+    "maxModelCallsPerRun": 40,
+    "monthlyModelCallCap": 400,
     "maxWebSearchesPerRun": 25
   },
   "cadence": {

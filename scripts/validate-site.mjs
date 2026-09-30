@@ -15,7 +15,7 @@ function walk(dir) {
 
 const REQUIRED = {
   BlogPosting: ['headline', 'datePublished', 'author', 'publisher', 'image'],
-  Person: ['name'],
+  Organization: ['name'],
   FAQPage: ['mainEntity'],
   BreadcrumbList: ['itemListElement'],
   Service: ['name', 'provider'],

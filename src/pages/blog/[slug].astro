@@ -33,14 +33,8 @@ const related = allPosts
   .slice(0, 2)
   .map(x => x.p);
 
-const person = {
-  "@type": "Person",
-  "@id": `${SITE_URL}/#mitchell`,
-  "name": AUTHOR.name,
-  "jobTitle": AUTHOR.jobTitle,
-  "url": AUTHOR.url,
-  "worksFor": { "@id": `${SITE_URL}/#business` },
-};
+// Bylined to the company: the author is the LocalBusiness node defined site-wide in BaseLayout.
+const authorRef = { "@type": "Organization", "@id": `${SITE_URL}/#business`, "name": AUTHOR.name, "url": AUTHOR.url };
 
 const graph: Record<string, unknown>[] = [
   {
@@ -55,7 +49,7 @@ const graph: Record<string, unknown>[] = [
     "url": url,
     "image": `${SITE_URL}/og/${entry.slug}.png`,
     "articleSection": PILLARS[pillar].title,
-    "author": person,
+    "author": authorRef,
     "publisher": { "@id": `${SITE_URL}/#business` },
     ...(sources.length ? { "citation": sources.map(s => ({ "@type": "CreativeWork", "name": s.title, "url": s.url })) } : {}),
   },
@@ -106,7 +100,7 @@ if (faq.length) {
           <h1 class="post-title">{title}</h1>
           <p class="post-excerpt">{excerpt}</p>
           <div class="post-meta">
-            <a href="/about/" class="post-author" rel="author">{AUTHOR.name}, {AUTHOR.jobTitle}</a>
+            <a href="/about/" class="post-author" rel="author">{AUTHOR.name}</a>
             <span class="post-meta-dot" aria-hidden="true">·</span>
             <time datetime={date}>{formattedDate}</time>
             {showUpdated && (<>

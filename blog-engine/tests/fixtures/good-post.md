@@ -5,7 +5,7 @@ excerpt: Most small business websites take one to two weeks when content arrives
 date: "2026-10-06"
 category: Web Design
 readTime: 5 min read
-author: Mitchell Spinetta
+author: Mayfly Web Design
 pillar: website-cost
 format: how-to
 primaryKeyword: how long to build a small business website

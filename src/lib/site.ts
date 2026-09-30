@@ -1,9 +1,9 @@
 // Single source of truth for site-wide constants used by layouts, schema and feeds.
 export const SITE_URL = 'https://mayflywebdesign.com';
 export const SITE_NAME = 'Mayfly Web Design';
+// Posts are bylined to the company, not a person.
 export const AUTHOR = {
-  name: 'Mitchell Spinetta',
-  jobTitle: 'Founder',
+  name: 'Mayfly Web Design',
   url: `${SITE_URL}/about/`,
 };
 export const BOOKING_URL = 'https://cal.com/mayflywebdesign/discovery';

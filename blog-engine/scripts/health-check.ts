@@ -46,7 +46,7 @@ async function main() {
     now, cfg, state, published,
     indexStatus: g.indexStatus ?? [], postPerf: g.postPerf ?? [],
     siteImpressionsTwoWeeks: g.siteImpressionsTwoWeeks, siteImpressionsPriorTwoWeeks: g.siteImpressionsPriorTwoWeeks,
-    recentRuns: state.runs.filter((r) => r.at.slice(0, 7) === now.toISOString().slice(0, 7)),
+    recentRuns: state.runs.filter((r) => r.at.slice(0, 7) === now.toISOString().slice(0, 7) && !r.reason?.includes('usage-limit')),
   };
   if (argVal('simulate') === 'bad-index') {
     const mk = (slug: string, age: number, verdict: 'indexed' | 'not-indexed') => ({ slug, publishedAt: new Date(now.getTime() - age * 86400000).toISOString(), verdict });
