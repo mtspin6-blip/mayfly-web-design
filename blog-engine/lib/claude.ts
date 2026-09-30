@@ -73,6 +73,8 @@ export function buildCliInvocation(o: Pick<AskOptions, 'model' | 'system' | 'web
   const childEnv: NodeJS.ProcessEnv = { ...env };
   // Never allow API billing: drop every API credential before the child starts.
   for (const k of ['ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN', 'ANTHROPIC_BASE_URL', 'CLAUDE_CODE_USE_BEDROCK', 'CLAUDE_CODE_USE_VERTEX']) delete childEnv[k];
+  // A token copied out of a wrapped terminal line often carries a line break or spaces. Strip them.
+  if (childEnv.CLAUDE_CODE_OAUTH_TOKEN) childEnv.CLAUDE_CODE_OAUTH_TOKEN = childEnv.CLAUDE_CODE_OAUTH_TOKEN.replace(/\s+/g, '');
   return { args, env: childEnv };
 }
 

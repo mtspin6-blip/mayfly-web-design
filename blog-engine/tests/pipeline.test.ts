@@ -242,3 +242,8 @@ test('call caps stop a runaway loop', async () => {
   await assert.rejects(ask({ model: 'm', system: 's', user: 'u', budget: b }), /call cap/);
   setMockClaude(undefined);
 });
+
+test('a token pasted with a line break or spaces is cleaned before use', () => {
+  const { env } = buildCliInvocation({ model: 'm', system: 's' }, { CLAUDE_CODE_OAUTH_TOKEN: 'sk-ant-oat01-abc\ndef ghi\r\n' });
+  assert.equal(env.CLAUDE_CODE_OAUTH_TOKEN, 'sk-ant-oat01-abcdefghi');
+});
