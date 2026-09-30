@@ -8,11 +8,12 @@ import ValueProps from '../components/sections/ValueProps.astro';
 import SocialProof from '../components/sections/SocialProof.astro';
 import PricingSnapshot from '../components/sections/PricingSnapshot.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
+import RelatedGuides from '../components/sections/RelatedGuides.astro';
 ---
 
 <BaseLayout
-  title="Montana Web Design | Mayfly Web Design — Missoula, Bozeman"
-  description="$0 upfront websites from $59/month for Montana small businesses, plus AI automations and local SEO. Serving Missoula, Bozeman, Great Falls & statewide."
+  title="Montana Web Design | Mayfly Web Design, Missoula MT"
+  description="Web design in Montana from a Missoula web designer. $0 upfront websites from $59/month, plus business automation and local SEO for small businesses."
 >
   <Header />
   <main id="main-content">
@@ -21,6 +22,7 @@ import FinalCTA from '../components/sections/FinalCTA.astro';
     <ValueProps />
     <SocialProof />
     <PricingSnapshot />
+    <RelatedGuides heading="Guides for Montana small business owners" limit={5} cities />
     <FinalCTA />
   </main>
   <Footer />

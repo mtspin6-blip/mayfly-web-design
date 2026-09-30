@@ -1,10 +1,12 @@
 ---
 title: "5 AI Automations That Save Montana Small Businesses Hours Every Week"
+seoTitle: "5 AI Automations for Montana Businesses"
+description: "Five AI automations that save Montana small businesses hours every week, from lead follow-up to review requests, without a tech team or big budget."
 excerpt: "Most Montana small business owners are drowning in repetitive work. Here are five AI automations that give those hours back without requiring a tech team or a massive budget."
 date: "2026-05-09"
 category: "Automations"
 readTime: "5 min read"
-author: "Mayfly Web Design"
+author: "Mitchell Spinetta"
 image: ../../assets/steven-cordes-v8rgLNfpHyY-unsplash.jpg
 ---
 

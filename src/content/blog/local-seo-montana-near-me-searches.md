@@ -1,10 +1,12 @@
 ---
 title: "Local SEO for Montana Businesses: How to Show Up in Near Me Searches"
+seoTitle: "Local SEO for Montana Near Me Searches"
+description: "Learn how local SEO gets your Montana business into near me searches, what it really involves, and the first steps to start showing up on Google Maps."
 excerpt: "Near me searches drive a huge share of local business in Montana. Here is what local SEO actually does, why it matters more than ever, and how to get your business showing up."
 date: "2026-05-10"
 category: "SEO"
 readTime: "4 min read"
-author: "Mayfly Web Design"
+author: "Mitchell Spinetta"
 image: ../../assets/troy-olson-CGFsPbYYN2c-unsplash.jpg
 ---
 

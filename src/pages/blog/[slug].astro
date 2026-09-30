@@ -1,12 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
+import { SITE_URL, SITE_NAME, AUTHOR, BOOKING_URL, PILLARS, pillarOf } from '../../lib/site';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection('blog', (p) => !p.data.draft);
   return posts.map(entry => ({
     params: { slug: entry.slug },
     props: { entry },
@@ -16,43 +16,82 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-const { title, excerpt, date, category, readTime, author, image } = entry.data;
-const formattedDate = new Date(date).toLocaleDateString('en-US', {
-  year: 'numeric', month: 'long', day: 'numeric'
-});
+const { title, seoTitle, excerpt, date, updatedDate, category, readTime, sources, faq, cta } = entry.data;
+const description = entry.data.description ?? excerpt.slice(0, 155);
+const pillar = pillarOf(entry.data);
+const fmt = (d: string) => new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const formattedDate = fmt(date);
+const showUpdated = updatedDate && updatedDate !== date;
+const url = `${SITE_URL}/blog/${entry.slug}/`;
 
-// Related posts — same category, exclude this one, max 2
-const allPosts = await getCollection('blog');
+// Related posts: same pillar first, then same category, max 2
+const allPosts = (await getCollection('blog', (p) => !p.data.draft)).filter(p => p.slug !== entry.slug);
 const related = allPosts
-  .filter(p => p.slug !== entry.slug && p.data.category === category)
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-  .slice(0, 2);
+  .map(p => ({ p, score: (pillarOf(p.data) === pillar ? 2 : 0) + (p.data.category === category ? 1 : 0) }))
+  .filter(x => x.score > 0)
+  .sort((a, b) => b.score - a.score || new Date(b.p.data.date).getTime() - new Date(a.p.data.date).getTime())
+  .slice(0, 2)
+  .map(x => x.p);
 
-const postSchema = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": title,
-  "description": excerpt,
-  "datePublished": date,
-  "dateModified": date,
-  "author": {
-    "@type": "Person",
-    "name": author
-  },
-  "publisher": {
-    "@type": "LocalBusiness",
-    "name": "Mayfly Web Design",
-    "url": "https://mayflywebdesign.com"
-  },
-  "url": `https://mayflywebdesign.com/blog/${entry.slug}`
+const person = {
+  "@type": "Person",
+  "@id": `${SITE_URL}/#mitchell`,
+  "name": AUTHOR.name,
+  "jobTitle": AUTHOR.jobTitle,
+  "url": AUTHOR.url,
+  "worksFor": { "@id": `${SITE_URL}/#business` },
 };
+
+const graph: Record<string, unknown>[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#post`,
+    "headline": title,
+    "description": description,
+    "datePublished": date,
+    "dateModified": updatedDate ?? date,
+    "mainEntityOfPage": url,
+    "url": url,
+    "image": `${SITE_URL}/og/${entry.slug}.png`,
+    "articleSection": PILLARS[pillar].title,
+    "author": person,
+    "publisher": { "@id": `${SITE_URL}/#business` },
+    ...(sources.length ? { "citation": sources.map(s => ({ "@type": "CreativeWork", "name": s.title, "url": s.url })) } : {}),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${SITE_URL}/blog/` },
+      { "@type": "ListItem", "position": 3, "name": PILLARS[pillar].title, "item": `${SITE_URL}/blog/topic/${pillar}/` },
+      { "@type": "ListItem", "position": 4, "name": title, "item": url },
+    ],
+  },
+];
+if (faq.length) {
+  graph.push({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  });
+}
 ---
 
 <BaseLayout
-  title={`${title} | Mayfly Web Design`}
-  description={excerpt.slice(0, 155)}
+  title={seoTitle ?? title}
+  description={description}
+  ogType="article"
+  ogImage={`${SITE_URL}/og/${entry.slug}.png`}
+  publishedTime={date}
+  modifiedTime={updatedDate ?? date}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(postSchema)} slot="head"></script>
+  {graph.map(g => <script type="application/ld+json" set:html={JSON.stringify(g)} slot="head"></script>)}
 
   <Header />
   <main id="main-content">
@@ -60,15 +99,19 @@ const postSchema = {
     <!-- ── Post Header ───────────────────────────────────────── -->
     <section class="post-hero">
       <div class="section-container post-hero-inner">
-        <a href="/blog/" class="post-back">← Back to Blog</a>
+        <a href={`/blog/topic/${pillar}/`} class="post-back">← {PILLARS[pillar].title}</a>
         <div class="post-hero-content">
           <span class="post-tag">{category}</span>
           <h1 class="post-title">{title}</h1>
           <p class="post-excerpt">{excerpt}</p>
           <div class="post-meta">
-            <span>{author}</span>
+            <a href="/about/" class="post-author" rel="author">{AUTHOR.name}, {AUTHOR.jobTitle}</a>
             <span class="post-meta-dot" aria-hidden="true">·</span>
             <time datetime={date}>{formattedDate}</time>
+            {showUpdated && (<>
+              <span class="post-meta-dot" aria-hidden="true">·</span>
+              <span>Updated <time datetime={updatedDate}>{fmt(updatedDate!)}</time></span>
+            </>)}
             <span class="post-meta-dot" aria-hidden="true">·</span>
             <span>{readTime}</span>
           </div>
@@ -82,18 +125,43 @@ const postSchema = {
         <article class="post-body">
           <Content />
 
+          {faq.length > 0 && (
+            <section class="post-faq" aria-labelledby="faq-heading">
+              <h2 id="faq-heading">Frequently asked questions</h2>
+              {faq.map(f => (
+                <div class="post-faq-item">
+                  <h3>{f.q}</h3>
+                  <p>{f.a}</p>
+                </div>
+              ))}
+            </section>
+          )}
+
           <!-- ── Inline CTA ─────────────────────────────────── -->
           <div class="post-cta">
-            <p class="post-cta-text">Ready to get your Montana business showing up in AI search?</p>
+            <p class="post-cta-text">{cta ? 'Want a hand with this?' : 'Ready to get your Montana business showing up in AI search?'}</p>
             <a
-              href="https://cal.com/mayflywebdesign/discovery"
+              href={`${BOOKING_URL}?utm_source=blog&utm_medium=cta&utm_campaign=${entry.slug}`}
               target="_blank"
               rel="noopener noreferrer"
               class="post-cta-btn"
+              data-cta="blog-book-call"
+              data-post={entry.slug}
             >
-              Book a Free Call
+              {cta ?? 'Book a Free Call'}
             </a>
           </div>
+
+          {sources.length > 0 && (
+            <aside class="post-sources" aria-labelledby="sources-heading">
+              <h2 id="sources-heading">Sources</h2>
+              <ol>
+                {sources.map(src => (
+                  <li><a href={src.url} rel="noopener noreferrer" target="_blank">{src.title}</a></li>
+                ))}
+              </ol>
+            </aside>
+          )}
         </article>
       </div>
     </section>
@@ -337,6 +405,14 @@ const postSchema = {
     opacity: 0.9;
     transform: translateY(-1px);
   }
+
+  .post-author { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .post-faq { margin-top: 3.5rem; }
+  .post-faq-item h3 { margin-top: 1.75rem; }
+  .post-faq-item p { margin-bottom: 0.5rem; }
+  .post-sources { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-surface); }
+  .post-sources :global(h2) { font-size: 1.125rem; margin-top: 0; }
+  .post-sources :global(ol), .post-sources :global(li), .post-sources :global(a) { font-size: 0.9375rem; }
 
   /* ── Related Posts ────────────────────────────────────────── */
   .related-section {

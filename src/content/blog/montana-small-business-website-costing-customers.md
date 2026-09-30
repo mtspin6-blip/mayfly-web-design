@@ -1,10 +1,12 @@
 ---
 title: "Why Most Montana Small Business Websites Are Costing Them Customers"
+seoTitle: "Why Your Montana Website Loses Customers"
+description: "Find out why many Montana small business websites quietly turn customers away, the most common problems, and how to fix them before you lose more leads."
 excerpt: "Most Montana small businesses have a website that quietly drives customers away. Here is what is going wrong, why it matters, and how to fix it."
 date: "2026-05-08"
 category: "Web Design"
 readTime: "4 min read"
-author: "Mayfly Web Design"
+author: "Mitchell Spinetta"
 image: ../../assets/matthew-lancaster-cWFlYyJp2PE-unsplash.jpg
 ---
 

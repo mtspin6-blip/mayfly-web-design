@@ -5,10 +5,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import HeroImg from '../../assets/BlogPageHeader.jpg';
+import { PILLARS, pillarOf } from '../../lib/site';
 
-const posts = (await getCollection('blog')).sort(
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
+
+const pillarCounts = Object.keys(PILLARS).map((slug) => ({
+  slug,
+  title: PILLARS[slug as keyof typeof PILLARS].title,
+  count: posts.filter((p) => pillarOf(p.data) === slug).length,
+})).filter((x) => x.count > 0);
 
 const heroImage = await getImage({ src: HeroImg, width: 1920, format: 'webp', quality: 82 });
 
@@ -17,12 +24,9 @@ const blogSchema = {
   "@type": "Blog",
   "name": "Mayfly Web Design Blog",
   "description": "Web design, AI search, and GAIO insights for Montana small businesses",
-  "url": "https://mayflywebdesign.com/blog",
-  "publisher": {
-    "@type": "LocalBusiness",
-    "name": "Mayfly Web Design",
-    "url": "https://mayflywebdesign.com"
-  }
+  "url": "https://mayflywebdesign.com/blog/",
+  "inLanguage": "en-US",
+  "publisher": { "@id": "https://mayflywebdesign.com/#business" }
 };
 ---
 
@@ -53,6 +57,12 @@ const blogSchema = {
     <!-- ── Post Grid ─────────────────────────────────────────── -->
     <section class="blog-grid-section">
       <div class="section-container">
+
+        <nav class="topic-nav" aria-label="Blog topics">
+          {pillarCounts.map((t) => (
+            <a href={`/blog/topic/${t.slug}/`} class="topic-chip">{t.title} <span>({t.count})</span></a>
+          ))}
+        </nav>
 
         {posts.length === 0 ? (
           <div class="blog-empty reveal">
@@ -89,6 +99,12 @@ const blogSchema = {
             ))}
           </ul>
         )}
+
+        <p class="editorial-note">
+          Every guide is written and edited to answer one real question, cites its sources, and shows when it was last
+          updated. Prices quoted are Mayfly's current published prices. Spotted a mistake?
+          <a href="mailto:contact@mayflywebdesign.com?subject=Blog%20correction">Tell us</a> and we'll fix it and note the correction.
+        </p>
       </div>
     </section>
 
@@ -371,6 +387,20 @@ const blogSchema = {
     font-weight: 300;
     white-space: nowrap;
   }
+
+  .topic-nav { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-bottom: 2.5rem; }
+  .topic-chip {
+    font-family: var(--font-body); font-size: 0.8125rem; font-weight: 500; text-decoration: none;
+    color: var(--color-text); border: 1px solid var(--color-surface); background: #fff; padding: 0.5rem 0.875rem;
+    transition: border-color 0.2s ease;
+  }
+  .topic-chip:hover { border-color: var(--color-accent); }
+  .topic-chip span { color: var(--color-muted); font-weight: 300; }
+  .editorial-note {
+    font-family: var(--font-body); font-size: 0.875rem; font-weight: 300; line-height: 1.7;
+    color: var(--color-muted); max-width: 62ch; margin-top: 3rem;
+  }
+  .editorial-note a { color: var(--color-gold); text-decoration: underline; }
 
   /* ── Empty state ──────────────────────────────────────────── */
   .blog-empty {

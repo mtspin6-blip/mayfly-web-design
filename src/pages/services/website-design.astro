@@ -7,6 +7,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import FinalCTA from '../../components/sections/FinalCTA.astro';
+import RelatedGuides from '../../components/sections/RelatedGuides.astro';
 
 const deliverables = [
   { name: 'Custom Web Design',  detail: 'Built around your brand, not a template' },
@@ -110,8 +111,8 @@ const serviceSchema = {
 ---
 
 <BaseLayout
-  title="Website Design for Montana Businesses | Mayfly Web Design"
-  description="$0 upfront websites from $59/month. Mobile-first, fast-loading, and built to convert. Serving Montana statewide — Missoula, Bozeman, Great Falls, Billings."
+  title="Web Design for Small Business in Montana | Mayfly Web Design"
+  description="Small business web design in Montana from a Missoula web designer. Fast, mobile-first sites from $59/month with $0 upfront. Book a free call."
 >
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} slot="head"></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
@@ -127,11 +128,11 @@ const serviceSchema = {
         <div class="svc-hero-content">
           <p class="section-eyebrow reveal">Website Design</p>
           <h1 class="svc-headline reveal" style="transition-delay:0.08s">
-            Websites built to convert,<br /><em>not just exist.</em>
+            Web design for Montana<br />small business, <em>built to convert.</em>
           </h1>
           <p class="svc-sub reveal" style="transition-delay:0.16s">
-            Custom websites for Missoula, Bozeman, and Montana small businesses — fast to load, easy to update,
-            designed to turn visitors into customers.
+            A Missoula web designer building custom websites for Montana small businesses: fast to load,
+            easy to update, designed to turn visitors into customers.
           </p>
           <a href="/contact/" class="btn-primary reveal" style="transition-delay:0.22s">
             Book a Free Consultation
@@ -237,6 +238,7 @@ const serviceSchema = {
       </div>
     </section>
 
+    <RelatedGuides heading="Guides on website cost and choosing a designer" pillars={['website-cost', 'website-problems']} cities />
     <FinalCTA />
   </main>
   <Footer />
@@ -320,7 +322,7 @@ const serviceSchema = {
   .svc-headline {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(3.25rem, 7vw, 5.5rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     line-height: 1.07;
     letter-spacing: -0.025em;
     color: var(--color-bg);

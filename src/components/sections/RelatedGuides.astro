@@ -1,0 +1,52 @@
+---
+// Internal links from money pages to the blog. Pass `pillars` to pick topics; falls back to newest posts.
+import { getCollection } from 'astro:content';
+import { pillarOf, type PillarSlug } from '../../lib/site';
+
+interface Props {
+  heading?: string;
+  pillars?: PillarSlug[];
+  limit?: number;
+  cities?: boolean;
+}
+const { heading = 'Guides that help', pillars, limit = 3, cities = false } = Astro.props;
+
+const all = (await getCollection('blog', (p) => !p.data.draft)).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+const picked = (pillars ? all.filter((p) => pillars.includes(pillarOf(p.data))) : all).slice(0, limit);
+const cityLinks = [
+  ['Missoula', 'missoula'], ['Bozeman', 'bozeman'], ['Great Falls', 'great-falls'], ['Billings', 'billings'],
+];
+---
+
+{picked.length > 0 && (
+  <section class="guides-strip">
+    <div class="section-container">
+      <p class="guides-eyebrow">From the blog</p>
+      <h2 class="guides-heading">{heading}</h2>
+      <ul class="guides-list" role="list">
+        {picked.map((p) => (
+          <li><a href={`/blog/${p.slug}/`}>{p.data.title}</a></li>
+        ))}
+      </ul>
+      {cities && (
+        <p class="guides-cities">
+          Web design by city:
+          {cityLinks.map(([n, s], i) => (<><a href={`/web-design/${s}/`}>{n}</a>{i < cityLinks.length - 1 ? ' · ' : ''}</>))}
+        </p>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  .guides-strip { background: var(--color-surface); padding: 4rem 0; }
+  .guides-eyebrow { font-family: var(--font-body); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 0.75rem; }
+  .guides-heading { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.02em; color: var(--color-text); margin-bottom: 1.5rem; }
+  .guides-list { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.75rem; }
+  .guides-list a, .guides-cities a { font-family: var(--font-body); font-size: 1.0625rem; color: var(--color-text); text-decoration: underline; text-underline-offset: 3px; }
+  .guides-list a:hover, .guides-cities a:hover { color: var(--color-gold); }
+  .guides-cities { font-family: var(--font-body); font-size: 0.9375rem; color: var(--color-muted); }
+  .guides-cities a { font-size: 0.9375rem; margin: 0 0.25rem; }
+</style>

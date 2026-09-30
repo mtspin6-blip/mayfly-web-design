@@ -1,10 +1,12 @@
 ---
 title: "What a Modern Website Should Cost in Montana and What You Are Actually Paying For"
+seoTitle: "What a Website Costs in Montana (2026)"
+description: "An honest breakdown of what a small business website should cost in Montana, what drives the price, and how to tell when a quote is too high."
 excerpt: "Website pricing in Montana is all over the map. Here is an honest breakdown of what a modern small business website should cost, what drives the price, and how to know when you are being overcharged."
 date: "2026-05-11"
 category: "Pricing"
 readTime: "5 min read"
-author: "Mayfly Web Design"
+author: "Mitchell Spinetta"
 image: ../../assets/joss-woodhead-aksMD569g60-unsplash.jpg
 ---
 

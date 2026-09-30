@@ -7,6 +7,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import FinalCTA from '../../components/sections/FinalCTA.astro';
+import RelatedGuides from '../../components/sections/RelatedGuides.astro';
 
 const services = [
   {
@@ -120,8 +121,8 @@ const serviceSchema = {
 ---
 
 <BaseLayout
-  title="Montana SEO + GAIO Services | Mayfly Web Design"
-  description="Rank locally and get cited by AI. Full local SEO and Generative AI Optimization (GAIO) for Montana businesses — Missoula, Bozeman, statewide."
+  title="Local SEO in Montana + AI Search | Mayfly Web Design"
+  description="Local SEO in Montana that also gets you cited by ChatGPT and Google AI. Missoula-based, serving Bozeman, Great Falls and Billings. Book a free call."
 >
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} slot="head"></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
@@ -137,7 +138,7 @@ const serviceSchema = {
         <div class="svc-hero-content">
           <p class="section-eyebrow reveal">SEO &amp; GAIO</p>
           <h1 class="svc-headline reveal" style="transition-delay:0.08s">
-            Get found — by Google<br /><em>and ChatGPT.</em>
+            Local SEO in Montana,<br /><em>for Google and ChatGPT.</em>
           </h1>
           <p class="svc-sub reveal" style="transition-delay:0.16s">
             Most agencies optimize for Google in 2015. We optimize for how Montanans
@@ -283,6 +284,7 @@ const serviceSchema = {
       </div>
     </section>
 
+    <RelatedGuides heading="Local SEO and AI search guides" pillars={['local-seo', 'ai-search']} />
     <FinalCTA ctaEm="SEO and GAIO that work." />
   </main>
   <Footer />
@@ -365,7 +367,7 @@ const serviceSchema = {
   .svc-headline {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(3.25rem, 7vw, 5.5rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     line-height: 1.07;
     letter-spacing: -0.025em;
     color: var(--color-bg);

@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import { CITIES } from '../../data/cities';
+import { SITE_URL } from '../../lib/site';
+
+export function getStaticPaths() {
+  return CITIES.map((c) => ({ params: { city: c.slug }, props: { city: c } }));
+}
+
+const { city } = Astro.props;
+const url = `${SITE_URL}/web-design/${city.slug}/`;
+const others = CITIES.filter((c) => city.neighbors.includes(c.slug));
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": `Web design in ${city.name}, MT`,
+    "url": url,
+    "serviceType": "Website design",
+    "provider": { "@id": `${SITE_URL}/#business` },
+    "areaServed": { "@type": "City", "name": city.name, "address": { "@type": "PostalAddress", "addressRegion": "MT", "addressCountry": "US" } },
+    "offers": [
+      { "@type": "Offer", "name": "Starter", "price": "59", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "59", "priceCurrency": "USD", "billingDuration": "P1M" } },
+      { "@type": "Offer", "name": "Business", "price": "99", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "99", "priceCurrency": "USD", "billingDuration": "P1M" } },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": city.faqs.map((f) => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Website Design", "item": `${SITE_URL}/services/website-design/` },
+      { "@type": "ListItem", "position": 3, "name": city.name, "item": url },
+    ],
+  },
+];
+---
+
+<BaseLayout title={city.title} description={city.metaDescription}>
+  {schema.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} slot="head"></script>)}
+  <Header />
+  <main id="main-content">
+    <section class="city-hero">
+      <div class="section-container">
+        <p class="section-eyebrow">{city.based ? 'Based in Missoula' : `Serving ${city.name} from Missoula`}</p>
+        <h1 class="city-h1">{city.h1}</h1>
+        <p class="city-intro">{city.intro}</p>
+        <a href="/contact/" class="btn-primary">Book a Free Consultation <span class="btn-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="city-body">
+      <div class="section-container city-prose">
+        <h2>{city.localContext.heading}</h2>
+        {city.localContext.paragraphs.map((p) => <p>{p}</p>)}
+
+        <h2>{city.searches.heading}</h2>
+        <p>{city.searches.intro}</p>
+        <ul>{city.searches.items.map((i) => <li>{i}</li>)}</ul>
+
+        <h2>{city.checklist.heading}</h2>
+        <p>{city.checklist.intro}</p>
+        <ol>
+          {city.checklist.items.map((i) => (<li><strong>{i.name}.</strong> {i.why}</li>))}
+        </ol>
+
+        <h2>How does working with Mayfly go?</h2>
+        <p>{city.workWith}</p>
+        <p>
+          See the <a href="/services/website-design/">website design service</a>, the full
+          <a href="/pricing/">pricing and plans</a>, or read our guide to
+          <a href="/blog/montana-website-cost-guide/">what a website should cost in Montana</a>.
+        </p>
+
+        <h2>Frequently asked questions</h2>
+        {city.faqs.map((f) => (
+          <div class="city-faq">
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+
+        <h2>Also serving</h2>
+        <p>
+          {others.map((o, i) => (<><a href={`/web-design/${o.slug}/`}>{o.name}</a>{i < others.length - 1 ? ', ' : ''}</>))}
+          , and businesses across Montana.
+        </p>
+
+        <aside class="city-sources">
+          <h2>Sources</h2>
+          <ol>{city.sources.map((s) => <li><a href={s.url} rel="noopener noreferrer" target="_blank">{s.title}</a></li>)}</ol>
+        </aside>
+      </div>
+    </section>
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .city-hero {
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
+    background-color: var(--color-text);
+    padding: 5.5rem 0 4.5rem;
+  }
+  .city-h1 {
+    font-family: var(--font-display); font-weight: 300; font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    line-height: 1.06; letter-spacing: -0.03em; color: var(--color-bg); margin: 1rem 0 1.25rem; max-width: 18ch;
+  }
+  .city-intro { font-family: var(--font-body); font-size: 1.125rem; font-weight: 300; line-height: 1.7; color: rgba(242,237,227,0.78); max-width: 58ch; margin-bottom: 2rem; }
+  .city-body { background: var(--color-bg); padding: 4.5rem 0 5rem; }
+  .city-prose { max-width: 720px; }
+  .city-prose :global(h2) { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.3; letter-spacing: -0.025em; color: var(--color-text); margin: 3rem 0 1rem; }
+  .city-prose :global(h3) { font-family: var(--font-body); font-size: 1.0625rem; font-weight: 600; margin: 1.75rem 0 0.5rem; color: var(--color-text); }
+  .city-prose :global(p), .city-prose :global(li) { font-family: var(--font-body); font-size: 1.0625rem; font-weight: 300; line-height: 1.75; color: var(--color-text); }
+  .city-prose :global(p) { margin-bottom: 1.25rem; }
+  .city-prose :global(ul), .city-prose :global(ol) { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .city-prose :global(li) { margin-bottom: 0.625rem; }
+  .city-prose :global(a) { color: var(--color-gold); text-decoration: underline; text-underline-offset: 3px; }
+  .city-prose :global(strong) { font-weight: 600; }
+  .city-sources { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--color-surface); }
+  .city-sources :global(h2) { font-size: 1.125rem; margin-top: 0; }
+  .city-sources :global(li), .city-sources :global(a) { font-size: 0.9375rem; }
+</style>

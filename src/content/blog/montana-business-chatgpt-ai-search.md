@@ -1,10 +1,12 @@
 ---
 title: "How to Get Your Montana Business to Show Up in ChatGPT and AI Search"
+seoTitle: "Get Your Business Into ChatGPT Search"
+description: "See how customers now find Montana businesses through ChatGPT and AI search, what changed, and the practical steps to make your business show up."
 excerpt: "Younger customers aren't searching the way they used to. Here's what changed, why it matters for Montana businesses, and what to do about it."
 date: "2026-05-07"
 category: "AI Search"
 readTime: "3 min read"
-author: "Mayfly Web Design"
+author: "Mitchell Spinetta"
 image: ../../assets/glen-rushton-azhKlWu66p8-unsplash.jpg
 ---
 

@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/layout/Header.astro';
+import Footer from '../../../components/layout/Footer.astro';
+import FinalCTA from '../../../components/sections/FinalCTA.astro';
+import { PILLARS, SITE_URL, pillarOf } from '../../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog', (p) => !p.data.draft)).sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  );
+  // Only pillars that have posts get a hub page, so we never publish an empty page.
+  return Object.keys(PILLARS)
+    .map((slug) => ({ slug, posts: posts.filter((p) => pillarOf(p.data) === slug) }))
+    .filter((x) => x.posts.length > 0)
+    .map((x) => ({ params: { pillar: x.slug }, props: { posts: x.posts } }));
+}
+
+const { pillar } = Astro.params;
+const { posts } = Astro.props;
+const info = PILLARS[pillar as keyof typeof PILLARS];
+const fmt = (d: string) => new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": info.title,
+    "description": info.blurb,
+    "url": `${SITE_URL}/blog/topic/${pillar}/`,
+    "isPartOf": { "@type": "Blog", "name": "Mayfly Web Design Blog", "url": `${SITE_URL}/blog/` },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": posts.map((p, i) => ({
+        "@type": "ListItem", "position": i + 1, "url": `${SITE_URL}/blog/${p.slug}/`, "name": p.data.title,
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE_URL}/` },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${SITE_URL}/blog/` },
+      { "@type": "ListItem", "position": 3, "name": info.title, "item": `${SITE_URL}/blog/topic/${pillar}/` },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={info.title}
+  description={`${info.blurb} Guides from Mayfly Web Design in Missoula, Montana.`.slice(0, 155)}
+>
+  {schema.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} slot="head"></script>)}
+  <Header />
+  <main id="main-content">
+    <section class="hub-hero">
+      <div class="section-container">
+        <a href="/blog/" class="hub-back">← All guides</a>
+        <h1 class="hub-title">{info.title}</h1>
+        <p class="hub-blurb">{info.blurb}</p>
+      </div>
+    </section>
+
+    <section class="hub-list">
+      <div class="section-container">
+        <ul class="hub-items" role="list">
+          {posts.map((p) => (
+            <li class="hub-item">
+              <h2><a href={`/blog/${p.slug}/`}>{p.data.title}</a></h2>
+              <p>{p.data.excerpt}</p>
+              <span class="hub-meta">
+                <time datetime={p.data.updatedDate ?? p.data.date}>{fmt(p.data.updatedDate ?? p.data.date)}</time>
+                · {p.data.readTime}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+    <FinalCTA />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hub-hero {
+    --color-accent: var(--color-accent-light);
+    --color-muted: var(--color-muted-light);
+    --color-gold: var(--color-gold-light);
+    background-color: var(--color-text);
+    padding: 5rem 0 4rem;
+  }
+  .hub-back { font-family: var(--font-body); font-size: 0.8125rem; color: var(--color-gold); text-decoration: none; }
+  .hub-title {
+    font-family: var(--font-display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 1.08; letter-spacing: -0.03em; color: var(--color-bg); margin: 1.5rem 0 1rem;
+  }
+  .hub-blurb { font-family: var(--font-body); font-size: 1.0625rem; font-weight: 300; line-height: 1.65; color: rgba(242,237,227,0.75); max-width: 56ch; }
+  .hub-list { background: var(--color-bg); padding: 4rem 0 5rem; }
+  .hub-items { list-style: none; padding: 0; margin: 0; display: grid; gap: 2rem; max-width: 720px; }
+  .hub-item { border-bottom: 1px solid var(--color-surface); padding-bottom: 2rem; }
+  .hub-item h2 { font-family: var(--font-display); font-weight: 300; font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 0.625rem; }
+  .hub-item h2 a { color: var(--color-text); text-decoration: none; }
+  .hub-item h2 a:hover { color: var(--color-gold); }
+  .hub-item p { font-family: var(--font-body); font-weight: 300; line-height: 1.7; color: #6B6B69; margin-bottom: 0.75rem; }
+  .hub-meta { font-family: var(--font-body); font-size: 0.75rem; color: var(--color-muted); }
+</style>

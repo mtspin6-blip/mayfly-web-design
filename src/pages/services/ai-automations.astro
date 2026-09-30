@@ -7,6 +7,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import FinalCTA from '../../components/sections/FinalCTA.astro';
+import RelatedGuides from '../../components/sections/RelatedGuides.astro';
 
 const automations = [
   { name: 'Lead Capture',          what: 'Form → CRM → instant reply to every new lead',         saved: '3 hrs/wk' },
@@ -117,8 +118,8 @@ const serviceSchema = {
 ---
 
 <BaseLayout
-  title="AI Automations for Montana Small Businesses | Mayfly Web Design"
-  description="Automate your lead follow-up, bookings, and review requests. Montana-built, affordable, and done for you. Custom pricing, scoped to your workflow."
+  title="Business Automation in Montana | Mayfly Web Design"
+  description="Business automation in Montana: lead follow-up, review requests and online booking that run on their own. Custom-priced and done for you. Book a call."
 >
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} slot="head"></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head"></script>
@@ -134,7 +135,7 @@ const serviceSchema = {
         <div class="svc-hero-content">
           <p class="section-eyebrow reveal">AI Automations</p>
           <h1 class="svc-headline reveal" style="transition-delay:0.08s">
-            Stop doing the work<br /><em>a robot could do.</em>
+            Business automation<br />for Montana, <em>done for you.</em>
           </h1>
           <p class="svc-sub reveal" style="transition-delay:0.16s">
             Custom automations that handle leads, follow-ups, scheduling, and admin —
@@ -300,6 +301,7 @@ const serviceSchema = {
       </div>
     </section>
 
+    <RelatedGuides heading="Automation guides" pillars={['automations']} />
     <FinalCTA ctaEm="automations that work." />
   </main>
   <Footer />
@@ -382,7 +384,7 @@ const serviceSchema = {
   .svc-headline {
     font-family: var(--font-display);
     font-weight: 300;
-    font-size: clamp(3.25rem, 7vw, 5.5rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     line-height: 1.07;
     letter-spacing: -0.025em;
     color: var(--color-bg);

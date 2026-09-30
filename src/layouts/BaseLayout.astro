@@ -1,20 +1,36 @@
 ---
 import '../styles/global.css';
+import { SITE_URL, SITE_NAME, canonicalFor } from '../lib/site';
 
 export interface Props {
   title: string;
   description: string;
   canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
 }
 
+// Canonical is always the apex host with a trailing slash, so a request served on
+// www.* (or a preview host) can never self-canonicalize and split ranking signals.
 const {
   title,
   description,
-  canonical = Astro.url.href,
+  canonical = canonicalFor(Astro.url.pathname),
+  ogImage = `${SITE_URL}/og/default.png`,
+  ogType = 'website',
+  noindex = false,
+  publishedTime,
+  modifiedTime,
 } = Astro.props;
 
-const siteName = 'Mayfly Web Design';
-const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const siteName = SITE_NAME;
+const beaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+const withSite = `${title} | ${siteName}`;
+// Only append the brand when the result stays a sensible length in search results.
+const fullTitle = title.includes(siteName) || withSite.length > 65 ? title : withSite;
 ---
 
 <!doctype html>
@@ -31,12 +47,20 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={siteName} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="alternate" type="application/rss+xml" title="Mayfly Web Design Blog" href="/rss.xml" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <meta name="geo.region" content="US-MT" />
     <meta name="geo.placename" content="Montana" />
@@ -67,7 +91,8 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
         "@type": "LocalBusiness",
         "name": "Mayfly Web Design",
         "description": "Custom websites, AI automations, and SEO optimization for Montana small businesses. Based in Missoula, serving Bozeman, Great Falls, Billings, and statewide.",
-        "url": "https://mayflywebdesign.com",
+        "url": "https://mayflywebdesign.com/",
+        "@id": "https://mayflywebdesign.com/#business",
         "email": "contact@mayflywebdesign.com",
         "address": {
           "@type": "PostalAddress",
@@ -105,6 +130,10 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
         "foundingDate": "2024"
       }
     </script>
+
+    {beaconToken && (
+      <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: beaconToken })}></script>
+    )}
 
     <slot name="head" />
     <!--
