@@ -28,6 +28,10 @@ const blog = defineCollection({
     // CTA button wording, rotated by the engine.
     cta: z.string().optional(),
     draft: z.boolean().default(false),
+    // Set by the prune step for posts with no impressions after 180 days.
+    noindex: z.boolean().default(false),
+    // Title/meta experiment bookkeeping written by the monthly optimization job.
+    titleTest: z.object({ from: z.string(), fromDescription: z.string().optional(), to: z.string(), at: z.string(), baselineCtr: z.number().optional() }).optional(),
   }),
 });
 

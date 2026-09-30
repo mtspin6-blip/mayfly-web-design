@@ -1,0 +1,44 @@
+name: blog-monthly
+
+# Monthly optimization (CTR title tests, striking-distance FAQs, freshness, prune) then the report.
+on:
+  schedule:
+    - cron: '0 16 1 * *'
+  workflow_dispatch:
+
+concurrency:
+  group: blog-engine
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  monthly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Optimize
+        run: npm run engine:refresh
+      - name: Build check (edits must not break the site)
+        run: npm run build && npm run validate
+      - name: Report
+        run: npm run engine:report
+      - name: Commit
+        run: |
+          git config user.name "mayfly-blog-engine"
+          git config user.email "blog-engine@users.noreply.github.com"
+          git add -A src/content/blog blog-engine/published-log.json blog-engine/data reports
+          git diff --cached --quiet || git commit -m "blog-engine: monthly optimization and report"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -4,3 +4,8 @@ node_modules/
 .env.*
 !.env.example
 .DS_Store
+
+# blog engine scratch
+blog-engine/data/cache/
+blog-engine/data/last-run.json
+reports/ALERT.md

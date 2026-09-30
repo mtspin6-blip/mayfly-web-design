@@ -1,0 +1,3316 @@
+[
+  {
+    "keyword": "how to get more google reviews",
+    "cluster": {
+      "primary": "how to get more google reviews",
+      "secondary": [
+        "how to get more google reviews from customers",
+        "how to get more google reviews for my business",
+        "how to get more google reviews for your business",
+        "how to get more google reviews fast",
+        "how to get more google reviews restaurant",
+        "how to make more google reviews"
+      ]
+    },
+    "score": 65,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "seed",
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 24,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why is my business not showing on google maps",
+    "cluster": {
+      "primary": "why is my business not showing on google maps",
+      "secondary": [
+        "why is my business not showing up on google maps after verification",
+        "why is my business not on google maps",
+        "why is my business not pinned on google maps",
+        "why is my business profile not showing up on google maps",
+        "why is my business icon not showing on google maps",
+        "why is my business on google maps"
+      ]
+    },
+    "score": 63.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 20,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to start online booking business",
+    "cluster": {
+      "primary": "how to start online booking business",
+      "secondary": [
+        "online booking for small business",
+        "how to start ticket booking business"
+      ]
+    },
+    "score": 63.5,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 18,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to get a google business profile",
+    "cluster": {
+      "primary": "how to get a google business profile",
+      "secondary": [
+        "what is a google business profile",
+        "how to set up a google business profile",
+        "how to write a google business profile description",
+        "how to set a google business profile",
+        "how to set up your google business profile",
+        "how to set up google business profile"
+      ]
+    },
+    "score": 63.3,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 20,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how much does it cost to build a website for a small business",
+    "cluster": {
+      "primary": "how much does it cost to build a website for a small business",
+      "secondary": [
+        "how much does it cost to maintain a website for a small business",
+        "how much does a small business website cost",
+        "how much does a small business website cost in 2026",
+        "how much should a small business website cost",
+        "how much does a small website cost",
+        "how much does it cost for a small business to get a website"
+      ]
+    },
+    "score": 61.7,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 25,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to do booking for a small business",
+    "cluster": {
+      "primary": "how to do booking for a small business",
+      "secondary": []
+    },
+    "score": 61.7,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 18,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how does local seo work",
+    "cluster": {
+      "primary": "how does local seo work",
+      "secondary": [
+        "what is local seo",
+        "what is local seo and how does it work",
+        "how much is local seo",
+        "what is a local seo",
+        "what does local seo do",
+        "what is seo and local seo"
+      ]
+    },
+    "score": 58.3,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 14,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is generative engine optimization geo and why it matters",
+    "cluster": {
+      "primary": "what is generative engine optimization geo and why it matters",
+      "secondary": [
+        "what is generative engine optimization geo and how does it work",
+        "what is generative engine optimization",
+        "what is generative engine optimization geo",
+        "what does generative engine optimization do",
+        "how generative engine optimization geo works",
+        "how to do generative engine optimization"
+      ]
+    },
+    "score": 57.5,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 12,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is generative engine optimization and how does it work",
+    "cluster": {
+      "primary": "what is generative engine optimization and how does it work",
+      "secondary": [
+        "what does generative engine optimization mean",
+        "what is generative engine optimization in marketing",
+        "how is generative engine optimization done",
+        "what is generative search engine optimization",
+        "why is generative engine optimization important",
+        "how generative engine optimization works"
+      ]
+    },
+    "score": 53.8,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 10,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how does schema markup work",
+    "cluster": {
+      "primary": "how does schema markup work",
+      "secondary": [
+        "what is schema markup"
+      ]
+    },
+    "score": 53.8,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 10,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "schema markup for local business",
+    "cluster": {
+      "primary": "schema markup for local business",
+      "secondary": [
+        "schema markup generator local business",
+        "what is local business schema in seo"
+      ]
+    },
+    "score": 52.9,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "seed",
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 11,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo in digital marketing",
+    "cluster": {
+      "primary": "what is local seo in digital marketing",
+      "secondary": [
+        "what is local seo marketing",
+        "what is local seo in marketing"
+      ]
+    },
+    "score": 52.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 11,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo in simple words",
+    "cluster": {
+      "primary": "what is local seo in simple words",
+      "secondary": []
+    },
+    "score": 52.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 11,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "do i need a website for my small business",
+    "cluster": {
+      "primary": "do i need a website for my small business",
+      "secondary": [
+        "does a small business need a website",
+        "should i make a website for my small business",
+        "how do i create a website for my small business"
+      ]
+    },
+    "score": 52.6,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "seed",
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 11,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to set up a google business profile without an address",
+    "cluster": {
+      "primary": "how to set up a google business profile without an address",
+      "secondary": [
+        "how to set up a new google business profile",
+        "how to set up google business profile for reviews",
+        "how to set up google business profile for a client",
+        "how to set up google business profile for online business",
+        "how to create a google business profile without an address",
+        "how to have a google business profile without an address"
+      ]
+    },
+    "score": 51.3,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 10,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how much does a small business website cost per month",
+    "cluster": {
+      "primary": "how much does a small business website cost per month",
+      "secondary": [
+        "how much does a website cost per month for a small business"
+      ]
+    },
+    "score": 50.8,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 10,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo in hindi",
+    "cluster": {
+      "primary": "what is local seo in hindi",
+      "secondary": []
+    },
+    "score": 50.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 10,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to get better google reviews",
+    "cluster": {
+      "primary": "how to get better google reviews",
+      "secondary": []
+    },
+    "score": 50,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 8,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo in 2026",
+    "cluster": {
+      "primary": "what is local seo in 2026",
+      "secondary": []
+    },
+    "score": 48.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 9,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why is my business no longer on google maps",
+    "cluster": {
+      "primary": "why is my business no longer on google maps",
+      "secondary": []
+    },
+    "score": 48.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 8,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why is my business notlisted on google maps",
+    "cluster": {
+      "primary": "why is my business notlisted on google maps",
+      "secondary": [
+        "why is my business grey on google maps",
+        "why is my business suspended on google maps"
+      ]
+    },
+    "score": 48.5,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 8,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "local seo examples",
+    "cluster": {
+      "primary": "local seo examples",
+      "secondary": []
+    },
+    "score": 47.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 11,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how long does it take to build a small business website",
+    "cluster": {
+      "primary": "how long does it take to build a small business website",
+      "secondary": [
+        "how long does it take to build a website for a small business"
+      ]
+    },
+    "score": 47.5,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 8,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo for small businesses",
+    "cluster": {
+      "primary": "what is local seo for small businesses",
+      "secondary": [
+        "what is local seo and why is it important for small businesses"
+      ]
+    },
+    "score": 47.4,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 9,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo optimization",
+    "cluster": {
+      "primary": "what is local seo optimization",
+      "secondary": []
+    },
+    "score": 47,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 8,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo services",
+    "cluster": {
+      "primary": "what is local seo services",
+      "secondary": [
+        "local seo services for hvac contractors"
+      ]
+    },
+    "score": 47,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 8,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how long does it take to build a website from scratch",
+    "cluster": {
+      "primary": "how long does it take to build a website from scratch",
+      "secondary": []
+    },
+    "score": 46.8,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 7,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "can i have a website without a business license",
+    "cluster": {
+      "primary": "can i have a website without a business license",
+      "secondary": []
+    },
+    "score": 46.6,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 7,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why is my website not generating leads",
+    "cluster": {
+      "primary": "why is my website not generating leads",
+      "secondary": [
+        "why is my website not getting leads"
+      ]
+    },
+    "score": 46.5,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 7,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "bozeman business automation",
+    "cluster": {
+      "primary": "bozeman business automation",
+      "secondary": []
+    },
+    "score": 46,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscImpressions": 26,
+      "gscPosition": 91,
+      "autocompleteDepth": 0,
+      "winnability": 0.5,
+      "local": true
+    }
+  },
+  {
+    "keyword": "local seo cost",
+    "cluster": {
+      "primary": "local seo cost",
+      "secondary": []
+    },
+    "score": 45.8,
+    "intent": "commercial",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 10,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo citation",
+    "cluster": {
+      "primary": "what is local seo citation",
+      "secondary": [
+        "what is local citation in seo"
+      ]
+    },
+    "score": 45.1,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 7,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "local seo best practices",
+    "cluster": {
+      "primary": "local seo best practices",
+      "secondary": []
+    },
+    "score": 44.1,
+    "intent": "commercial",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 9,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "local seo for contractors",
+    "cluster": {
+      "primary": "local seo for contractors",
+      "secondary": []
+    },
+    "score": 43.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "seed",
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 9,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why is my website not working",
+    "cluster": {
+      "primary": "why is my website not working",
+      "secondary": []
+    },
+    "score": 42.5,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 5,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "average cost of website maintenance for small business",
+    "cluster": {
+      "primary": "average cost of website maintenance for small business",
+      "secondary": []
+    },
+    "score": 42,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 6,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how long does it take to set up google business profile",
+    "cluster": {
+      "primary": "how long does it take to set up google business profile",
+      "secondary": [
+        "how long does it take to set up a google business profile"
+      ]
+    },
+    "score": 41.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 5,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is generative engine optimisation geo",
+    "cluster": {
+      "primary": "what is generative engine optimisation geo",
+      "secondary": []
+    },
+    "score": 40.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is generative engine optimization in digital marketing",
+    "cluster": {
+      "primary": "what is generative engine optimization in digital marketing",
+      "secondary": [
+        "what is generative engine marketing"
+      ]
+    },
+    "score": 40.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is off page seo technique for local seo",
+    "cluster": {
+      "primary": "what is off page seo technique for local seo",
+      "secondary": [
+        "what is on page seo technique for local seo",
+        "what is a local seo page"
+      ]
+    },
+    "score": 40,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 4,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to make a small business website on etsy",
+    "cluster": {
+      "primary": "how to make a small business website on etsy",
+      "secondary": [
+        "how to make your own website for a small business"
+      ]
+    },
+    "score": 39.8,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 4,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is the main goal of local seo",
+    "cluster": {
+      "primary": "what is the main goal of local seo",
+      "secondary": []
+    },
+    "score": 39.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 4,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to create google business profile without video verification",
+    "cluster": {
+      "primary": "how to create google business profile without video verification",
+      "secondary": []
+    },
+    "score": 39.5,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to create google business profile qr code",
+    "cluster": {
+      "primary": "how to create google business profile qr code",
+      "secondary": []
+    },
+    "score": 39.4,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to create a google business profile step by step",
+    "cluster": {
+      "primary": "how to create a google business profile step by step",
+      "secondary": []
+    },
+    "score": 39.4,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how guides get bookings online",
+    "cluster": {
+      "primary": "how guides get bookings online",
+      "secondary": []
+    },
+    "score": 38.8,
+    "intent": "informational",
+    "pillar": "niche-guides",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to increase google reviews",
+    "cluster": {
+      "primary": "how to increase google reviews",
+      "secondary": []
+    },
+    "score": 38.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to improve reviews on google",
+    "cluster": {
+      "primary": "how to improve reviews on google",
+      "secondary": []
+    },
+    "score": 38.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how does generative engine optimization use mcp",
+    "cluster": {
+      "primary": "how does generative engine optimization use mcp",
+      "secondary": [
+        "generative engine optimization use cases"
+      ]
+    },
+    "score": 38.8,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "chatgpt prompts for small business owners",
+    "cluster": {
+      "primary": "chatgpt prompts for small business owners",
+      "secondary": [
+        "how much is chatgpt for small business"
+      ]
+    },
+    "score": 38.3,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 4,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why doesnt my google business not showing up",
+    "cluster": {
+      "primary": "why doesnt my google business not showing up",
+      "secondary": []
+    },
+    "score": 37.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is the difference between seo and local seo",
+    "cluster": {
+      "primary": "what is the difference between seo and local seo",
+      "secondary": [
+        "what is the difference between local and organic seo",
+        "what is the difference between local seo and technical seo"
+      ]
+    },
+    "score": 37.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "chatgpt for small business pricing",
+    "cluster": {
+      "primary": "chatgpt for small business pricing",
+      "secondary": [
+        "how to use chatgpt for small business"
+      ]
+    },
+    "score": 37.9,
+    "intent": "commercial",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 4,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to set up your business for google reviews",
+    "cluster": {
+      "primary": "how to set up your business for google reviews",
+      "secondary": [
+        "how to set up my google business page",
+        "how to get google reviews up",
+        "how to set up my google business"
+      ]
+    },
+    "score": 37.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo and why is it important",
+    "cluster": {
+      "primary": "what is local seo and why is it important",
+      "secondary": []
+    },
+    "score": 37.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo in bangla",
+    "cluster": {
+      "primary": "what is local seo in bangla",
+      "secondary": []
+    },
+    "score": 37.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo in urdu",
+    "cluster": {
+      "primary": "what is local seo in urdu",
+      "secondary": []
+    },
+    "score": 37.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo in tamil",
+    "cluster": {
+      "primary": "what is local seo in tamil",
+      "secondary": []
+    },
+    "score": 37.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "automated review request on amazon",
+    "cluster": {
+      "primary": "automated review request on amazon",
+      "secondary": [
+        "automatic review request amazon",
+        "automated review request system",
+        "automated amazon review request"
+      ]
+    },
+    "score": 37.5,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why is my business blurred out on google maps",
+    "cluster": {
+      "primary": "why is my business blurred out on google maps",
+      "secondary": []
+    },
+    "score": 37.4,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what should a fly fishing outfitter website include",
+    "cluster": {
+      "primary": "what should a fly fishing outfitter website include",
+      "secondary": []
+    },
+    "score": 37.3,
+    "intent": "informational",
+    "pillar": "niche-guides",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how long does it take to learn to build a website",
+    "cluster": {
+      "primary": "how long does it take to learn to build a website",
+      "secondary": [
+        "how long does it take to build a professional website"
+      ]
+    },
+    "score": 37.3,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "is a one page website enough",
+    "cluster": {
+      "primary": "is a one page website enough",
+      "secondary": []
+    },
+    "score": 37.1,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to build a simple business website",
+    "cluster": {
+      "primary": "how to build a simple business website",
+      "secondary": []
+    },
+    "score": 37.1,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why does my sound not work on google maps",
+    "cluster": {
+      "primary": "why does my sound not work on google maps",
+      "secondary": [
+        "why does my google maps location not work",
+        "why does my volume not work on google maps"
+      ]
+    },
+    "score": 36.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to get more google review surveys",
+    "cluster": {
+      "primary": "how to get more google review surveys",
+      "secondary": []
+    },
+    "score": 36.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to show up in chatgpt searches",
+    "cluster": {
+      "primary": "how to show up in chatgpt searches",
+      "secondary": [
+        "how to show up in chatgpt search",
+        "how to show up on chatgpt search"
+      ]
+    },
+    "score": 36.9,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 4,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to show up in chatgpt search results",
+    "cluster": {
+      "primary": "how to show up in chatgpt search results",
+      "secondary": []
+    },
+    "score": 36.9,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 5,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is the best online booking system",
+    "cluster": {
+      "primary": "what is the best online booking system",
+      "secondary": []
+    },
+    "score": 36.9,
+    "intent": "commercial",
+    "pillar": "automations",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "do you get leads through your website",
+    "cluster": {
+      "primary": "do you get leads through your website",
+      "secondary": []
+    },
+    "score": 36.9,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to increase google review",
+    "cluster": {
+      "primary": "how to increase google review",
+      "secondary": []
+    },
+    "score": 36.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what are local seo ranking factors",
+    "cluster": {
+      "primary": "what are local seo ranking factors",
+      "secondary": []
+    },
+    "score": 36,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo lead generation",
+    "cluster": {
+      "primary": "what is local seo lead generation",
+      "secondary": []
+    },
+    "score": 36,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to get a small business website up fast",
+    "cluster": {
+      "primary": "how to get a small business website up fast",
+      "secondary": [
+        "how to set up a small business website"
+      ]
+    },
+    "score": 35.8,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how much does it cost to have a website built for a small business",
+    "cluster": {
+      "primary": "how much does it cost to have a website built for a small business",
+      "secondary": [
+        "how much does it cost to have a website made for a small business"
+      ]
+    },
+    "score": 35.8,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how much does it cost to set up a small business website",
+    "cluster": {
+      "primary": "how much does it cost to set up a small business website",
+      "secondary": []
+    },
+    "score": 35.8,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo meaning",
+    "cluster": {
+      "primary": "what is local seo meaning",
+      "secondary": [
+        "what is the meaning of local seo"
+      ]
+    },
+    "score": 35.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is technical and local seo",
+    "cluster": {
+      "primary": "what is technical and local seo",
+      "secondary": [
+        "what is technical seo and local seo"
+      ]
+    },
+    "score": 35.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what does local seo focus on",
+    "cluster": {
+      "primary": "what does local seo focus on",
+      "secondary": []
+    },
+    "score": 35.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo stand for",
+    "cluster": {
+      "primary": "what is local seo stand for",
+      "secondary": []
+    },
+    "score": 35.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local pack in seo",
+    "cluster": {
+      "primary": "what is local pack in seo",
+      "secondary": [
+        "what is local pack seo"
+      ]
+    },
+    "score": 35.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is the importance of local seo",
+    "cluster": {
+      "primary": "what is the importance of local seo",
+      "secondary": []
+    },
+    "score": 35.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "automate review requests",
+    "cluster": {
+      "primary": "automate review requests",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "seed",
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 3,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "signs your website is outdated",
+    "cluster": {
+      "primary": "signs your website is outdated",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to set cover photo in google business profile",
+    "cluster": {
+      "primary": "how to set cover photo in google business profile",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why is my business not publicly visible on google maps",
+    "cluster": {
+      "primary": "why is my business not publicly visible on google maps",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization best practices",
+    "cluster": {
+      "primary": "generative engine optimization best practices",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "commercial",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization company in bangalore",
+    "cluster": {
+      "primary": "generative engine optimization company in bangalore",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization case study",
+    "cluster": {
+      "primary": "generative engine optimization case study",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization expert in kerala",
+    "cluster": {
+      "primary": "generative engine optimization expert in kerala",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization en franais",
+    "cluster": {
+      "primary": "generative engine optimization en franais",
+      "secondary": [
+        "generative engine optimization en espaol"
+      ]
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization hong kong",
+    "cluster": {
+      "primary": "generative engine optimization hong kong",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization kya hai",
+    "cluster": {
+      "primary": "generative engine optimization kya hai",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization los angeles",
+    "cluster": {
+      "primary": "generative engine optimization los angeles",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization linkedin learning",
+    "cluster": {
+      "primary": "generative engine optimization linkedin learning",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization l g",
+    "cluster": {
+      "primary": "generative engine optimization l g",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization market size",
+    "cluster": {
+      "primary": "generative engine optimization market size",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization neil patel",
+    "cluster": {
+      "primary": "generative engine optimization neil patel",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization open source",
+    "cluster": {
+      "primary": "generative engine optimization open source",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "que es generative engine optimization",
+    "cluster": {
+      "primary": "que es generative engine optimization",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization research paper",
+    "cluster": {
+      "primary": "generative engine optimization research paper",
+      "secondary": [
+        "generative engine optimization white paper"
+      ]
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization services toronto",
+    "cluster": {
+      "primary": "generative engine optimization services toronto",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization vs aeo",
+    "cluster": {
+      "primary": "generative engine optimization vs aeo",
+      "secondary": [
+        "generative engine optimization vs aio",
+        "generative engine optimization vs seo"
+      ]
+    },
+    "score": 35.6,
+    "intent": "commercial",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization wordpress plugin",
+    "cluster": {
+      "primary": "generative engine optimization wordpress plugin",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization y combinator",
+    "cluster": {
+      "primary": "generative engine optimization y combinator",
+      "secondary": []
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to make google business profile more visible",
+    "cluster": {
+      "primary": "how to make google business profile more visible",
+      "secondary": [
+        "how to make google business profile publicly visible"
+      ]
+    },
+    "score": 35.6,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "why does mybusiness notcome up on google maps",
+    "cluster": {
+      "primary": "why does mybusiness notcome up on google maps",
+      "secondary": []
+    },
+    "score": 35.5,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how much does it cost for a small business to have a custom website created for them",
+    "cluster": {
+      "primary": "how much does it cost for a small business to have a custom website created for them",
+      "secondary": []
+    },
+    "score": 35.3,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to tell if a website is outdated",
+    "cluster": {
+      "primary": "how to tell if a website is outdated",
+      "secondary": []
+    },
+    "score": 35.2,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how long does it take to update a website",
+    "cluster": {
+      "primary": "how long does it take to update a website",
+      "secondary": []
+    },
+    "score": 35.2,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how often should you update your website",
+    "cluster": {
+      "primary": "how often should you update your website",
+      "secondary": []
+    },
+    "score": 35,
+    "intent": "informational",
+    "pillar": "website-problems",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how much to charge for website maintenance",
+    "cluster": {
+      "primary": "how much to charge for website maintenance",
+      "secondary": []
+    },
+    "score": 35,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "automate lead follow up small business",
+    "cluster": {
+      "primary": "automate lead follow up small business",
+      "secondary": []
+    },
+    "score": 34.8,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to set up google business profile optimization gbp for small businesses",
+    "cluster": {
+      "primary": "how to set up google business profile optimization gbp for small businesses",
+      "secondary": []
+    },
+    "score": 34.7,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization vs traditional seo",
+    "cluster": {
+      "primary": "generative engine optimization vs traditional seo",
+      "secondary": []
+    },
+    "score": 34.6,
+    "intent": "commercial",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "website subscription vs one time cost",
+    "cluster": {
+      "primary": "website subscription vs one time cost",
+      "secondary": []
+    },
+    "score": 34.5,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how much does a website cost for a contractor",
+    "cluster": {
+      "primary": "how much does a website cost for a contractor",
+      "secondary": []
+    },
+    "score": 34.5,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to make small business website ada compliant",
+    "cluster": {
+      "primary": "how to make small business website ada compliant",
+      "secondary": []
+    },
+    "score": 34.4,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to set up a service area google business profile",
+    "cluster": {
+      "primary": "how to set up a service area google business profile",
+      "secondary": []
+    },
+    "score": 34.4,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to finish setting up google business profile",
+    "cluster": {
+      "primary": "how to finish setting up google business profile",
+      "secondary": []
+    },
+    "score": 34.1,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is mean by local seo",
+    "cluster": {
+      "primary": "what is mean by local seo",
+      "secondary": []
+    },
+    "score": 34.1,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is nap consistency in local seo",
+    "cluster": {
+      "primary": "what is nap consistency in local seo",
+      "secondary": []
+    },
+    "score": 34.1,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo audit",
+    "cluster": {
+      "primary": "what is local seo audit",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is a local seo agency",
+    "cluster": {
+      "primary": "what is a local seo agency",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is a local seo strategy",
+    "cluster": {
+      "primary": "what is a local seo strategy",
+      "secondary": [
+        "what is local seo strategy"
+      ]
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is a local seo service",
+    "cluster": {
+      "primary": "what is a local seo service",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo campaign",
+    "cluster": {
+      "primary": "what is local seo campaign",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo called",
+    "cluster": {
+      "primary": "what is local seo called",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo example",
+    "cluster": {
+      "primary": "what is local seo example",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo gmb",
+    "cluster": {
+      "primary": "what is local seo gmb",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is google local seo",
+    "cluster": {
+      "primary": "what is google local seo",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is gbp in local seo",
+    "cluster": {
+      "primary": "what is gbp in local seo",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is hyper local seo",
+    "cluster": {
+      "primary": "what is hyper local seo",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what does local seo include",
+    "cluster": {
+      "primary": "what does local seo include",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local listing in seo",
+    "cluster": {
+      "primary": "what is local listing in seo",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo pages",
+    "cluster": {
+      "primary": "what is local seo pages",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is proximity in local seo",
+    "cluster": {
+      "primary": "what is proximity in local seo",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local seo setup",
+    "cluster": {
+      "primary": "what is local seo setup",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is local search seo",
+    "cluster": {
+      "primary": "what is local search seo",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "what is yoast local seo",
+    "cluster": {
+      "primary": "what is yoast local seo",
+      "secondary": []
+    },
+    "score": 33.9,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to get your business to show up on google maps",
+    "cluster": {
+      "primary": "how to get your business to show up on google maps",
+      "secondary": []
+    },
+    "score": 33.8,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "automated google reviews",
+    "cluster": {
+      "primary": "automated google reviews",
+      "secondary": []
+    },
+    "score": 33.8,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to view chatgpt search history",
+    "cluster": {
+      "primary": "how to view chatgpt search history",
+      "secondary": []
+    },
+    "score": 33.5,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "introducing the chatgpt for small businesses program",
+    "cluster": {
+      "primary": "introducing the chatgpt for small businesses program",
+      "secondary": [
+        "chatgpt for small businesses program"
+      ]
+    },
+    "score": 33.5,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization how to dominate ai search mahe chen",
+    "cluster": {
+      "primary": "generative engine optimization how to dominate ai search mahe chen",
+      "secondary": [
+        "generative engine optimization how to dominate ai search arxiv",
+        "generative engine optimization how to dominate ai search"
+      ]
+    },
+    "score": 33.3,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "online booking and payment system for small business",
+    "cluster": {
+      "primary": "online booking and payment system for small business",
+      "secondary": []
+    },
+    "score": 33.1,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "generative engine optimization for small business",
+    "cluster": {
+      "primary": "generative engine optimization for small business",
+      "secondary": []
+    },
+    "score": 32.9,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "claude vs chatgpt for small business owners",
+    "cluster": {
+      "primary": "claude vs chatgpt for small business owners",
+      "secondary": []
+    },
+    "score": 32.9,
+    "intent": "commercial",
+    "pillar": "ai-search",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.55,
+      "local": false
+    }
+  },
+  {
+    "keyword": "how to make google business profile show up",
+    "cluster": {
+      "primary": "how to make google business profile show up",
+      "secondary": []
+    },
+    "score": 32.4,
+    "intent": "informational",
+    "pillar": "local-seo",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.6000000000000001,
+      "local": false
+    }
+  },
+  {
+    "keyword": "brewery website must haves",
+    "cluster": {
+      "primary": "brewery website must haves",
+      "secondary": []
+    },
+    "score": 32.1,
+    "intent": "informational",
+    "pillar": "niche-guides",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "hvac contractor website checklist",
+    "cluster": {
+      "primary": "hvac contractor website checklist",
+      "secondary": []
+    },
+    "score": 32.1,
+    "intent": "informational",
+    "pillar": "niche-guides",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "automated google review requests",
+    "cluster": {
+      "primary": "automated google review requests",
+      "secondary": []
+    },
+    "score": 31.9,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "automatic review request",
+    "cluster": {
+      "primary": "automatic review request",
+      "secondary": []
+    },
+    "score": 31.9,
+    "intent": "informational",
+    "pillar": "automations",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 1,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "chatgpt for local business",
+    "cluster": {
+      "primary": "chatgpt for local business",
+      "secondary": []
+    },
+    "score": 30,
+    "intent": "informational",
+    "pillar": "ai-search",
+    "sources": [
+      "seed"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "website maintenance cost",
+    "cluster": {
+      "primary": "website maintenance cost",
+      "secondary": []
+    },
+    "score": 29.5,
+    "intent": "commercial",
+    "pillar": "website-cost",
+    "sources": [
+      "autocomplete"
+    ],
+    "status": "new",
+    "signals": {
+      "autocompleteDepth": 2,
+      "winnability": 0.4,
+      "local": false
+    }
+  },
+  {
+    "keyword": "montana web design",
+    "cluster": {
+      "primary": "montana web design",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "website-cost",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscImpressions": 97,
+      "gscPosition": 67,
+      "local": true
+    }
+  },
+  {
+    "keyword": "montana web designer",
+    "cluster": {
+      "primary": "montana web designer",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "website-cost",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscImpressions": 44,
+      "gscPosition": 80,
+      "local": true
+    }
+  },
+  {
+    "keyword": "local seo montana",
+    "cluster": {
+      "primary": "local seo montana",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "local-seo",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscPosition": 22,
+      "local": true
+    }
+  },
+  {
+    "keyword": "web design for small business montana",
+    "cluster": {
+      "primary": "web design for small business montana",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "website-cost",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscPosition": 23.5,
+      "local": true
+    }
+  },
+  {
+    "keyword": "website design missoula mt",
+    "cluster": {
+      "primary": "website design missoula mt",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "website-cost",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscPosition": 21,
+      "local": true
+    }
+  },
+  {
+    "keyword": "web designer missoula mt",
+    "cluster": {
+      "primary": "web designer missoula mt",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "website-cost",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscPosition": 26,
+      "local": true
+    }
+  },
+  {
+    "keyword": "montana website development",
+    "cluster": {
+      "primary": "montana website development",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "website-cost",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscPosition": 17,
+      "local": true
+    }
+  },
+  {
+    "keyword": "web design missoula mt",
+    "cluster": {
+      "primary": "web design missoula mt",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "website-cost",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscPosition": 17.7,
+      "local": true
+    }
+  },
+  {
+    "keyword": "near me seo montana",
+    "cluster": {
+      "primary": "near me seo montana",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "local-seo",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscPosition": 27,
+      "local": true
+    }
+  },
+  {
+    "keyword": "montana search engine optimization",
+    "cluster": {
+      "primary": "montana search engine optimization",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "informational",
+    "pillar": "website-cost",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "gscImpressions": 31,
+      "local": true
+    }
+  },
+  {
+    "keyword": "ai agency montana",
+    "cluster": {
+      "primary": "ai agency montana",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "automations",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "local": true
+    }
+  },
+  {
+    "keyword": "seo great falls mt",
+    "cluster": {
+      "primary": "seo great falls mt",
+      "secondary": []
+    },
+    "score": 0,
+    "intent": "local",
+    "pillar": "local-seo",
+    "sources": [
+      "gsc-baseline"
+    ],
+    "status": "new",
+    "signals": {
+      "local": true
+    }
+  }
+]

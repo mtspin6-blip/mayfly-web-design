@@ -1,0 +1,76 @@
+name: blog-publish
+
+# Runs hourly on Mon and Thu between 10:00 and 17:00 UTC (04:00-11:00 Mountain, DST-proof).
+# Most runs exit in seconds: the script only publishes once, inside the day's slot, after a per-slot
+# random target time of 07:00 MT +/- 3 hours. Hard caps (max 1/day, 2/week) live in code, not here.
+on:
+  schedule:
+    - cron: '0 10-17 * * 1,4'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (everything except commit/push)'
+        type: boolean
+        default: true
+
+concurrency:
+  group: blog-engine
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CI: 'true'
+      CHROME_PATH: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Configure git (the pipeline commits during its run)
+        run: |
+          git config user.name "mayfly-blog-engine"
+          git config user.email "blog-engine@users.noreply.github.com"
+
+      - name: Unit tests (manual runs only)
+        if: github.event_name == 'workflow_dispatch'
+        run: npm run engine:test
+
+      - name: Run pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          BING_WEBMASTER_API_KEY: ${{ secrets.BING_WEBMASTER_API_KEY }}
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+            npm run engine:run -- --dry-run --now
+          else
+            npm run engine:run
+          fi
+
+      - name: Push
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+        run: |
+          git add -A blog-engine/health-state.json blog-engine/keyword-backlog.json blog-engine/data/spend-ledger.json 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "blog-engine: record run state"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Index pings (after deploy)
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
+        run: |
+          SLUG=$(node -e "try{console.log(JSON.parse(require('fs').readFileSync('blog-engine/data/last-run.json','utf8')).published||'')}catch{console.log('')}")
+          if [ -n "$SLUG" ]; then npm run engine:ping -- "$SLUG"; else echo "nothing published this run"; fi

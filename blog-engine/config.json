@@ -49,6 +49,7 @@
     "gscShiftAfterDays": 28,
     "gscHeavyDemandWeight": 0.6
   },
+  "nicheLock": null,
   "gates": {
     "editorMinEach": 4,
     "editorMinAverage": 4.2,

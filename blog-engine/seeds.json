@@ -1,0 +1,121 @@
+{
+  "note": "Hypotheses from PRD section 5. Validate with research; expect some low demand. City + service terms belong on service pages, not blog posts.",
+  "seeds": [
+    {
+      "keyword": "how much does a small business website cost",
+      "pillar": "website-cost"
+    },
+    {
+      "keyword": "website subscription vs one time cost",
+      "pillar": "website-cost"
+    },
+    {
+      "keyword": "how much does a website cost for a contractor",
+      "pillar": "website-cost"
+    },
+    {
+      "keyword": "how long to build a small business website",
+      "pillar": "website-cost"
+    },
+    {
+      "keyword": "how to set up google business profile",
+      "pillar": "local-seo"
+    },
+    {
+      "keyword": "why is my business not on google maps",
+      "pillar": "local-seo"
+    },
+    {
+      "keyword": "how to get more google reviews",
+      "pillar": "local-seo"
+    },
+    {
+      "keyword": "local seo for contractors",
+      "pillar": "local-seo"
+    },
+    {
+      "keyword": "how to show up in chatgpt search",
+      "pillar": "ai-search"
+    },
+    {
+      "keyword": "what is generative engine optimization",
+      "pillar": "ai-search"
+    },
+    {
+      "keyword": "schema markup for local business",
+      "pillar": "ai-search"
+    },
+    {
+      "keyword": "what should a fly fishing outfitter website include",
+      "pillar": "niche-guides"
+    },
+    {
+      "keyword": "brewery website must haves",
+      "pillar": "niche-guides"
+    },
+    {
+      "keyword": "hvac contractor website checklist",
+      "pillar": "niche-guides"
+    },
+    {
+      "keyword": "how guides get bookings online",
+      "pillar": "niche-guides"
+    },
+    {
+      "keyword": "automate lead follow up small business",
+      "pillar": "automations"
+    },
+    {
+      "keyword": "automate review requests",
+      "pillar": "automations"
+    },
+    {
+      "keyword": "online booking for small business",
+      "pillar": "automations"
+    },
+    {
+      "keyword": "signs your website is outdated",
+      "pillar": "website-problems"
+    },
+    {
+      "keyword": "why is my website not getting leads",
+      "pillar": "website-problems"
+    },
+    {
+      "keyword": "is a one page website enough",
+      "pillar": "website-problems"
+    },
+    {
+      "keyword": "do i need a website for my small business",
+      "pillar": "website-problems"
+    },
+    {
+      "keyword": "website checklist for small business",
+      "pillar": "website-problems"
+    },
+    {
+      "keyword": "what is local seo",
+      "pillar": "local-seo"
+    },
+    {
+      "keyword": "how to write a google business profile description",
+      "pillar": "local-seo"
+    },
+    {
+      "keyword": "chatgpt for local business",
+      "pillar": "ai-search"
+    },
+    {
+      "keyword": "how to get a small business website up fast",
+      "pillar": "website-cost"
+    },
+    {
+      "keyword": "website maintenance cost small business",
+      "pillar": "website-cost"
+    },
+    {
+      "keyword": "how to get customers online small business",
+      "pillar": "website-problems"
+    }
+  ]
+}

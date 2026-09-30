@@ -7,7 +7,20 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "validate": "node scripts/validate-site.mjs"
+    "validate": "node scripts/validate-site.mjs",
+    "engine:research": "tsx blog-engine/scripts/research-keywords.ts",
+    "engine:baseline": "tsx blog-engine/scripts/import-baseline.ts",
+    "engine:pick": "tsx blog-engine/scripts/pick-topic.ts",
+    "engine:run": "tsx blog-engine/scripts/run-pipeline.ts",
+    "engine:dry-run": "tsx blog-engine/scripts/run-pipeline.ts --dry-run --now",
+    "engine:health": "tsx blog-engine/scripts/health-check.ts",
+    "engine:report": "tsx blog-engine/scripts/gsc-report.ts",
+    "engine:refresh": "tsx blog-engine/scripts/refresh.ts",
+    "engine:ping": "tsx blog-engine/scripts/index-ping.ts",
+    "engine:audit": "tsx blog-engine/scripts/audit-existing.ts",
+    "engine:voice": "tsx blog-engine/scripts/build-voice.ts",
+    "engine:test": "tsx --test blog-engine/tests/*.test.ts",
+    "engine:typecheck": "tsc -p blog-engine/tsconfig.json"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.129.0",
@@ -16,7 +29,9 @@
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^4.15.0",
     "google-auth-library": "^11.1.0",
-    "tailwindcss": "^3.4.1"
+    "google-trends-api": "^4.9.2",
+    "tailwindcss": "^3.4.1",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@fontsource/dm-sans": "^5.3.0",

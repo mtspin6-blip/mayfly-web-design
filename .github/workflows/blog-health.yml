@@ -1,0 +1,41 @@
+name: blog-health
+
+# Weekly circuit breaker: URL Inspection + Search Console checks. May pause publishing and open an issue.
+on:
+  schedule:
+    - cron: '0 15 * * 0'
+  workflow_dispatch:
+
+concurrency:
+  group: blog-engine
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Health check
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: npm run engine:health
+      - name: Commit state
+        run: |
+          git config user.name "mayfly-blog-engine"
+          git config user.email "blog-engine@users.noreply.github.com"
+          git add -A blog-engine/config.json blog-engine/health-state.json blog-engine/published-log.json blog-engine/data reports src/content/blog
+          git diff --cached --quiet || git commit -m "blog-engine: weekly health check"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -87,6 +87,7 @@ if (faq.length) {
   title={seoTitle ?? title}
   description={description}
   ogType="article"
+  noindex={entry.data.noindex}
   ogImage={`${SITE_URL}/og/${entry.slug}.png`}
   publishedTime={date}
   modifiedTime={updatedDate ?? date}

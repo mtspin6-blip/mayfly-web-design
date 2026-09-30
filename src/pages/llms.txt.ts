@@ -4,7 +4,7 @@ import { SITE_URL, BOOKING_URL, PILLARS, pillarOf } from '../lib/site';
 import offer from '../../blog-engine/config.json';
 
 export async function GET() {
-  const posts = (await getCollection('blog', (p) => !p.data.draft)).sort(
+  const posts = (await getCollection('blog', (p) => !p.data.draft && !p.data.noindex)).sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
   );
   const o = offer.offer;
