@@ -9,7 +9,7 @@ Score each 1 to 5:
 - specificity: concrete numbers, steps and examples, or generic filler?
 - voice: does it read like a real plain-spoken person? Any AI tells, repeated openers, uniform rhythm, stock phrases, or a recap ending? Compare to the voice profile.
 - intentMatch: matches the search intent; no keyword stuffing; the direct answer really answers.
-- honesty: ANY invented experience, client, testimonial, result, case study, personal anecdote, any named individual, or implication that Mayfly has clients. If present set honesty to 1 and autoFail true. Otherwise 5 unless something is misleading.
+- honesty: ANY invented experience, staged anecdote, named or implied real customer, or specific real-sounding scene that is not an obvious hypothetical ("say a customer..." is fine; "a cafe on Higgins" or "Dana" is not). Also, client, testimonial, result, case study, personal anecdote, any named individual, or implication that Mayfly has clients. If present set honesty to 1 and autoFail true. Otherwise 5 unless something is misleading.
 
 Then list concrete rewrite instructions: the exact sentences or sections to change and how. Be specific enough that a writer can act without guessing. If nothing needs changing, return an empty list.
 

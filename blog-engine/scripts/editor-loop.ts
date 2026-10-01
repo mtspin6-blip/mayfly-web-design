@@ -41,6 +41,8 @@ export async function editorLoop(o: { post: Post; brief: Brief; item: { keyword:
     scores = review.scores;
     const eg = gateEditor(scores, o.cfg);
     log.push(`round ${round}: editor ${eg.detail}; deterministic failures: ${gates.filter((g) => !g.ok).map((g) => `${g.id} [${g.detail.slice(0, 160)}]`).join('; ') || 'none'}`);
+    log.push(`editor problems: ${review.problems.join(' | ') || 'none'}`);
+    log.push(`editor rewrite instructions: ${review.rewriteInstructions.join(' | ') || 'none'}`);
     if (scores.autoFail || scores.honesty < 5) return { post, scores, rounds: round, gates: [...gates, eg], ok: false, log: [...log, 'honesty auto-fail'] };
     if (allPassed(gates) && eg.ok) return { post, scores, rounds: round, gates: [...gates, eg], ok: true, log };
     if (round === o.cfg.gates.maxRewrites) return { post, scores, rounds: round, gates: [...gates, eg], ok: false, log };

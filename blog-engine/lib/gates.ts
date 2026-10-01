@@ -82,7 +82,8 @@ export function gateTitleMeta(p: Post): GateResult {
 export function gateHeadings(p: Post): GateResult {
   const hs = h2s(p.body);
   const q = hs.filter((h) => h.trim().endsWith('?')).length;
-  const colonTitles = hs.filter((h) => /^[^:]{3,40}:\s/.test(h)).length;
+  // "Step 1: How do you..." is a normal how-to pattern; only flag generic "Topic: subtitle" headings.
+  const colonTitles = hs.filter((h) => /^[^:]{3,40}:\s/.test(h) && !/^(step|part|tip|rule|stage|option)\s*\d+\s*:/i.test(h)).length;
   const ok = hs.length >= 3 && q / hs.length > 0.5 && colonTitles / Math.max(hs.length, 1) < 0.5;
   return check('headings', ok, `${hs.length} H2s, ${q} questions, ${colonTitles} colon-style`);
 }
@@ -172,7 +173,8 @@ export function gateBannedPatterns(p: Post, cfg: Config): GateResult {
   if ((p.body.match(/;/g) ?? []).length > 2) problems.push('more than 2 semicolons');
   if (EMOJI.test(text)) problems.push('emoji');
   if (/\bFirst,[\s\S]{0,400}\bSecond,[\s\S]{0,400}\bThird,/i.test(p.body)) problems.push('First/Second/Third scaffold');
-  if (/^#{2,3}\s+[^:\n]{3,40}:\s+\S/m.test(p.body) && (p.body.match(/^##\s+[^:\n]{3,40}:\s+\S/gm) ?? []).length > 1) problems.push('title-colon-subtitle headings');
+  const colonHeads = (p.body.match(/^##\s+(?!(?:step|part|tip|rule|stage|option)\s*\d+\s*:)[^:\n]{3,40}:\s+\S/gim) ?? []).length;
+  if (colonHeads > 1) problems.push('title-colon-subtitle headings');
   return check('banned-patterns', problems.length === 0, problems.length ? problems.slice(0, 6).join('; ') : 'clean');
 }
 
@@ -208,8 +210,11 @@ export function gateQuotes(p: Post): GateResult {
   for (const m of p.body.matchAll(/["\u201C]([^"\u201D\n]{20,})["\u201D]/g)) {
     if (wordCount(m[1]) > 15) long.push(m[1].slice(0, 40));
   }
-  const blockquotes = (p.body.match(/^>\s+\S/gm) ?? []).length;
-  const problems = [...long.map((l) => `quote over 15 words: "${l}..."`), ...(blockquotes ? [`${blockquotes} blockquote(s); paraphrase sources instead`] : [])];
+  // A blockquote is allowed when it is a copy-and-paste template (it contains a [placeholder] like [Name] or [link]).
+  // Anything else over 15 words reads as quoting a source and fails.
+  const blocks = p.body.split(/\n{2,}/).filter((b) => /^>\s/.test(b.trim()));
+  const sourceQuotes = blocks.filter((b) => !/\[[A-Za-z][^\]]{0,30}\]/.test(b.replace(/\]\(/g, '')) && wordCount(b.replace(/^>\s*/gm, '')) > 15).length;
+  const problems = [...long.map((l) => `quote over 15 words: "${l}..."`), ...(sourceQuotes ? [`${sourceQuotes} blockquote(s) that look like quoted sources; paraphrase instead`] : [])];
   return check('quotes', problems.length === 0, problems.length ? problems.join('; ') : 'no long quotes');
 }
 

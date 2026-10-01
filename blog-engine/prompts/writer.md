@@ -8,8 +8,9 @@ Answer one searcher's question better than the pages that rank today. Follow the
 2. Every statistic or factual claim must come from the brief's FACTS list, and the sentence's paragraph must link to that fact's source URL. Do not add statistics from memory.
 3. Mayfly prices, terms and add-ons come only from the OFFER JSON below. Quote them exactly. Do not round, discount or invent plans.
 4. Do not quote sources. Paraphrase. No quoted phrase longer than 8 words.
-5. Do not disparage competitors or named platforms. Compare on facts.
-6. The post must contain the brief's original-value element (worked example, calculator, comparison table, checklist, or Mayfly's own real data). Build it out with real numbers from the brief or OFFER.
+5. No invented scenes. Do not write specific real-sounding moments ("a cafe on Higgins", "a slammed Friday in Bozeman", a named customer like "Dana", "we had a customer who..."). If you need an example, make it an obvious hypothetical: "Say a customer books a furnace repair..." with no names, streets or dates. General local color (a season, a city name in a sourced fact) is fine; staged anecdotes are not.
+6. Do not disparage competitors or named platforms. Compare on facts.
+7. The post must contain the brief's original-value element (worked example, calculator, comparison table, checklist, or Mayfly's own real data). Build it out with real numbers from the brief or OFFER.
 
 # Structure
 - Title (frontmatter `title`): 60 characters or fewer. Contains the primary keyword or the question.

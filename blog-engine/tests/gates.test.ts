@@ -176,3 +176,26 @@ test('long quotation fails quotes gate', async () => {
   p.body += '\nOne source said "the quick brown fox jumps over the lazy dog while the sun sets slowly behind the tall mountains" about it.\n';
   assert.equal(byId(run(p), 'quotes').ok, false);
 });
+
+test('"Step N:" headings and copy-paste script blockquotes are allowed', () => {
+  const p = clone(goodPost());
+  p.body = p.body.replace(/^## (What happens before the build starts\?)/m, '## Step 1: $1').replace(/^## (How long does the build itself take\?)/m, '## Step 2: $1').replace(/^## (What slows a website project down\?)/m, '## Step 3: $1');
+  p.body += '\n> Text: Hi [Name], thanks for having us out today. If you have a minute, a Google review about how it went would help a lot: [link]. Thanks either way.\n';
+  const r = run(p);
+  assert.equal(byId(r, 'headings').ok, true, byId(r, 'headings').detail);
+  assert.equal(byId(r, 'quotes').ok, true, byId(r, 'quotes').detail);
+  assert.equal(byId(r, 'banned-patterns').ok, true, byId(r, 'banned-patterns').detail);
+});
+
+test('a long blockquote lifted from a source still fails', () => {
+  const p = clone(goodPost());
+  p.body += '\n> Google says that businesses should never offer incentives of any kind in exchange for reviews because doing so is considered fake and misleading content under the policy.\n';
+  assert.equal(byId(run(p), 'quotes').ok, false);
+});
+
+test('generic "Topic: subtitle" headings still fail', () => {
+  const p = clone(goodPost());
+  p.body = p.body.replace(/^## What happens before the build starts\?/m, '## Planning: what happens first').replace(/^## How long does the build itself take\?/m, '## Building: how long it takes');
+  const g = byId(run(p), 'banned-patterns');
+  assert.equal(g.ok, false);
+});
