@@ -58,11 +58,15 @@ export function parsePost(slug: string, raw: string): Post {
   return { slug, fm: YAML.parse(m[1]) as Frontmatter, body: m[2].trim() + '\n' };
 }
 
-export function serializePost(p: Post): string {
-  // Astro's YAML reader turns bare 2026-10-06 into a Date; the content schema wants a string, so quote date fields.
-  const fm = YAML.stringify(p.fm, { lineWidth: 0 })
+/** Frontmatter as it is written to disk. Astro's YAML reader turns bare 2026-10-06 into a Date, so date fields are quoted. */
+export function frontmatterYaml(fm: Frontmatter): string {
+  return YAML.stringify(fm, { lineWidth: 0 })
     .trimEnd()
     .replace(/^(date|updatedDate|at): (\d{4}-\d{2}-\d{2}(?:T[\d:.]+Z?)?)$/gm, '$1: "$2"');
+}
+
+export function serializePost(p: Post): string {
+  const fm = frontmatterYaml(p.fm);
   return `---\n${fm}\n---\n\n${p.body.trim()}\n`;
 }
 

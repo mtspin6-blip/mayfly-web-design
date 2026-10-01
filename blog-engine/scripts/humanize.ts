@@ -1,6 +1,6 @@
 // Rhythm/voice rewrite pass. Runs after the draft and before the editor. Facts, links and numbers must survive unchanged.
 import YAML from 'yaml';
-import { repairYaml } from '../lib/post.js';
+import { repairYaml, frontmatterYaml } from '../lib/post.js';
 import type { Config } from '../lib/config.js';
 import { Budget, ask, splitDelimited } from '../lib/claude.js';
 import type { Post } from '../lib/post.js';
@@ -13,7 +13,7 @@ const hrefs = (s: string) => links(s).map((l) => l.href).sort().join('|');
 
 export async function humanize(post: Post, cfg: Config, budget: Budget): Promise<{ post: Post; kept: boolean; note: string }> {
   const system = prompt('humanize', { BANNED: cfg.bannedPhrases.join(', '), VOICE: loadVoice() });
-  const user = `===FRONTMATTER===\n${YAML.stringify(post.fm, { lineWidth: 0 }).trim()}\n===BODY===\n${post.body}`;
+  const user = `===FRONTMATTER===\n${frontmatterYaml(post.fm)}\n===BODY===\n${post.body}`;
   let out;
   try {
     out = splitDelimited(await ask({ model: cfg.models.humanize, system, user, effort: 'medium', maxTokens: 16000, budget }));

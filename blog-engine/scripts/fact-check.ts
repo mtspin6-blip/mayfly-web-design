@@ -1,9 +1,8 @@
 // Fact-check: fetch every cited URL, confirm each claim appears there, drop dead links, remove unsupported claims.
-import YAML from 'yaml';
 import type { Config } from '../lib/config.js';
 import { Budget, ask, askJson, splitDelimited } from '../lib/claude.js';
 import { fetchPageText, type PageFetch } from '../lib/http.js';
-import type { Post } from '../lib/post.js';
+import { frontmatterYaml, type Post } from '../lib/post.js';
 import { links } from '../lib/gates.js';
 import { prompt } from '../lib/pipeline.js';
 
@@ -49,7 +48,7 @@ export async function factCheck(post: Post, cfg: Config, budget: Budget, fetcher
     const raw = await ask({
       model: cfg.models.humanize,
       system: `You are a fact-check editor. The listed sentences make claims that their cited sources do not support. Remove each claim, or rewrite the sentence so it says only what is safe without a statistic. Keep every other word, link, heading and the frontmatter exactly as is. Do not add new facts. No em dashes. Return the full post as:\n===FRONTMATTER===\n(yaml)\n===BODY===\n(markdown)`,
-      user: `UNSUPPORTED SENTENCES:\n${bad.map((b, i) => `${i + 1}. ${b.sentence}`).join('\n')}\n\nPOST:\n===FRONTMATTER===\n${YAML.stringify(cur.fm, { lineWidth: 0 }).trim()}\n===BODY===\n${cur.body}`,
+      user: `UNSUPPORTED SENTENCES:\n${bad.map((b, i) => `${i + 1}. ${b.sentence}`).join('\n')}\n\nPOST:\n===FRONTMATTER===\n${frontmatterYaml(cur.fm)}\n===BODY===\n${cur.body}`,
       effort: 'low', maxTokens: 16000, budget,
     });
     const out = splitDelimited(raw);

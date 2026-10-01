@@ -1,15 +1,14 @@
 // Skeptical editor: scores the draft, returns rewrite instructions, and the writer revises (max 2 rewrites).
-import YAML from 'yaml';
 import type { Config } from '../lib/config.js';
 import { Budget, ask, askJson, splitDelimited } from '../lib/claude.js';
-import type { Post } from '../lib/post.js';
+import { frontmatterYaml, type Post } from '../lib/post.js';
 import { runDeterministicGates, gateEditor, allPassed, summarize, type EditorScores, type GateContext, type GateResult } from '../lib/gates.js';
 import { prompt, loadVoice } from '../lib/pipeline.js';
 import { buildPost, type Brief } from './draft-post.js';
 
 interface EditorReply { scores: EditorScores; autoFail?: boolean; problems: string[]; rewriteInstructions: string[] }
 
-const render = (p: Post) => `===FRONTMATTER===\n${YAML.stringify(p.fm, { lineWidth: 0 }).trim()}\n===BODY===\n${p.body}`;
+const render = (p: Post) => `===FRONTMATTER===\n${frontmatterYaml(p.fm)}\n===BODY===\n${p.body}`;
 
 export async function edit(post: Post, brief: Brief, cfg: Config, budget: Budget, voiceHint = loadVoice()): Promise<EditorReply> {
   const r = await askJson<EditorReply>({

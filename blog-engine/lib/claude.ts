@@ -2,6 +2,9 @@
 // Usage counts against your plan's limits. There is no API key and no per-token billing: the API key
 // variables are stripped from the child process so a stray key can never turn this into API spend.
 import { spawn, spawnSync } from 'node:child_process';
+import os from 'node:os';
+import fs from 'node:fs';
+import path from 'node:path';
 import { Config } from './config.js';
 import { enginePath, readJson, writeJson } from './paths.js';
 
@@ -86,7 +89,9 @@ const AUTH_RE = /(authenticate|oauth|not logged in|login|unauthorized|invalid to
 function runClaude(o: AskOptions): Promise<CliResult> {
   const { args, env } = buildCliInvocation(o);
   return new Promise((resolve, reject) => {
-    const child = spawn('claude', args, { env, stdio: ['pipe', 'pipe', 'pipe'] });
+    // Run in an empty scratch directory so Claude Code can't pick up this repo's CLAUDE.md or settings as context.
+    const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'mayfly-claude-'));
+    const child = spawn('claude', args, { env, cwd, stdio: ['pipe', 'pipe', 'pipe'] });
     let out = '', err = '';
     const timer = setTimeout(() => { child.kill('SIGKILL'); reject(new Error('claude timed out after 12 minutes')); }, 12 * 60 * 1000);
     child.stdout.on('data', (d) => (out += d));
@@ -94,6 +99,7 @@ function runClaude(o: AskOptions): Promise<CliResult> {
     child.on('error', (e) => { clearTimeout(timer); reject(new Error(`could not start claude CLI: ${e.message}. Install with: npm i -g @anthropic-ai/claude-code`)); });
     child.on('close', () => {
       clearTimeout(timer);
+      fs.rmSync(cwd, { recursive: true, force: true });
       try { resolve(JSON.parse(out) as CliResult); }
       catch { reject(new Error(`claude returned no JSON: ${(out || err).slice(0, 300)}`)); }
     });
