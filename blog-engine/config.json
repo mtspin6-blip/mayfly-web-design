@@ -1,6 +1,5 @@
 {
-  "paused": true,
-  "pausedReason": "Ships paused. Flip to false after: Cloudflare www redirect added, secrets set, baseline CSVs imported.",
+  "paused": false,
   "disclosure": { "enabled": false, "text": "" },
   "site": { "url": "https://mayflywebdesign.com", "author": "Mayfly Web Design" },
   "offer": {

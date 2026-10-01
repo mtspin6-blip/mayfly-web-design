@@ -20,7 +20,7 @@ Mitchell is learning web development: explain in plain English.
 Automated weekly pipeline: research, brief, draft, humanize, editor loop, fact-check, gates, publish, index. Weekly health check with a circuit breaker; monthly optimization and report. Runs in GitHub Actions (`.github/workflows/blog-*.yml`).
 
 Rules for anyone (human or model) editing it:
-1. **Kill switch:** `blog-engine/config.json` `"paused"`. It ships `true`. Never flip it without Mitchell asking.
+1. **Kill switch:** `blog-engine/config.json` `"paused"`. Turned ON (`false`) by Mitchell's request on 2026-09-30; the health check may set it back to `true` on its own. Never flip it without Mitchell asking.
 2. **Never raise `HARD_CAPS`** (1 post/day, 2/week) in `lib/config.ts` and never make them configurable.
 3. **Never fabricate:** no clients, testimonials, case studies, results, invented quotes or personal stories. First-person material only from `blog-engine/notes/inbox.md`.
 4. Every statistic needs a cited source; the gates and fact-checker enforce it. Don't loosen a gate to make a draft pass. Fix the draft.

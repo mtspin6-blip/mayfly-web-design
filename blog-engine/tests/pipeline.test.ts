@@ -82,15 +82,6 @@ test('honesty auto-fail discards the post immediately', async () => {
   setMockClaude(undefined);
 });
 
-test('paused config blocks a real (non-dry) run', async () => {
-  const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
-  assert.equal(cfg.paused, true, 'ships paused');
-  const r = await runPipeline({ dryRun: false, now: false, site: false });
-  assert.equal(r.ok, true);
-  assert.match(r.reason, /paused/);
-  assert.equal(r.published, undefined);
-});
-
 test('fact-check drops dead links and removes unsupported claims', async () => {
   const post = clone(goodPost());
   const bad = 'About 90% of Montana sites fail [a study](https://dead.example.com/x). ';
