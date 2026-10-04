@@ -1,19 +1,44 @@
 {
   "paused": false,
-  "disclosure": { "enabled": false, "text": "" },
-  "site": { "url": "https://mayflywebdesign.com", "author": "Mayfly Web Design" },
+  "disclosure": {
+    "enabled": false,
+    "text": ""
+  },
+  "site": {
+    "url": "https://mayflywebdesign.com",
+    "author": "Mayfly Web Design"
+  },
   "offer": {
-    "starter": { "monthly": 59, "annual": 599, "buyout": 750 },
-    "business": { "monthly": 99, "annual": 999, "buyout": 1500 },
-    "localSeo": { "monthly": 299 },
+    "starter": {
+      "monthly": 59,
+      "annual": 599,
+      "buyout": 750
+    },
+    "business": {
+      "monthly": 99,
+      "annual": 999,
+      "buyout": 1500
+    },
+    "localSeo": {
+      "monthly": 299
+    },
     "addons": {
       "additionalSection": 49,
       "additionalPage": 149,
       "leadFormSetup": 49,
       "gbpSetup": 199,
-      "booking": { "setup": 99, "monthly": 29 },
-      "leadForm": { "setup": 49, "monthly": 9 },
-      "payments": { "setup": 299, "monthly": 39 }
+      "booking": {
+        "setup": 99,
+        "monthly": 29
+      },
+      "leadForm": {
+        "setup": 49,
+        "monthly": 9
+      },
+      "payments": {
+        "setup": 299,
+        "monthly": 39
+      }
     },
     "termMonths": 6,
     "bookingUrl": "https://cal.com/mayflywebdesign/discovery"
@@ -73,23 +98,92 @@
     "gateFailureRateMax": 0.5
   },
   "bannedPhrases": [
-    "delve", "dive into", "deep dive", "in today's digital landscape", "in the ever-evolving", "ever-evolving",
-    "game-changer", "game changer", "unlock", "leverage", "harness", "elevate", "seamless", "seamlessly", "robust",
-    "cutting-edge", "navigate the complexities", "it's important to note", "it is important to note",
-    "it's worth noting", "it is worth noting", "look no further", "whether you're", "at the end of the day",
-    "a testament to", "tapestry", "realm", "foster", "streamline", "empower", "paramount", "in conclusion",
-    "ready to take the next step", "additionally", "moreover", "furthermore", "not only", "it's not just",
-    "in the world of", "when it comes to", "plays a crucial role", "crucial"
+    "delve",
+    "dive into",
+    "deep dive",
+    "in today's digital landscape",
+    "in the ever-evolving",
+    "ever-evolving",
+    "game-changer",
+    "game changer",
+    "unlock",
+    "leverage",
+    "harness",
+    "elevate",
+    "seamless",
+    "seamlessly",
+    "robust",
+    "cutting-edge",
+    "navigate the complexities",
+    "it's important to note",
+    "it is important to note",
+    "it's worth noting",
+    "it is worth noting",
+    "look no further",
+    "whether you're",
+    "at the end of the day",
+    "a testament to",
+    "tapestry",
+    "realm",
+    "foster",
+    "streamline",
+    "empower",
+    "paramount",
+    "in conclusion",
+    "ready to take the next step",
+    "additionally",
+    "moreover",
+    "furthermore",
+    "not only",
+    "it's not just",
+    "in the world of",
+    "when it comes to",
+    "plays a crucial role",
+    "crucial"
   ],
   "fakeClientPhrases": [
-    "our client", "our clients", "my client", "my clients", "a client of mine", "we built a site for",
-    "i built a site for", "i built a website for", "we helped a", "one of our customers", "case study",
-    "testimonial", "customers say", "clients say", "increased their", "helped them rank"
+    "our client",
+    "our clients",
+    "my client",
+    "my clients",
+    "a client of mine",
+    "we built a site for",
+    "i built a site for",
+    "i built a website for",
+    "we helped a",
+    "one of our customers",
+    "case study",
+    "testimonial",
+    "customers say",
+    "clients say",
+    "increased their",
+    "helped them rank"
   ],
-  "disparagementPhrases": ["scam", "rip-off", "rip off", "avoid wix", "wix is terrible", "squarespace is terrible", "worst agency"],
+  "disparagementPhrases": [
+    "scam",
+    "rip-off",
+    "rip off",
+    "avoid wix",
+    "wix is terrible",
+    "squarespace is terrible",
+    "worst agency"
+  ],
   "internalPages": [
-    "/services/website-design/", "/services/seo-gaio/", "/services/ai-automations/", "/pricing/", "/about/", "/contact/",
-    "/web-design/missoula/", "/web-design/bozeman/", "/web-design/great-falls/", "/web-design/billings/"
+    "/services/website-design/",
+    "/services/seo-gaio/",
+    "/services/ai-automations/",
+    "/pricing/",
+    "/about/",
+    "/contact/",
+    "/web-design/missoula/",
+    "/web-design/bozeman/",
+    "/web-design/great-falls/",
+    "/web-design/billings/"
   ],
-  "servicePages": ["/services/website-design/", "/services/seo-gaio/", "/services/ai-automations/", "/pricing/"]
+  "servicePages": [
+    "/services/website-design/",
+    "/services/seo-gaio/",
+    "/services/ai-automations/",
+    "/pricing/"
+  ]
 }

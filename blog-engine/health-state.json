@@ -1,0 +1,12 @@
+{
+  "cadence": "weekly",
+  "consecutiveHealthy": 1,
+  "runs": [],
+  "siteImpressionsHistory": [
+    {
+      "at": "2026-10-04T18:29:23.198Z",
+      "twoWeekImpressions": 0
+    }
+  ],
+  "lastCheck": "2026-10-04T18:29:23.198Z"
+}
