@@ -19,12 +19,14 @@
       "seed",
       "autocomplete"
     ],
-    "status": "new",
+    "status": "rejected",
     "signals": {
       "autocompleteDepth": 24,
       "winnability": 0.6000000000000001,
       "local": false
-    }
+    },
+    "rejectedReason": "editor loop failed: editor rewrite instructions: Replace 'Not listed in the FTC's announcement' cells with a clearer phrase such as 'Not addressed in the FTC sources we cite' and add one sentence under the table saying so. Change 'Yes, per Google's policy' to just 'Yes'. | In Step 4, remove or softe",
+    "rejectedAt": "2026-10-05T19:19:00.037Z"
   },
   {
     "keyword": "why is my business not showing on google maps",
@@ -45,12 +47,14 @@
     "sources": [
       "autocomplete"
     ],
-    "status": "new",
+    "status": "rejected",
     "signals": {
       "autocompleteDepth": 20,
       "winnability": 0.6000000000000001,
       "local": false
-    }
+    },
+    "rejectedReason": "editor loop failed: editor rewrite instructions: Change the title to '...? 7 Fixes' to match the brief, or make the description's counting consistent with the H2s (test plus six fixes). | Delete or soften the 'Not sure you ever made a profile?' paragraph, or reframe it as a plain suggestion without ",
+    "rejectedAt": "2026-10-05T19:25:46.712Z"
   },
   {
     "keyword": "how to start online booking business",
@@ -67,12 +71,14 @@
     "sources": [
       "autocomplete"
     ],
-    "status": "new",
+    "status": "rejected",
     "signals": {
       "autocompleteDepth": 18,
       "winnability": 0.6000000000000001,
       "local": false
-    }
+    },
+    "rejectedReason": "editor loop failed: editor rewrite instructions: After the card-fee table, add a short combined year-one table or sentences. For the $85 tour deposit at 40 a month: $1,957 fixed (Starter monthly plus LLC) plus about $1,327 in card fees (110.60 × 12) is about $3,284. For the $25 ticket at 200 a month",
+    "rejectedAt": "2026-10-05T19:32:04.224Z"
   },
   {
     "keyword": "how to get a google business profile",

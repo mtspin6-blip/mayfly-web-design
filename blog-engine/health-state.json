@@ -1,12 +1,22 @@
 {
   "cadence": "weekly",
   "consecutiveHealthy": 1,
-  "runs": [],
+  "runs": [
+    {
+      "at": "2026-10-05T19:32:04.225Z",
+      "ok": false,
+      "reason": "slot 2026-10-05:mon failed: editor loop failed: editor rewrite instructions: After the card-fee table, add a short combined year-one table or sentences. For the $85 tour deposit at 40 a month: $1,957 fixed (Starter monthly plus "
+    }
+  ],
   "siteImpressionsHistory": [
     {
       "at": "2026-10-04T18:29:23.198Z",
       "twoWeekImpressions": 0
     }
   ],
-  "lastCheck": "2026-10-04T18:29:23.198Z"
+  "lastCheck": "2026-10-04T18:29:23.198Z",
+  "nextPublishAt": {
+    "slot": "2026-10-05:mon",
+    "at": "2026-10-05T13:08:50.744Z"
+  }
 }
