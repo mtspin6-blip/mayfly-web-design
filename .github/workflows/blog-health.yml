@@ -33,7 +33,8 @@ jobs:
         run: npm run engine:health
       # One commit for everything the run touched, rebased with --autostash and retried (see blog-engine/scripts/ci-push.sh).
       - name: Commit and push
-        run: bash blog-engine/scripts/ci-push.sh "blog-engine: weekly health check"
+        run: |
+          bash blog-engine/scripts/ci-push.sh "blog-engine: weekly health check"
       - name: Alert - the job crashed
         if: failure()
         env:

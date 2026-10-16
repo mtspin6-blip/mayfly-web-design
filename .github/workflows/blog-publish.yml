@@ -76,7 +76,7 @@ jobs:
       - name: Push
         id: push
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
-        run: bash blog-engine/scripts/ci-push.sh "blog-engine: run ${{ github.run_id }}"
+        run: bash blog-engine/scripts/ci-push.sh "blog-engine run ${{ github.run_id }}"
 
       - name: Verify live, then ping search engines
         id: ping
