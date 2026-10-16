@@ -17,12 +17,13 @@ Mitchell is learning web development: explain in plain English.
 - `llms.txt`, `rss.xml`, OG images (`/og/<slug>.png`), topic hubs and IndexNow key file are generated at build. Don't hand-edit or add static copies in `public/`.
 
 ## Blog engine (`blog-engine/`), see `docs/BLOG-ENGINE.md` and `docs/SETUP.md`
-Automated weekly pipeline: research, brief, draft, humanize, editor loop, fact-check, gates, publish, index. Weekly health check with a circuit breaker; monthly optimization and report. Runs in GitHub Actions (`.github/workflows/blog-*.yml`).
+Automated weekly pipeline with a ready queue (`blog-engine/queue/`): the writer fills it (brief, draft, humanize, editor repair, fact-check, gates, targeted fix passes); the publisher (no model calls) publishes the oldest queued post; then index and alert. Weekly health check with a circuit breaker; monthly optimization and report. Runs in GitHub Actions (`.github/workflows/blog-*.yml`).
 
 Rules for anyone (human or model) editing it:
 1. **Kill switch:** `blog-engine/config.json` `"paused"`. Turned ON (`false`) by Mitchell's request on 2026-09-30; the health check may set it back to `true` on its own. Never flip it without Mitchell asking.
 2. **Never raise `HARD_CAPS`** (1 post/day, 2/week) in `lib/config.ts` and never make them configurable.
 3. **Never fabricate:** no clients, testimonials, case studies, results, invented quotes or personal stories. First-person material only from `blog-engine/notes/inbox.md`.
+3b. The editor **repairs, never rejects**; only deterministic gates (`lib/gates.ts`) and the fact-checker's unsupported-claim list can hold a draft back, and each failure goes to a fix pass (3 rounds) before a topic is set aside. The run workflow makes **one commit** via `blog-engine/scripts/ci-push.sh`; never split publish and state commits, and keep generated files out of git (`.astro/` is ignored).
 4. Every statistic needs a cited source; the gates and fact-checker enforce it. Don't loosen a gate to make a draft pass. Fix the draft.
 5. Changing a gate, prompt or threshold? Add or update a test in `blog-engine/tests/`. The good fixture (`tests/fixtures/good-post.md`) must keep passing every gate.
 6. Model calls go through `lib/claude.ts`, which runs Claude Code headless under Mitchell's Claude account (`CLAUDE_CODE_OAUTH_TOKEN`). **There is no API key and there must never be one**: API credentials are stripped from the child process so nothing can bill per token. Call caps and usage-limit handling live there. Models: `claude-opus-5-5` for brief/draft, `claude-sonnet-5-5` for humanize/editor/research, `claude-haiku-4-5` for fact-check.

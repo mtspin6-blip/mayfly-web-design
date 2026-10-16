@@ -1,15 +1,17 @@
 name: blog-publish
 
-# Runs hourly on Mon and Thu between 10:00 and 17:00 UTC (04:00-11:00 Mountain, DST-proof).
-# Most runs exit in seconds: the script only publishes once, inside the day's slot, after a per-slot
-# random target time of 07:00 MT +/- 3 hours. Hard caps (max 1/day, 2/week) live in code, not here.
+# Three triggers a week (Mon 15:00 UTC, Mon 21:00 UTC, Tue 15:00 UTC). GitHub often delivers cron runs hours late, so there is no
+# time window: any run publishes the oldest queued post if nothing went out in the last few days, then tops the queue back up
+# to 2 finished posts. Every run is safe to repeat. Hard caps (max 1/day, 2/week) live in code, not here.
 on:
   schedule:
-    - cron: '0 10-17 * * 1,4'
+    - cron: '0 15 * * 1'
+    - cron: '0 21 * * 1'
+    - cron: '0 15 * * 2'
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Dry run (everything except commit/push)'
+        description: 'Dry run (everything except writing files, committing and pushing)'
         type: boolean
         default: true
 
@@ -24,10 +26,12 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     env:
       CI: 'true'
       CHROME_PATH: /usr/bin/google-chrome
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,16 +41,13 @@ jobs:
       - run: npm ci
       - name: Install Claude Code (signs in with your Claude account, no API key)
         run: npm install -g @anthropic-ai/claude-code
-      - name: Configure git (the pipeline commits during its run)
-        run: |
-          git config user.name "mayfly-blog-engine"
-          git config user.email "blog-engine@users.noreply.github.com"
 
       - name: Unit tests (manual runs only)
         if: github.event_name == 'workflow_dispatch'
         run: npm run engine:test
 
-      - name: Run pipeline
+      - name: Publish from the queue, then refill it
+        id: run
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
@@ -59,24 +60,26 @@ jobs:
             npm run engine:run
           fi
 
-      - name: Keep rejected drafts for review
+      - name: Keep set-aside drafts and the queue for review
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rejected-drafts
-          path: blog-engine/data/rejected/
+          name: engine-drafts
+          path: |
+            blog-engine/data/rejected/
+            blog-engine/queue/
+            blog-engine/data/last-run.json
           if-no-files-found: ignore
           retention-days: 14
 
+      # One commit for the post, the queue and the run state, so they can never be separated. Fails the job if it can't push.
       - name: Push
+        id: push
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
-        run: |
-          git add -A blog-engine/health-state.json blog-engine/keyword-backlog.json blog-engine/data/usage-ledger.json 2>/dev/null || true
-          git diff --cached --quiet || git commit -m "blog-engine: record run state"
-          git pull --rebase origin main
-          git push origin HEAD:main
+        run: bash blog-engine/scripts/ci-push.sh "blog-engine: run ${{ github.run_id }}"
 
-      - name: Index pings (after deploy)
+      - name: Verify live, then ping search engines
+        id: ping
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
@@ -85,3 +88,11 @@ jobs:
         run: |
           SLUG=$(node -e "try{console.log(JSON.parse(require('fs').readFileSync('blog-engine/data/last-run.json','utf8')).published||'')}catch{console.log('')}")
           if [ -n "$SLUG" ]; then npm run engine:ping -- "$SLUG"; else echo "nothing published this run"; fi
+
+      - name: Tell Mitchell what happened
+        if: ${{ always() && steps.run.outcome == 'success' && steps.push.outcome != 'failure' }}
+        run: npm run engine:report-run
+
+      - name: Alert - the job crashed
+        if: ${{ failure() && (steps.run.outcome != 'success' || steps.push.outcome == 'failure') }}
+        run: npm run engine:report-run -- --crash

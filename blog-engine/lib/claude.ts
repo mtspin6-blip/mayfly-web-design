@@ -70,6 +70,7 @@ export function buildCliInvocation(o: Pick<AskOptions, 'model' | 'system' | 'web
     '--tools', tools,
     '--output-format', 'json',
     '--no-session-persistence',
+    '--setting-sources', 'project',
     '--max-turns', String(o.webSearch ? o.webSearch.maxUses + 4 : 1),
   ];
   if (o.webSearch) args.push('--allowedTools', 'WebSearch', 'WebFetch');
@@ -81,10 +82,30 @@ export function buildCliInvocation(o: Pick<AskOptions, 'model' | 'system' | 'web
   return { args, env: childEnv };
 }
 
-interface CliResult { is_error?: boolean; result?: string; usage?: { input_tokens?: number; output_tokens?: number; server_tool_use?: { web_search_requests?: number } } }
+interface CliResult { is_error?: boolean; subtype?: string; result?: string; usage?: { input_tokens?: number; output_tokens?: number; server_tool_use?: { web_search_requests?: number } } }
 
 const LIMIT_RE = /(usage limit|session limit|hit your|resets |rate limit|limit reached|too many requests|overloaded|quota)/i;
 const AUTH_RE = /(authenticate|oauth|not logged in|login|unauthorized|invalid token)/i;
+const MODEL_RE = /(model.*(not found|not supported|invalid|unknown|does not exist|may not exist|not available)|issue with the selected model|(not found|unknown|invalid).*model)/i;
+
+/** Claude Code's own short names. Used when the pinned model id isn't known to the installed CLI. */
+export const modelAlias = (model: string): string | null => (/opus/i.test(model) ? 'opus' : /sonnet/i.test(model) ? 'sonnet' : /haiku/i.test(model) ? 'haiku' : null);
+
+export type CliOutcome = { kind: 'ok'; text: string } | { kind: 'limit' | 'auth' | 'model' | 'error'; text: string };
+
+/**
+ * Only a result the CLI itself flags as an error can be a limit/auth/model problem. A successful answer that happens
+ * to contain "limit" or "login" (an article about rate limits, say) is just an answer.
+ */
+export function classifyCliResult(res: CliResult): CliOutcome {
+  const text = (res.result ?? '').trim();
+  const flagged = res.is_error === true || (typeof res.subtype === 'string' && res.subtype.startsWith('error') && res.subtype !== 'error_max_turns');
+  if (!flagged) return { kind: 'ok', text };
+  if (LIMIT_RE.test(text)) return { kind: 'limit', text };
+  if (AUTH_RE.test(text)) return { kind: 'auth', text };
+  if (MODEL_RE.test(text)) return { kind: 'model', text };
+  return { kind: 'error', text };
+}
 
 function runClaude(o: AskOptions): Promise<CliResult> {
   const { args, env } = buildCliInvocation(o);
@@ -111,16 +132,20 @@ export async function ask(o: AskOptions): Promise<string> {
   o.budget.assertAvailable();
   if (mock) return mock({ model: o.model, system: o.system, user: o.user, webSearch: !!o.webSearch });
 
-  const res = await runClaude(o);
-  const text = (res.result ?? '').trim();
-  if (res.is_error) {
-    if (LIMIT_RE.test(text)) throw new UsageLimit(`Claude plan usage limit: ${text.slice(0, 160)}`);
-    if (AUTH_RE.test(text)) throw new UsageLimit(`Claude sign-in problem (check CLAUDE_CODE_OAUTH_TOKEN): ${text.slice(0, 160)}`);
-    throw new Error(`claude error: ${text.slice(0, 300)}`);
+  let res = await runClaude(o);
+  let out = classifyCliResult(res);
+  const alias = modelAlias(o.model);
+  if (out.kind === 'model' && alias && alias !== o.model) {
+    console.warn(`model "${o.model}" not accepted by this Claude Code version; retrying with alias "${alias}"`);
+    res = await runClaude({ ...o, model: alias });
+    out = classifyCliResult(res);
   }
+  if (out.kind === 'limit') throw new UsageLimit(`Claude plan usage limit: ${out.text.slice(0, 160)}`);
+  if (out.kind === 'auth') throw new UsageLimit(`Claude sign-in problem (check CLAUDE_CODE_OAUTH_TOKEN): ${out.text.slice(0, 160)}`);
+  if (out.kind !== 'ok') throw new Error(`claude error: ${out.text.slice(0, 300)}`);
   o.budget.record((res.usage?.input_tokens ?? 0) + (res.usage?.output_tokens ?? 0), res.usage?.server_tool_use?.web_search_requests ?? 0);
-  if (!text) throw new Error('claude returned an empty result');
-  return text;
+  if (!out.text) throw new Error('claude returned an empty result');
+  return out.text;
 }
 
 /** True when this environment can reach Claude: a long-lived token (CI) or a logged-in local CLI. */

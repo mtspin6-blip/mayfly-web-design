@@ -36,11 +36,12 @@ jobs:
         run: npm run build && npm run validate
       - name: Report
         run: npm run engine:report
-      - name: Commit
-        run: |
-          git config user.name "mayfly-blog-engine"
-          git config user.email "blog-engine@users.noreply.github.com"
-          git add -A src/content/blog blog-engine/published-log.json blog-engine/data reports
-          git diff --cached --quiet || git commit -m "blog-engine: monthly optimization and report"
-          git pull --rebase origin main
-          git push origin HEAD:main
+      # One commit for everything the run touched, rebased with --autostash and retried (see blog-engine/scripts/ci-push.sh).
+      - name: Commit and push
+        run: bash blog-engine/scripts/ci-push.sh "blog-engine: monthly optimization and report"
+      - name: Alert - the job crashed
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: npm run engine:report-run -- --crash

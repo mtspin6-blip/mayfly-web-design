@@ -1,105 +1,73 @@
-// The weekly job: decide whether to publish now, then brief -> draft -> humanize -> editor loop -> fact-check -> gates -> publish.
-// Flags: --dry-run (everything except commit), --now (ignore the day/slot/jitter check; caps still apply), --no-site (skip build/Lighthouse)
+// The scheduled run. Publishing and writing are separate jobs that share the ready queue (blog-engine/queue/):
+//   1. publish   - no model calls. If a post is due, the oldest queued post goes live.
+//   2. write     - top the queue back up to 2 finished, gate-passing posts.
+//   3. publish   - only if step 1 had nothing to publish (empty queue) and step 2 just wrote something.
+// A bad writing day therefore never costs a week: the queue already holds posts. Every run writes data/last-run.json,
+// which the workflow turns into the GitHub issue/email and the post-deploy checks.
+// Flags: --dry-run (touch nothing on disk), --now (ignore the "last N days" rule; caps still apply), --no-site (skip build/Lighthouse)
 import { loadConfig } from '../lib/config.js';
-import { Budget, BudgetExceeded, UsageLimit } from '../lib/claude.js';
-import { loadBacklog, saveBacklog, loadPublished, loadHealth, saveHealth } from '../lib/state.js';
-import { loadPosts } from '../lib/post.js';
-import { decide } from '../lib/schedule.js';
-import { normalizeKeyword } from '../lib/text.js';
-import { arg, gateContext } from '../lib/pipeline.js';
-import { pickTopic } from './pick-topic.js';
-import { makeBrief, writeDraft } from './draft-post.js';
-import { humanize } from './humanize.js';
-import { editorLoop, RejectedDraft } from './editor-loop.js';
-import fs from 'node:fs';
-import path from 'node:path';
-import { serializePost } from '../lib/post.js';
-import { factCheck } from './fact-check.js';
-import { runAllGates } from './quality-gate.js';
-import { publish } from './publish.js';
-import type { PageFetch } from '../lib/http.js';
+import { Budget } from '../lib/claude.js';
+import { loadHealth, saveHealth } from '../lib/state.js';
+import { arg } from '../lib/pipeline.js';
+import { listQueue, QUEUE_TARGET, type QueueItem } from '../lib/queue.js';
 import { enginePath, writeJson } from '../lib/paths.js';
+import { publishFromQueue, type PublishOutcome } from './publish.js';
+import { fillQueue, type WriteResult } from './write-queue.js';
+import type { PageFetch } from '../lib/http.js';
 
-export interface RunResult { published?: string; reason: string; ok: boolean }
+export interface RunSummary {
+  at: string; dryRun: boolean; ok: boolean; published?: string; title?: string; publishReason: string; due: boolean;
+  queued: string[]; queueSize: number; setAside: { keyword: string; reason: string }[]; stopped?: string; backlinked: string[];
+  usage: { calls: number; tokens: number; searches: number };
+}
 
-export async function runPipeline(o: { dryRun: boolean; now: boolean; site: boolean; date?: Date; fetcher?: (u: string) => Promise<PageFetch> }): Promise<RunResult> {
+export interface RunResult { published?: string; reason: string; ok: boolean; summary: RunSummary }
+
+export async function runPipeline(o: { dryRun: boolean; now: boolean; site: boolean; queueTarget?: number; date?: Date; fetcher?: (u: string) => Promise<PageFetch> }): Promise<RunResult> {
   const cfg = loadConfig();
-  const health = loadHealth();
   const when = o.date ?? new Date();
-  const d = decide({ now: when, cfg, health, log: loadPublished(), ignoreSlot: o.now });
-  console.log(`schedule: ${d.reason}`);
-  if (!d.publish && !(o.dryRun && o.now)) return { ok: true, reason: d.reason };
-  if (d.nextPublishAt && !o.dryRun) health.nextPublishAt = d.nextPublishAt;
-
   const budget = new Budget(cfg);
-  const slotKey = d.nextPublishAt?.slot ?? 'manual';
-  const skip: string[] = [];
-  let lastFailure = 'no eligible topic in backlog';
+  const pubOpts = { dryRun: o.dryRun, now: when, ignoreInterval: o.now, site: o.site };
 
-  for (let attempt = 1; attempt <= cfg.gates.maxTopicTriesPerRun; attempt++) {
-    const ctx = gateContext(cfg);
-    const usedKeywords = [...ctx.existing.map((p) => p.fm.primaryKeyword ?? ''), ...ctx.published.map((p) => p.keyword)];
-    const pick = pickTopic({ cfg, backlog: loadBacklog(), published: ctx.published, usedKeywords, skip });
-    if (!pick) break;
-    const { item, format } = pick;
-    console.log(`\n[try ${attempt}/${cfg.gates.maxTopicTriesPerRun}] "${item.keyword}" (${item.pillar}, ${format}, score ${item.score})`);
-    try {
-      const posts = loadPosts();
-      const dc = { cfg, budget, item, format, existing: posts, recentCtas: posts.map((p) => p.fm.cta ?? '').filter(Boolean).slice(-6), knownPaths: ctx.knownPaths };
-      const brief = await makeBrief(dc);
-      let post = await writeDraft({ ...dc, brief });
-      const h = await humanize(post, cfg, budget);
-      console.log(`humanize: ${h.note}`);
-      post = h.post;
+  let pub: PublishOutcome = publishFromQueue(pubOpts);
+  console.log(`publish: ${pub.reason}`);
 
-      const loop = await editorLoop({ post, brief, item, format, cfg, budget, ctx });
-      loop.log.forEach((l) => console.log(l));
-      if (!loop.ok) throw new RejectedDraft(`editor loop failed: ${loop.log.at(-1)}`, loop.post, loop.gates.map((g) => `${g.ok ? 'PASS' : 'FAIL'} ${g.id}: ${g.detail}`).join('\n') + '\n\n' + loop.log.join('\n'));
-      post = loop.post;
+  // Write only when the queue is short. A paused engine writes nothing.
+  let written: WriteResult = { queued: [], setAside: [], items: [] };
+  const queueNow = listQueue().length;
+  const target = o.queueTarget ?? QUEUE_TARGET;
+  if (!cfg.paused && queueNow < target) {
+    written = await fillQueue({ cfg, budget, dryRun: o.dryRun, site: o.site, target, fetcher: o.fetcher });
+  } else console.log(`write: skipped (${cfg.paused ? 'paused' : `queue already has ${queueNow}`})`);
 
-      const fc = await factCheck(post, cfg, budget, o.fetcher);
-      console.log(`fact-check: ${fc.report.checked} claims, ${fc.report.deadLinks.length} dead links, ${fc.report.rewrites} rewrite(s), ok=${fc.report.ok}`);
-      if (!fc.report.ok) throw new Error(`fact-check failed: unsupported claims remain (${fc.report.unsupported.slice(0, 2).join(' / ')})`);
-      post = fc.post;
-
-      const gates = await runAllGates(post, ctx, loop.scores, { site: o.site, keepOnSuccess: !o.dryRun });
-      console.log(gates.text);
-      if (!gates.ok) throw new Error(`gates failed: ${gates.results.filter((g) => !g.ok).map((g) => `${g.id} (${g.detail})`).join('; ')}`);
-
-      const res = publish({ post, scores: loop.scores, gateText: gates.text, item, cfg, dryRun: o.dryRun });
-      if (!o.dryRun) {
-        writeJson(enginePath('data/last-run.json'), { published: res.slug, at: new Date().toISOString() });
-        health.launchDate ??= new Date().toISOString();
-        health.runs.push({ at: new Date().toISOString(), ok: true, reason: `slot ${slotKey} published ${res.slug}` });
-        saveHealth(health);
-      }
-      console.log(`usage: ${budget.runCalls} model calls, ${budget.runTokens} tokens, ${budget.searches} searches`);
-      return { ok: true, published: res.slug, reason: `published ${res.slug}` };
-    } catch (e) {
-      lastFailure = (e as Error).message;
-      if (e instanceof RejectedDraft) {
-        const dir = enginePath('data/rejected');
-        fs.mkdirSync(dir, { recursive: true });
-        fs.writeFileSync(path.join(dir, `${e.post.slug}.md`), `<!--\n${e.report}\n-->\n\n${serializePost(e.post)}`);
-        console.log(`saved rejected draft + gate report: blog-engine/data/rejected/${e.post.slug}.md`);
-      }
-      console.error(`rejected "${item.keyword}": ${lastFailure}`);
-      if (e instanceof BudgetExceeded) { lastFailure = `${e instanceof UsageLimit ? 'usage-limit' : 'budget'}: ${lastFailure}`; break; }
-      skip.push(item.keyword);
-      if (!o.dryRun) {
-        const backlog = loadBacklog();
-        const b = backlog.find((x) => normalizeKeyword(x.keyword) === normalizeKeyword(item.keyword));
-        if (b) { b.status = 'rejected'; b.rejectedReason = lastFailure.slice(0, 300); b.rejectedAt = new Date().toISOString(); saveBacklog(backlog); }
-      }
-    }
+  // First run, or the queue had run dry: a post may have just been written, so try the publisher again.
+  if (!pub.published && pub.due && written.items.length) {
+    const virtual: QueueItem[] = o.dryRun ? written.items : [];
+    pub = publishFromQueue({ ...pubOpts, virtual });
+    console.log(`publish (second look): ${pub.reason}`);
   }
+
+  const duePublishFailed = pub.due && !pub.published;
+  if (duePublishFailed && written.stopped) pub = { ...pub, reason: `${pub.reason}; writer stopped: ${written.stopped}` };
+  const summary: RunSummary = {
+    at: new Date().toISOString(), dryRun: o.dryRun, ok: !duePublishFailed, published: pub.published, title: pub.title, publishReason: pub.reason, due: pub.due,
+    queued: written.queued, queueSize: o.dryRun ? queueNow + written.queued.length : listQueue().length,
+    setAside: [...written.setAside, ...pub.setAside.map((s) => ({ keyword: s.slug, reason: s.reason }))],
+    stopped: written.stopped, backlinked: pub.backlinked,
+    usage: { calls: budget.runCalls, tokens: budget.runTokens, searches: budget.searches },
+  };
+  console.log(`usage: ${budget.runCalls} model calls, ${budget.runTokens} tokens, ${budget.searches} searches`);
+
   if (!o.dryRun) {
-    const limited = lastFailure.startsWith('usage-limit');
-    health.runs.push({ at: new Date().toISOString(), ok: false, reason: `slot ${slotKey} ${limited ? 'usage-limit' : 'failed'}: ${lastFailure.slice(0, 200)}` });
+    const health = loadHealth();
+    if (pub.published) health.launchDate ??= new Date().toISOString();
+    const limited = (written.stopped ?? '').startsWith('usage-limit');
+    health.runs.push({ at: summary.at, ok: summary.ok, reason: `${pub.published ? `published ${pub.published}` : pub.reason}; queued ${written.queued.length}; set aside ${summary.setAside.length}${limited ? '; usage-limit' : ''}` });
     health.runs = health.runs.slice(-60);
     saveHealth(health);
   }
-  return { ok: false, reason: lastFailure };
+  writeJson(enginePath('data/last-run.json'), { ...summary, published: pub.published ?? '' });
+  return { ok: summary.ok, published: pub.published, reason: pub.published ? `published ${pub.published}` : pub.reason, summary };
 }
 
 if (process.argv[1]?.endsWith('run-pipeline.ts')) {

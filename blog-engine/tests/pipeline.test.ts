@@ -9,7 +9,7 @@ import { factCheck } from '../scripts/fact-check.js';
 import { backlinkTargets, addBackLink } from '../scripts/publish.js';
 import { pickTopic, pickFormat } from '../scripts/pick-topic.js';
 import { humanize } from '../scripts/humanize.js';
-import { Budget, buildCliInvocation, ask, UsageLimit } from '../lib/claude.js';
+import { Budget, buildCliInvocation, ask, UsageLimit, classifyCliResult, modelAlias } from '../lib/claude.js';
 import { loadConfig } from '../lib/config.js';
 import { parseQueriesCsv } from '../scripts/import-baseline.js';
 import { goodPost, clone } from './helpers.js';
@@ -23,9 +23,13 @@ const [, fmText, bodyText] = fixture.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)!
 const okFetch = async (url: string) => ({ url, ok: true, status: 200, text: 'page text' });
 const cfgPath = path.resolve(here, '../config.json');
 
-const goodScores = { scores: { helpfulness: 5, originalValue: 4, accuracy: 5, specificity: 4, voice: 5, intentMatch: 5, honesty: 5 }, autoFail: false, problems: [], rewriteInstructions: [] };
+const goodScores = { helpfulness: 5, originalValue: 4, accuracy: 5, specificity: 4, voice: 5, intentMatch: 5, honesty: 5 };
+const goodReview = { scores: goodScores, problems: [], honestyViolations: [], fabricationRemaining: false };
+const longTitle = 'title: "A Very Long Title About Small Business Websites In Montana That Goes On And On Forever"';
+const badFm = fmText.replace(/^title: .*$/m, longTitle);
 
-function mockModel(over: { editor?: unknown; claims?: unknown } = {}) {
+interface MockOpts { review?: unknown; correctedFm?: string; writerFm?: string; fixFm?: string; claims?: unknown }
+function mockModel(over: MockOpts = {}) {
   const calls: string[] = [];
   setMockClaude((req) => {
     if (req.system.includes('research editor')) {
@@ -40,12 +44,13 @@ function mockModel(over: { editor?: unknown; claims?: unknown } = {}) {
         internalLinks: [], faqCandidates: [], cta: 'Book a free call', category: 'Web Design',
       });
     }
-    if (req.system.includes('published by Mayfly Web Design') || req.system.includes('revising your draft')) {
-      calls.push(req.system.includes('published by Mayfly Web Design') ? 'write' : 'revise');
-      return `===FRONTMATTER===\n${fmText}\n===BODY===\n${bodyText}`;
-    }
+    if (req.system.includes('published by Mayfly Web Design')) { calls.push('write'); return `===FRONTMATTER===\n${over.writerFm ?? fmText}\n===BODY===\n${bodyText}`; }
+    if (req.system.includes('writer fixing your draft')) { calls.push('fix'); return `===FRONTMATTER===\n${over.fixFm ?? fmText}\n===BODY===\n${bodyText}`; }
     if (req.system.includes('Rewrite the draft below')) { calls.push('humanize'); return req.user; }
-    if (req.system.includes('skeptical search quality rater')) { calls.push('editor'); return JSON.stringify(over.editor ?? goodScores); }
+    if (req.system.includes('skeptical search quality rater')) {
+      calls.push('editor');
+      return `===REVIEW===\n${JSON.stringify(over.review ?? goodReview)}\n===FRONTMATTER===\n${over.correctedFm ?? over.writerFm ?? fmText}\n===BODY===\n${bodyText}`;
+    }
     if (req.system.includes('Extract every statistic')) { calls.push('claims'); return JSON.stringify(over.claims ?? { claims: [] }); }
     if (req.system.includes('verify factual claims')) { calls.push('verify'); return JSON.stringify({ results: [] }); }
     throw new Error('unexpected model call: ' + req.system.slice(0, 60));
@@ -53,33 +58,76 @@ function mockModel(over: { editor?: unknown; claims?: unknown } = {}) {
   return calls;
 }
 
-test('full dry-run pipeline (mock model, real gates) publishes the good fixture', async () => {
+test('full dry-run pipeline (mock model, real gates) writes, queues and publishes the good fixture', async () => {
   const calls = mockModel();
   const before = fs.readdirSync(BLOG_DIR).sort();
-  const r = await runPipeline({ dryRun: true, now: true, site: false, fetcher: okFetch, date: mtToDate('2026-10-05', 9) });
+  const r = await runPipeline({ dryRun: true, now: true, site: false, queueTarget: 1, fetcher: okFetch, date: mtToDate('2026-10-05', 9) });
   assert.equal(r.ok, true, r.reason);
   assert.ok(r.published);
   assert.deepEqual(calls.slice(0, 5), ['brief', 'write', 'humanize', 'editor', 'claims']);
   assert.deepEqual(fs.readdirSync(BLOG_DIR).sort(), before, 'dry-run leaves no files behind');
+  assert.equal(r.summary.queued.length >= 1, true);
   setMockClaude(undefined);
 });
 
-test('low editor scores trigger rewrites, then discard after max rewrites', async () => {
-  const bad = { ...goodScores, scores: { ...goodScores.scores, originalValue: 2 }, rewriteInstructions: ['add a real worked example'] };
-  const calls = mockModel({ editor: bad });
-  const r = await runPipeline({ dryRun: true, now: true, site: false, fetcher: okFetch });
-  assert.equal(r.ok, false);
-  assert.equal(calls.filter((c) => c === 'revise').length >= 2, true, 'two rewrites attempted');
-  assert.match(r.reason, /editor loop failed/);
+test('low advisory editor scores never reject a draft that passes the gates', async () => {
+  const low = { ...goodReview, scores: { ...goodScores, originalValue: 2, specificity: 2 }, problems: ['table cell wording', 'title says 6 but brief says 7'] };
+  mockModel({ review: low });
+  const r = await runPipeline({ dryRun: true, now: true, site: false, queueTarget: 1, fetcher: okFetch });
+  assert.equal(r.ok, true, r.reason);
+  assert.ok(r.published, 'published despite low editor scores');
   setMockClaude(undefined);
 });
 
-test('honesty auto-fail discards the post immediately', async () => {
-  const calls = mockModel({ editor: { ...goodScores, scores: { ...goodScores.scores, honesty: 1 }, autoFail: true } });
-  const r = await runPipeline({ dryRun: true, now: true, site: false, fetcher: okFetch });
-  assert.equal(r.ok, false);
-  assert.equal(calls.filter((c) => c === 'revise').length, 0, 'no rewrite attempted on fabricated content');
+test('a draft with a small inconsistency (title over 60 chars) is fixed, not rejected', async () => {
+  const calls = mockModel({ writerFm: badFm, fixFm: fmText });
+  const r = await runPipeline({ dryRun: true, now: true, site: false, queueTarget: 1, fetcher: okFetch });
+  assert.equal(r.ok, true, r.reason);
+  assert.ok(r.published);
+  assert.ok(calls.includes('fix'), 'a targeted fix pass ran');
+  assert.equal(r.summary.setAside.length, 0, 'nothing was set aside');
   setMockClaude(undefined);
+});
+
+test('the editor itself repairs: its corrected post replaces the draft before the gates run', async () => {
+  const calls = mockModel({ writerFm: badFm, correctedFm: fmText });
+  const r = await runPipeline({ dryRun: true, now: true, site: false, queueTarget: 1, fetcher: okFetch });
+  assert.ok(r.published, r.reason);
+  assert.equal(calls.includes('fix'), false, 'the editor already fixed it; no fix pass needed');
+  setMockClaude(undefined);
+});
+
+test('a draft that still fails a gate after 3 fix passes is set aside, with the failure list', async () => {
+  const calls = mockModel({ writerFm: badFm, correctedFm: badFm, fixFm: badFm });
+  const r = await runPipeline({ dryRun: true, now: true, site: false, queueTarget: 1, fetcher: okFetch });
+  assert.equal(r.ok, false);
+  assert.equal(calls.filter((c) => c === 'fix').length >= 3, true, 'three fix passes before giving up');
+  assert.match(r.summary.setAside[0].reason, /still failing after 3 fix passes/);
+  assert.match(r.summary.setAside[0].reason, /title/);
+  setMockClaude(undefined);
+});
+
+test('invented content the editor cannot remove is set aside immediately (no fix pass)', async () => {
+  const calls = mockModel({ review: { ...goodReview, honestyViolations: ['a cafe on Higgins'], fabricationRemaining: true } });
+  const r = await runPipeline({ dryRun: true, now: true, site: false, queueTarget: 1, fetcher: okFetch });
+  assert.equal(r.ok, false);
+  assert.equal(calls.filter((c) => c === 'fix').length, 0, 'no rewrite attempted on fabricated content');
+  setMockClaude(undefined);
+});
+
+test('editor reply parsing: review JSON plus corrected post; unparseable correction keeps the old draft', async () => {
+  const { parseEditorReply } = await import('../scripts/editor-loop.js');
+  const brief = { facts: [{ claim: 'a', sourceTitle: 't', sourceUrl: 'https://web.dev/articles/vitals' }], cta: 'x', category: 'Web Design' } as never;
+  const c = { cfg: loadConfig(), item: { keyword: 'k', pillar: 'website-cost' }, format: 'how-to', brief };
+  const prior = clone(goodPost());
+  const ok = parseEditorReply(`===REVIEW===\n${JSON.stringify(goodReview)}\n===FRONTMATTER===\n${fmText}\n===BODY===\n${bodyText}`, c, prior);
+  assert.ok(ok.corrected);
+  assert.equal(ok.scores.helpfulness, 5);
+  const none = parseEditorReply(`${JSON.stringify(goodReview)}`, c, prior);
+  assert.equal(none.corrected, undefined, 'no corrected post: keep the draft');
+  const broken = parseEditorReply(`===REVIEW===\n${JSON.stringify(goodReview)}\n===FRONTMATTER===\n: : :\n===BODY===\nx`, c, prior);
+  assert.equal(broken.corrected, undefined);
+  assert.match(broken.problems.at(-1)!, /unparseable/);
 });
 
 test('fact-check drops dead links and removes unsupported claims', async () => {
@@ -210,6 +258,7 @@ test('Claude Code invocation never carries an API key (no API billing possible)'
   assert.equal(env.ANTHROPIC_BASE_URL, undefined);
   assert.equal(env.CLAUDE_CODE_OAUTH_TOKEN, 'sub-token', 'subscription token is kept');
   assert.ok(args.includes('-p') && args.includes('--no-session-persistence'));
+  assert.deepEqual(args.slice(args.indexOf('--setting-sources'), args.indexOf('--setting-sources') + 2), ['--setting-sources', 'project']);
   assert.deepEqual(args.slice(args.indexOf('--tools'), args.indexOf('--tools') + 2), ['--tools', 'WebSearch,WebFetch']);
   const noTools = buildCliInvocation({ model: 'm', system: 's' }, {});
   assert.deepEqual(noTools.args.slice(noTools.args.indexOf('--tools'), noTools.args.indexOf('--tools') + 2), ['--tools', '']);
@@ -218,7 +267,7 @@ test('Claude Code invocation never carries an API key (no API billing possible)'
 
 test('a usage-limit stop ends the run without rejecting the topic', async () => {
   setMockClaude(() => { throw new UsageLimit('Claude plan usage limit reached'); });
-  const r = await runPipeline({ dryRun: true, now: true, site: false, fetcher: okFetch });
+  const r = await runPipeline({ dryRun: true, now: true, site: false, queueTarget: 1, fetcher: okFetch });
   assert.equal(r.ok, false);
   assert.match(r.reason, /usage-limit/);
   setMockClaude(undefined);
@@ -249,4 +298,38 @@ test('YAML repair quotes titles with colons and keeps valid values', async () =>
   assert.equal(fixed.readTime, '5 min read');
   assert.equal((fixed.sources as { title: string }[])[0].title, 'Google: helpful content');
   assert.equal((fixed.faq as { q: string }[])[0].q, 'Why? Because: reasons');
+});
+
+test('a successful answer that mentions "limit" is not a usage limit; only a CLI-reported error is', () => {
+  const article = 'Rate limit headers and the daily usage limit hit your quota when you login too often.';
+  assert.deepEqual(classifyCliResult({ is_error: false, result: article }), { kind: 'ok', text: article });
+  assert.equal(classifyCliResult({ result: article }).kind, 'ok');
+  assert.equal(classifyCliResult({ is_error: true, result: "You've hit your session limit. Resets 3pm" }).kind, 'limit');
+  assert.equal(classifyCliResult({ is_error: true, result: 'Invalid token, please login' }).kind, 'auth');
+  assert.equal(classifyCliResult({ is_error: true, result: "There's an issue with the selected model (claude-opus-5-5). It may not exist" }).kind, 'model');
+  assert.equal(classifyCliResult({ is_error: true, result: 'boom' }).kind, 'error');
+});
+
+test('a model id the installed CLI does not know falls back to the alias', async () => {
+  assert.equal(modelAlias('claude-opus-5-5'), 'opus');
+  assert.equal(modelAlias('claude-sonnet-5-5'), 'sonnet');
+  assert.equal(modelAlias('claude-haiku-4-5'), 'haiku');
+  assert.equal(modelAlias('gpt-x'), null);
+});
+
+test('queue: oldest first, round-trips a post, dequeue removes both files', async () => {
+  const os = await import('node:os');
+  const { enqueue, listQueue, dequeue } = await import('../lib/queue.js');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'queue-test-'));
+  const a = clone(goodPost()); a.slug = 'a-post';
+  const b = clone(goodPost()); b.slug = 'b-post';
+  const meta = (slug: string, at: string) => ({ slug, keyword: slug, pillar: 'website-cost' as const, format: 'how-to', queuedAt: at, gateText: 'PASS' });
+  enqueue({ post: b, meta: meta('b-post', '2026-10-02T00:00:00Z') }, dir);
+  enqueue({ post: a, meta: meta('a-post', '2026-10-01T00:00:00Z') }, dir);
+  const q = listQueue(dir);
+  assert.deepEqual(q.map((i) => i.meta.slug), ['a-post', 'b-post']);
+  assert.equal(q[0].post.fm.title, goodPost().fm.title);
+  dequeue('a-post', dir);
+  assert.deepEqual(listQueue(dir).map((i) => i.meta.slug), ['b-post']);
+  fs.rmSync(dir, { recursive: true, force: true });
 });

@@ -6,24 +6,25 @@ gates, publish it, index it, and watch the results. It ships **paused**. Nothing
 
 ## The weekly loop
 
+Writing and publishing are separate jobs that share a **ready queue** (`blog-engine/queue/`, two finished, gate-passing posts).
+
 ```
-GitHub Actions (Mon + Thu, hourly window) -> blog-engine scripts -> commit to main -> Cloudflare Pages deploys
-
-pick topic -> brief (web research) -> draft -> humanize -> editor loop (max 2 rewrites)
-  -> fact-check -> deterministic gates -> build + JSON-LD validate + Lighthouse -> commit -> IndexNow / GSC sitemap
+GitHub Actions (Mon 15:00 UTC, Mon 21:00 UTC, Tue 15:00 UTC)
+  1. publisher (no model calls): if nothing went out in the last 6 days (3 if twice-weekly), publish the OLDEST queued post
+  2. writer: if the queue holds fewer than 2, write more:
+       pick topic -> brief (web research) -> draft -> humanize -> editor REPAIRS (returns a corrected post)
+       -> fact-check + deterministic gates -> targeted fix pass with the exact failure list (up to 3 rounds)
+       -> build + JSON-LD validate + Lighthouse -> queue
+  3. one commit (post + queue + state) -> pull --rebase --autostash -> push (3 tries, fails loudly)
+  4. poll the live URL until 200 (Cloudflare Pages), ping IndexNow / Search Console
+  5. open a GitHub issue (GitHub emails you) saying what happened; a crash opens its own alert issue
 ```
 
-If a draft fails after two rewrites it's discarded, the keyword is marked `rejected` with the reason, and the next
-topic is tried (max 3 per run, then the run is skipped and logged).
-
-## Guardrails that live in code (not config, not prompts)
-
-- **Never more than 2 posts a week or 1 a day.** `HARD_CAPS` in `blog-engine/lib/config.ts`, frozen, tested.
-- **Ramp:** weeks 1 to 4 are 1 post a week (Mondays). Twice a week (Mon + Thu) only after the ramp weeks and 4 healthy weekly checks in a row.
-- **Jitter:** each slot gets a random publish target of 07:00 Mountain +/- 3 hours.
-- **Never fabricated:** no clients, testimonials, case studies, results, or personal stories. First-person experience is allowed only from `blog-engine/notes/inbox.md`. The editor auto-fails any post that contains it otherwise.
-- **Every statistic needs a linked source in the same paragraph**, and the fact-checker fetches each cited page to confirm the claim appears there.
-- **Kill switch:** `blog-engine/config.json` -> `"paused": true`.
+- **Only deterministic gates can hold a draft back.** The editor's scores are advisory. A gate failure (or a claim the fact-checker can't support) goes to a fix pass with the exact list; only after 3 failed fix passes is the topic set aside (marked `rejected`, draft saved as a run artifact).
+- **The one judgment call that stays:** if the editor says invented experience/clients remain after it tried to remove them, the draft is set aside at once (no fabrication, ever).
+- **A bad writing day never costs a week:** the publisher needs no model, so a queued post goes out even if the writer fails or Claude's plan limit is hit.
+- **No time window.** GitHub's cron can arrive hours late; any of the three runs may publish. Running twice is harmless: the "last N days" rule and the hard caps read the published log.
+- **Alerts:** every run opens a GitHub issue. Runs that need nothing from you (published, queued, nothing due) are closed immediately; a run that needs a look (crash, post due but none went out, page not live, writer stopped with an empty queue) stays open with the `needs-attention` label.
 
 ## The gates (`blog-engine/lib/gates.ts`)
 
@@ -44,7 +45,8 @@ validation, and mobile Lighthouse (median of 3) of at least 90.
 | `npm run engine:research` | Expand seeds, score, cluster, write `keyword-backlog.json` (add `-- --deep`, `-- --offline`) |
 | `npm run engine:pick` | Show the next topic without writing anything |
 | `npm run engine:dry-run` | Full pipeline except the commit (needs Claude Code signed in: locally `claude`, in GitHub `CLAUDE_CODE_OAUTH_TOKEN`) |
-| `npm run engine:run` | The real scheduled run (respects slot, caps, paused) |
+| `npm run engine:run` | The real scheduled run: publish from the queue, refill the queue (respects caps, paused) |
+| `npm run engine:report-run` | Turns `data/last-run.json` into the GitHub issue (add `--crash` for the crash alert) |
 | `npm run engine:health` | Weekly circuit breaker (`-- --dry-run --simulate bad-index` to rehearse) |
 | `npm run engine:refresh` | Monthly CTR tests, striking-distance FAQs, freshness, prune |
 | `npm run engine:report` | Writes `reports/YYYY-MM.md` |

@@ -1,4 +1,5 @@
 dist/
+.astro/
 node_modules/
 .env
 .env.*
@@ -10,3 +11,7 @@ blog-engine/data/cache/
 blog-engine/data/last-run.json
 blog-engine/data/rejected/
 reports/ALERT.md
+
+# blog engine: Lighthouse/preview scratch, never commit
+blog-engine/data/rejected/
+blog-engine/queue/*.tmp

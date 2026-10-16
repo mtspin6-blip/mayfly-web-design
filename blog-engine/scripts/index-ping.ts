@@ -5,6 +5,7 @@ import { indexNow } from '../lib/sources.js';
 import { submitSitemap, gscConfigured } from '../lib/gsc.js';
 import { psiMobile } from '../lib/psi.js';
 import { enginePath, readJson, writeJson } from '../lib/paths.js';
+import type { LastRun } from './report-run.js';
 
 export async function waitForLive(url: string, maxMinutes = 12): Promise<boolean> {
   for (let i = 0; i < maxMinutes * 2; i++) {
@@ -41,5 +42,11 @@ export async function ping(slug: string): Promise<string[]> {
 if (process.argv[1]?.endsWith('index-ping.ts')) {
   const slug = process.argv[2];
   if (!slug) { console.error('usage: index-ping.ts <slug>'); process.exit(1); }
-  ping(slug).then((l) => console.log(l.join('\n')));
+  ping(slug).then((l) => {
+    console.log(l.join('\n'));
+    const live = l[0]?.startsWith('live:') ?? false;
+    const file = enginePath('data/last-run.json');
+    writeJson(file, { ...readJson<LastRun>(file, {}), live, liveUrl: `https://mayflywebdesign.com/blog/${slug}/`, indexing: l });
+    if (!live) { console.error('::error::the new post never returned 200'); process.exit(1); }
+  });
 }

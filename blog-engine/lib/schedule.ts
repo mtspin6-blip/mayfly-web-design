@@ -56,23 +56,17 @@ export function effectiveCadence(health: HealthState, cfg: Config, now: Date): C
   return health.cadence;
 }
 
-/** Slots on which publishing is allowed today: Mon for weekly; Mon + Thu for twice-weekly. */
-export function slotToday(cadence: Cadence, weekday: string): 'mon' | 'thu' | null {
-  if (weekday === 'Mon') return 'mon';
-  if (weekday === 'Thu' && cadence === 'twice-weekly') return 'thu';
-  return null;
-}
+/** A post is due when nothing went out in the last N days (6 on the weekly cadence, 3 when twice-weekly). Hard caps still apply on top. */
+export const MIN_DAYS_BETWEEN: Record<Cadence, number> = { weekly: 6, 'twice-weekly': 3 };
 
-/** Deterministic-per-slot jitter target: 07:00 MT plus or minus jitterHours. `rng` injectable for tests. */
-export function pickTarget(date: string, cfg: Config, rng: () => number = Math.random): Date {
-  const base = mtToDate(date, cfg.cadence.publishHourMT, 0).getTime();
-  const jitterMs = (rng() * 2 - 1) * cfg.cadence.jitterHours * 3600000;
-  return new Date(base + jitterMs);
-}
+export interface Decision { publish: boolean; reason: string }
 
-export interface Decision { publish: boolean; reason: string; nextPublishAt?: { slot: string; at: string } }
-
-export function decide(opts: { now: Date; cfg: Config; health: HealthState; log: PublishedEntry[]; rng?: () => number; ignoreSlot?: boolean }): Decision {
+/**
+ * Should the publisher put a post live right now? There is no time-of-day window: GitHub's cron can arrive hours late,
+ * and a missed window used to mean a missed week. Any run on any trigger may publish if nothing went out recently,
+ * and running twice is harmless because the day/week caps and the "last N days" rule both look at the published log.
+ */
+export function decide(opts: { now: Date; cfg: Config; health: HealthState; log: PublishedEntry[]; ignoreInterval?: boolean }): Decision {
   const { now, cfg, health, log } = opts;
   if (cfg.paused) return { publish: false, reason: `paused: ${cfg.pausedReason ?? 'config.paused is true'}` };
   const mt = mtParts(now);
@@ -82,19 +76,14 @@ export function decide(opts: { now: Date; cfg: Config; health: HealthState; log:
   if (publishedInWeek(log, mt.date) >= HARD_CAPS.maxPerWeek) return { publish: false, reason: 'hard cap: weekly limit reached' };
 
   const cadence = effectiveCadence(health, cfg, now);
+  if (opts.ignoreInterval) return { publish: true, reason: 'manual run (interval ignored, hard caps still enforced)' };
   if (cadence === 'weekly' && publishedInWeek(log, mt.date) >= 1) return { publish: false, reason: 'weekly cadence: this week is done' };
 
-  const slot = opts.ignoreSlot ? 'manual' : slotToday(cadence, mt.weekday);
-  if (!slot) return { publish: false, reason: `no publish slot on ${mt.weekday} (${cadence})` };
-
-  const slotKey = `${mt.date}:${slot}`;
-  let next = health.nextPublishAt;
-  if (!next || next.slot !== slotKey) next = { slot: slotKey, at: pickTarget(mt.date, cfg, opts.rng).toISOString() };
-  if (opts.ignoreSlot) return { publish: true, reason: 'manual run (slot ignored, hard caps still enforced)', nextPublishAt: next };
-
-  // Plan-limit stops aren't real attempts: the next hourly run may try again once the limit resets.
-  const attempts = health.runs.filter((r) => r.reason?.startsWith(`slot ${slotKey}`) && !r.reason.includes('usage-limit')).length;
-  if (attempts >= 2) return { publish: false, reason: `already attempted slot ${slotKey} twice`, nextPublishAt: next };
-  if (now.getTime() < Date.parse(next.at)) return { publish: false, reason: `waiting for jittered target ${next.at}`, nextPublishAt: next };
-  return { publish: true, reason: `slot ${slotKey} due (${cadence})`, nextPublishAt: next };
+  const last = log.filter((e) => e.status !== 'merged').map((e) => Date.parse(e.publishedAt)).filter((t) => !Number.isNaN(t)).sort((a, b) => b - a)[0];
+  const need = MIN_DAYS_BETWEEN[cadence];
+  if (last !== undefined) {
+    const days = (now.getTime() - last) / 86400000;
+    if (days < need) return { publish: false, reason: `last post went out ${days.toFixed(1)} days ago (${cadence} needs ${need})` };
+  }
+  return { publish: true, reason: last === undefined ? 'nothing published yet' : `nothing published in the last ${need} days (${cadence})` };
 }

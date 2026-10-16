@@ -16,6 +16,7 @@
     "engine:health": "tsx blog-engine/scripts/health-check.ts",
     "engine:report": "tsx blog-engine/scripts/gsc-report.ts",
     "engine:refresh": "tsx blog-engine/scripts/refresh.ts",
+    "engine:report-run": "tsx blog-engine/scripts/report-run.ts",
     "engine:ping": "tsx blog-engine/scripts/index-ping.ts",
     "engine:audit": "tsx blog-engine/scripts/audit-existing.ts",
     "engine:voice": "tsx blog-engine/scripts/build-voice.ts",

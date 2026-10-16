@@ -3,7 +3,7 @@ import { execFileSync, spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import type { Config } from '../lib/config.js';
-import { runDeterministicGates, gateEditor, summarize, allPassed, type EditorScores, type GateContext, type GateResult } from '../lib/gates.js';
+import { runDeterministicGates, summarize, allPassed, type GateContext, type GateResult } from '../lib/gates.js';
 import { writePost, type Post } from '../lib/post.js';
 import { ROOT, BLOG_DIR } from '../lib/paths.js';
 import { sleep } from '../lib/http.js';
@@ -74,8 +74,20 @@ export async function siteChecks(post: Post, cfg: Config, opts: { keepOnSuccess:
 
 export interface GateReport { ok: boolean; results: GateResult[]; text: string }
 
-export async function runAllGates(post: Post, ctx: GateContext, scores: EditorScores | undefined, o: { site: boolean; keepOnSuccess: boolean }): Promise<GateReport> {
-  const results = [...runDeterministicGates(post, ctx), gateEditor(scores, ctx.cfg)];
+/** Deterministic gates, then (if they pass) the real build, schema validation and Lighthouse. Editor scores are advisory and never gate. */
+export async function runAllGates(post: Post, ctx: GateContext, o: { site: boolean; keepOnSuccess: boolean }): Promise<GateReport> {
+  const results = [...runDeterministicGates(post, ctx)];
   if (allPassed(results) && o.site) results.push(...(await siteChecks(post, ctx.cfg, { keepOnSuccess: o.keepOnSuccess })));
   return { ok: allPassed(results), results, text: summarize(results) };
+}
+
+/** Publisher-side safety net: the site must still build and validate with the post in place. No Lighthouse, no model. */
+export function buildCheck(): GateResult[] {
+  const build = sh('npm', ['run', 'build']);
+  const out: GateResult[] = [{ id: 'build', ok: build.ok, detail: build.ok ? 'npm run build succeeded' : build.out.slice(-300) }];
+  if (build.ok) {
+    const v = sh('npm', ['run', 'validate']);
+    out.push({ id: 'jsonld-validate', ok: v.ok, detail: v.ok ? 'JSON-LD, titles, canonicals valid' : v.out.slice(-400) });
+  }
+  return out;
 }

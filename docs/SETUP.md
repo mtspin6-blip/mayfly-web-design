@@ -48,7 +48,7 @@ sign in with the long-lived token from `claude setup-token`. Every model step (b
 fact-check, web research) runs through Claude Code under your plan. Nothing is billed per token. The code
 deliberately strips `ANTHROPIC_API_KEY` from the environment before each call, so a stray key can't cause API charges.
 
-- If you hit your plan's usage limit mid-run, the run stops cleanly, the topic is **not** marked rejected, and the next hourly run tries again.
+- If you hit your plan's usage limit mid-run, the writer stops cleanly, the topic is **not** marked rejected, and the next run tries again. Publishing needs no model, so a queued post still goes out.
 - Guard rails against eating your plan: max 40 model calls per run and 400 per month (`budget` in `config.json`).
 - To use less of your limit, set `models.brief` and `models.draft` to `claude-sonnet-5-5` in `config.json`.
 - Anthropic documents this token route for Claude Code in GitHub Actions. Check that your plan's terms cover automated use.
@@ -56,7 +56,7 @@ deliberately strips `ANTHROPIC_API_KEY` from the environment before each call, s
 ## 6. Rehearse, then go live
 1. GitHub -> Actions -> **blog-publish** -> Run workflow -> leave **dry run** ticked. Read the log: brief, draft, editor scores, gates.
 2. Optional: drop real notes in `blog-engine/notes/inbox.md` (public!) and real writing in `blog-engine/voice/samples/`, then `npm run engine:voice`.
-3. Edit `blog-engine/config.json`: set `"paused": false`, commit, push. The next Monday window publishes the first post.
+3. Edit `blog-engine/config.json`: set `"paused": false`, commit, push. The next scheduled run (Mon 15:00 UTC, Mon 21:00 UTC or Tue 15:00 UTC) publishes the first post.
 
 ## Answers to the PRD's section 15 questions
 1. **Free demand sources.** Google autocomplete works with no key and is what the committed backlog used. Bing Webmaster (`GetQueryStats`, `GetRelatedKeywords`) is wired but untested here because it needs your key; it fails soft. `google-trends-api` is unofficial and often breaks; it's optional (`--trends`) and fails soft.
