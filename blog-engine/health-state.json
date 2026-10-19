@@ -6,6 +6,11 @@
       "at": "2026-10-05T19:32:04.225Z",
       "ok": false,
       "reason": "slot 2026-10-05:mon failed: editor loop failed: editor rewrite instructions: After the card-fee table, add a short combined year-one table or sentences. For the $85 tour deposit at 40 a month: $1,957 fixed (Starter monthly plus "
+    },
+    {
+      "at": "2026-10-19T21:07:23.223Z",
+      "ok": true,
+      "reason": "published how-to-get-google-business-profile; queued 1; set aside 0"
     }
   ],
   "siteImpressionsHistory": [
@@ -26,5 +31,6 @@
   "nextPublishAt": {
     "slot": "2026-10-05:mon",
     "at": "2026-10-05T13:08:50.744Z"
-  }
+  },
+  "launchDate": "2026-10-19T21:07:23.223Z"
 }

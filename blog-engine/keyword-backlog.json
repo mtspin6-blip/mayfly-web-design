@@ -99,7 +99,7 @@
     "sources": [
       "autocomplete"
     ],
-    "status": "new",
+    "status": "published",
     "signals": {
       "autocompleteDepth": 20,
       "winnability": 0.6000000000000001,
