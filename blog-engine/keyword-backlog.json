@@ -144,7 +144,7 @@
     "sources": [
       "autocomplete"
     ],
-    "status": "new",
+    "status": "queued",
     "signals": {
       "autocompleteDepth": 18,
       "winnability": 0.6000000000000001,

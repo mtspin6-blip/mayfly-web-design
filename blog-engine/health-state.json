@@ -16,6 +16,11 @@
       "at": "2026-10-20T00:27:28.931Z",
       "ok": true,
       "reason": "hard cap: already published today; queued 1; set aside 0; usage-limit"
+    },
+    {
+      "at": "2026-10-20T19:11:35.976Z",
+      "ok": true,
+      "reason": "weekly cadence: this week is done; queued 1; set aside 0"
     }
   ],
   "siteImpressionsHistory": [
