@@ -1,0 +1,17 @@
+{
+  "slug": "small-business-website-cost",
+  "keyword": "how much does it cost to build a website for a small business",
+  "pillar": "website-cost",
+  "format": "cost-breakdown",
+  "queuedAt": "2026-10-20T00:16:57.605Z",
+  "gateText": "PASS length: 1082 words (700-1800)\nPASS direct-answer: first paragraph 61 words (50-75)\nPASS title-meta: title 53 (<=60), description 142 (140-155)\nPASS headings: 6 H2s, 6 questions, 0 colon-style\nPASS faq: 4 items, 40-60 words each\nPASS sources: 8 sources, all stats cited\nPASS internal-links: 5 links incl. a service page\nPASS duplicate: max similarity 0% (montana-website-cost-guide), limit 50%\nPASS banned-patterns: clean\nPASS keyword-stuffing: density 0.00% (<2%), in 0/6 H2s (<=30%)\nPASS offer-accuracy: prices match config\nPASS quotes: no long quotes\nPASS schema: BlogPosting/Organization/FAQPage/BreadcrumbList inputs valid\nPASS readability: Flesch-Kincaid grade 4.9 (<=9)\nPASS style: sd 7.6, 2.6 contractions/100w\nPASS variety: differs from recent posts\nPASS build: npm run build succeeded\nPASS jsonld-validate: JSON-LD, titles, canonicals valid\nPASS performance: mobile performance median 100 of [99, 100, 100] (>=90)",
+  "scores": {
+    "helpfulness": 4,
+    "originalValue": 4,
+    "accuracy": 4,
+    "specificity": 4,
+    "voice": 4,
+    "intentMatch": 5,
+    "honesty": 5
+  }
+}
