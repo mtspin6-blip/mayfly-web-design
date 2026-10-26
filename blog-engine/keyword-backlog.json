@@ -125,7 +125,7 @@
     "sources": [
       "autocomplete"
     ],
-    "status": "queued",
+    "status": "published",
     "signals": {
       "autocompleteDepth": 25,
       "winnability": 0.6000000000000001,
@@ -170,7 +170,7 @@
     "sources": [
       "autocomplete"
     ],
-    "status": "new",
+    "status": "queued",
     "signals": {
       "autocompleteDepth": 14,
       "winnability": 0.6000000000000001,

@@ -1,12 +1,12 @@
 ---
-title: "What a Modern Website Should Cost in Montana and What You Are Actually Paying For"
-seoTitle: "What a Website Costs in Montana (2026)"
-description: "An honest breakdown of what a small business website should cost in Montana, what drives the price, and how to tell when a quote is too high."
-excerpt: "Website pricing in Montana is all over the map. Here is an honest breakdown of what a modern small business website should cost, what drives the price, and how to know when you are being overcharged."
+title: What a Modern Website Should Cost in Montana and What You Are Actually Paying For
+seoTitle: What a Website Costs in Montana (2026)
+description: An honest breakdown of what a small business website should cost in Montana, what drives the price, and how to tell when a quote is too high.
+excerpt: Website pricing in Montana is all over the map. Here is an honest breakdown of what a modern small business website should cost, what drives the price, and how to know when you are being overcharged.
 date: "2026-05-11"
-category: "Pricing"
-readTime: "5 min read"
-author: "Mayfly Web Design"
+category: Pricing
+readTime: 5 min read
+author: Mayfly Web Design
 image: ../../assets/joss-woodhead-aksMD569g60-unsplash.jpg
 ---
 
@@ -71,3 +71,5 @@ This structure intentionally removes the upfront barrier that keeps small busine
 If you are evaluating quotes for a website right now, the most useful thing you can do is compare apples to apples. Ask each provider what is included, what is extra, what the timeline is, and what happens after launch. The right answer becomes obvious fast.
 
 If you want a straight conversation about what your business actually needs and what it should cost, book a free 30-minute discovery call. No pitch and no pressure.
+
+Related: [How Much Does a Small Business Website Cost to Build?](/blog/small-business-website-cost/)

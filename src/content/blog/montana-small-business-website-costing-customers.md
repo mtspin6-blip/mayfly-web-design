@@ -1,12 +1,12 @@
 ---
-title: "Why Most Montana Small Business Websites Are Costing Them Customers"
-seoTitle: "Why Your Montana Website Loses Customers"
-description: "Find out why many Montana small business websites quietly turn customers away, the most common problems, and how to fix them before you lose more leads."
-excerpt: "Most Montana small businesses have a website that quietly drives customers away. Here is what is going wrong, why it matters, and how to fix it."
+title: Why Most Montana Small Business Websites Are Costing Them Customers
+seoTitle: Why Your Montana Website Loses Customers
+description: Find out why many Montana small business websites quietly turn customers away, the most common problems, and how to fix them before you lose more leads.
+excerpt: Most Montana small businesses have a website that quietly drives customers away. Here is what is going wrong, why it matters, and how to fix it.
 date: "2026-05-08"
-category: "Web Design"
-readTime: "4 min read"
-author: "Mayfly Web Design"
+category: Web Design
+readTime: 4 min read
+author: Mayfly Web Design
 image: ../../assets/matthew-lancaster-cWFlYyJp2PE-unsplash.jpg
 ---
 
@@ -51,3 +51,5 @@ None of this requires a massive budget. It requires building the site correctly 
 If you are not sure whether your current site is helping or hurting, the easiest starting point is a free audit. We will look at your site honestly and tell you what is working, what is not, and what the priority fixes should be.
 
 If you want to know what your site is actually doing for your business, we offer a free 30-minute discovery call with no pitch and no pressure.
+
+Related: [How Much Does a Small Business Website Cost to Build?](/blog/small-business-website-cost/)

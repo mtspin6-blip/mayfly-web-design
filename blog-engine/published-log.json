@@ -17,5 +17,24 @@
       "honesty": 5
     },
     "status": "live"
+  },
+  {
+    "slug": "small-business-website-cost",
+    "keyword": "how much does it cost to build a website for a small business",
+    "title": "How Much Does a Small Business Website Cost to Build?",
+    "format": "cost-breakdown",
+    "pillar": "website-cost",
+    "publishedAt": "2026-10-26T20:18:58.259Z",
+    "gateSummary": "all gates passed",
+    "editorScores": {
+      "helpfulness": 4,
+      "originalValue": 4,
+      "accuracy": 4,
+      "specificity": 4,
+      "voice": 4,
+      "intentMatch": 5,
+      "honesty": 5
+    },
+    "status": "live"
   }
 ]

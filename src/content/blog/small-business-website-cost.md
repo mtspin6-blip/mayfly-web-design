@@ -34,7 +34,7 @@ faq:
     a: Mayfly's Starter plan is $59 a month billed monthly, $599 a year billed annually, or $750 once as a buyout. Monthly keeps your upfront cost low and has a six-month minimum. Annual costs less per year than paying monthly. Check what the buyout includes on the pricing page before comparing.
   - q: Should I renew my .com before November 1, 2026?
     a: The .com increase applies to renewals as well as new registrations, and renewals completed before November 1, 2026 are charged the old wholesale fee of $10.26. Your registrar adds its own markup, so the number you see will be higher. Log in, check your renewal date and the price shown, and decide before the deadline.
-date: "2026-10-19"
+date: "2026-10-26"
 author: Mayfly Web Design
 draft: false
 ---
