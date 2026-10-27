@@ -26,6 +26,11 @@
       "at": "2026-10-26T20:41:45.486Z",
       "ok": true,
       "reason": "published small-business-website-cost; queued 1; set aside 0"
+    },
+    {
+      "at": "2026-10-27T00:09:09.232Z",
+      "ok": true,
+      "reason": "hard cap: already published today; queued 0; set aside 0"
     }
   ],
   "siteImpressionsHistory": [
