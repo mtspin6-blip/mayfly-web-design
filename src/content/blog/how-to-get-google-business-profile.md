@@ -157,3 +157,5 @@ Pay someone if you'd rather spend the time on your business, or if your listing 
 If your website needs work too, our website plans start at $59/month or $599/year. Everything is on the [pricing page](/pricing/).
 
 Want us to handle the setup? [Get in touch](/contact/) and we'll talk through your listing.
+
+Related: [How to Do Booking for a Small Business: 7-Step Setup](/blog/small-business-booking-setup/)

@@ -130,3 +130,5 @@ Surprise costs tend to hide in the fine print. These questions catch them early:
 - What happens to the site and domain if you cancel?
 
 If a quote can't answer all seven in writing, keep shopping. For Montana-specific context on what local businesses face, see our [Montana website cost guide](/blog/montana-website-cost-guide/).
+
+Related: [How to Do Booking for a Small Business: 7-Step Setup](/blog/small-business-booking-setup/)

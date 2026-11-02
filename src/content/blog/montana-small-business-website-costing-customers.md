@@ -53,3 +53,5 @@ If you are not sure whether your current site is helping or hurting, the easiest
 If you want to know what your site is actually doing for your business, we offer a free 30-minute discovery call with no pitch and no pressure.
 
 Related: [How Much Does a Small Business Website Cost to Build?](/blog/small-business-website-cost/)
+
+Related: [How to Do Booking for a Small Business: 7-Step Setup](/blog/small-business-booking-setup/)

@@ -34,7 +34,7 @@ faq:
     a: No. A plain booking link on your Google Business Profile only needs the URL from your scheduler. Google's provider route can show a native Bookings button, but providers can take about a week to appear and may charge fees. Start with the plain link unless your tool already supports it.
   - q: What does Mayfly's booking add-on cost?
     a: It's $99 to set up and $29 a month, on top of a Mayfly site plan. Over the 6-month minimum term that's $273, or $447 for a full year. If you also want deposits or prepayment, the payments add-on is $299 setup and $39 a month, before Stripe's card fees.
-date: "2026-10-20"
+date: "2026-11-02"
 author: Mayfly Web Design
 draft: false
 ---

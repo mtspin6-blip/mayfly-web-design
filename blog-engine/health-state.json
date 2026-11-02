@@ -36,6 +36,11 @@
       "at": "2026-10-27T19:52:13.037Z",
       "ok": true,
       "reason": "weekly cadence: this week is done; queued 0; set aside 0"
+    },
+    {
+      "at": "2026-11-02T23:14:44.827Z",
+      "ok": true,
+      "reason": "published small-business-booking-setup; queued 1; set aside 0"
     }
   ],
   "siteImpressionsHistory": [

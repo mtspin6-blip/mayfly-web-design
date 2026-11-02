@@ -36,5 +36,24 @@
       "honesty": 5
     },
     "status": "live"
+  },
+  {
+    "slug": "small-business-booking-setup",
+    "keyword": "how to do booking for a small business",
+    "title": "How to Do Booking for a Small Business: 7-Step Setup",
+    "format": "how-to",
+    "pillar": "automations",
+    "publishedAt": "2026-11-02T22:59:43.032Z",
+    "gateSummary": "all gates passed",
+    "editorScores": {
+      "helpfulness": 4,
+      "originalValue": 4,
+      "accuracy": 5,
+      "specificity": 4,
+      "voice": 4,
+      "intentMatch": 5,
+      "honesty": 5
+    },
+    "status": "live"
   }
 ]
