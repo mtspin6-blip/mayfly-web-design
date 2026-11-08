@@ -1,6 +1,6 @@
 {
   "cadence": "twice-weekly",
-  "consecutiveHealthy": 5,
+  "consecutiveHealthy": 6,
   "runs": [
     {
       "at": "2026-10-05T19:32:04.225Z",
@@ -73,9 +73,13 @@
     {
       "at": "2026-11-01T19:15:26.266Z",
       "twoWeekImpressions": 0
+    },
+    {
+      "at": "2026-11-08T19:13:23.464Z",
+      "twoWeekImpressions": 0
     }
   ],
-  "lastCheck": "2026-11-01T19:15:26.266Z",
+  "lastCheck": "2026-11-08T19:13:23.464Z",
   "nextPublishAt": {
     "slot": "2026-10-05:mon",
     "at": "2026-10-05T13:08:50.744Z"
