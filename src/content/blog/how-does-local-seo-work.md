@@ -32,7 +32,7 @@ faq:
     a: No. Google allows a business that travels to customers and has no storefront to have one service-area Business Profile. If customers don't come to your address, hide it, and your profile shows your service area instead. Google suggests keeping that area within about two hours' drive of your base.
   - q: Can I offer customers a discount for leaving a Google review?
     a: No. Google Maps policy bans payment, discounts, free goods or services in exchange for a review. It also bans offering anything to get a negative review changed or removed, and asking only your happy customers. Ask everyone, the same way, with nothing attached. A plain text with your review link works fine.
-date: "2026-10-26"
+date: "2026-11-09"
 author: Mayfly Web Design
 draft: false
 ---

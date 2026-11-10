@@ -55,5 +55,24 @@
       "honesty": 5
     },
     "status": "live"
+  },
+  {
+    "slug": "how-does-local-seo-work",
+    "keyword": "how does local seo work",
+    "title": "How Does Local SEO Work? A 3-Signal Checklist",
+    "format": "checklist",
+    "pillar": "local-seo",
+    "publishedAt": "2026-11-09T23:41:48.528Z",
+    "gateSummary": "all gates passed",
+    "editorScores": {
+      "helpfulness": 4,
+      "originalValue": 4,
+      "accuracy": 5,
+      "specificity": 4,
+      "voice": 4,
+      "intentMatch": 5,
+      "honesty": 5
+    },
+    "status": "live"
   }
 ]

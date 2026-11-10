@@ -159,3 +159,5 @@ If your website needs work too, our website plans start at $59/month or $599/yea
 Want us to handle the setup? [Get in touch](/contact/) and we'll talk through your listing.
 
 Related: [How to Do Booking for a Small Business: 7-Step Setup](/blog/small-business-booking-setup/)
+
+Related: [How Does Local SEO Work? A 3-Signal Checklist](/blog/how-does-local-seo-work/)

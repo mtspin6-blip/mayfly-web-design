@@ -1,0 +1,17 @@
+{
+  "slug": "what-is-generative-engine-optimization",
+  "keyword": "what is generative engine optimization and how does it work",
+  "pillar": "ai-search",
+  "format": "comparison",
+  "queuedAt": "2026-11-10T00:15:36.639Z",
+  "gateText": "PASS length: 1385 words (700-1800)\nPASS direct-answer: first paragraph 74 words (50-75)\nPASS title-meta: title 59 (<=60), description 146 (140-155)\nPASS headings: 7 H2s, 7 questions, 0 colon-style\nPASS faq: 4 items, 40-60 words each\nPASS sources: 9 sources, all stats cited\nPASS internal-links: 5 links incl. a service page\nPASS duplicate: max similarity 2% (what-is-generative-engine-optimization-geo), limit 50%\nPASS banned-patterns: clean\nPASS keyword-stuffing: density 0.00% (<2%), in 0/7 H2s (<=30%)\nPASS offer-accuracy: prices match config\nPASS quotes: no long quotes\nPASS schema: BlogPosting/Organization/FAQPage/BreadcrumbList inputs valid\nPASS readability: Flesch-Kincaid grade 6.1 (<=9)\nPASS style: sd 6.5, 3.3 contractions/100w\nPASS variety: differs from recent posts\nPASS build: npm run build succeeded\nPASS jsonld-validate: JSON-LD, titles, canonicals valid\nPASS performance: mobile performance median 100 of [100, 100, 100] (>=90)",
+  "scores": {
+    "helpfulness": 4,
+    "originalValue": 5,
+    "accuracy": 4,
+    "specificity": 4,
+    "voice": 4,
+    "intentMatch": 5,
+    "honesty": 5
+  }
+}

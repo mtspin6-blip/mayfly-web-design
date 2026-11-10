@@ -51,6 +51,11 @@
       "at": "2026-11-03T20:49:32.333Z",
       "ok": true,
       "reason": "weekly cadence: this week is done; queued 0; set aside 0"
+    },
+    {
+      "at": "2026-11-10T00:15:36.645Z",
+      "ok": true,
+      "reason": "published how-does-local-seo-work; queued 1; set aside 0"
     }
   ],
   "siteImpressionsHistory": [
