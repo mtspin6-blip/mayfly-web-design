@@ -56,6 +56,11 @@
       "at": "2026-11-10T00:15:36.645Z",
       "ok": true,
       "reason": "published how-does-local-seo-work; queued 1; set aside 0"
+    },
+    {
+      "at": "2026-11-10T03:05:38.322Z",
+      "ok": true,
+      "reason": "hard cap: already published today; queued 0; set aside 0"
     }
   ],
   "siteImpressionsHistory": [
