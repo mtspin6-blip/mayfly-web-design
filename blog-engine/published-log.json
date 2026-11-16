@@ -74,5 +74,24 @@
       "honesty": 5
     },
     "status": "live"
+  },
+  {
+    "slug": "what-is-generative-engine-optimization-geo",
+    "keyword": "what is generative engine optimization geo and why it matters",
+    "title": "What Is Generative Engine Optimization (GEO)? A Glossary",
+    "format": "glossary",
+    "pillar": "ai-search",
+    "publishedAt": "2026-11-16T23:39:00.999Z",
+    "gateSummary": "all gates passed",
+    "editorScores": {
+      "helpfulness": 4,
+      "originalValue": 5,
+      "accuracy": 4,
+      "specificity": 4,
+      "voice": 4,
+      "intentMatch": 5,
+      "honesty": 5
+    },
+    "status": "live"
   }
 ]

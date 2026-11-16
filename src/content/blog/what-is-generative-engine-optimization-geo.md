@@ -34,7 +34,7 @@ faq:
     a: No. Bing's updated guidelines say plainly that GEO doesn't guarantee citations, the same way SEO never guaranteed rankings. Google says its AI features need no special optimizations at all. The research behind GEO reported gains of up to 40% in a lab benchmark, which is a best case from a test, not a promise for your site.
   - q: Is keyword stuffing still risky with AI search engines?
     a: Yes. In the original GEO study, keyword stuffing scored 17.8 against a 19.5 baseline, so it made content less visible, not more. Bing has also renamed its rule to cover keyword stuffing and artificially engineered language. Write for a person asking a real question, and say the thing clearly once.
-date: "2026-11-02"
+date: "2026-11-16"
 author: Mayfly Web Design
 draft: false
 ---
