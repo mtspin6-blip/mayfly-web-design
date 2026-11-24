@@ -136,3 +136,5 @@ Local SEO isn't a project you finish. Your hours shift with the seasons, custome
 - Glance at your Bing and Apple listings to make sure they still match Google.
 
 Put that list on your calendar for the first Monday of each month and it stops being the thing you forget. Want a second set of eyes on your profile first? Book a free local SEO check-in and we'll go through it with you.
+
+Related: [What Is Generative Engine Optimization? GEO vs SEO Compared](/blog/what-is-generative-engine-optimization/)

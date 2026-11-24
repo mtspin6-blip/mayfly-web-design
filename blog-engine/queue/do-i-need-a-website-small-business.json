@@ -1,0 +1,17 @@
+{
+  "slug": "do-i-need-a-website-small-business",
+  "keyword": "do i need a website for my small business",
+  "pillar": "website-problems",
+  "format": "decision-guide",
+  "queuedAt": "2026-11-24T02:14:45.977Z",
+  "gateText": "PASS length: 1080 words (700-1800)\nPASS direct-answer: first paragraph 66 words (50-75)\nPASS title-meta: title 59 (<=60), description 148 (140-155)\nPASS headings: 7 H2s, 7 questions, 0 colon-style\nPASS faq: 4 items, 40-60 words each\nPASS sources: 6 sources, all stats cited\nPASS internal-links: 5 links incl. a service page\nPASS duplicate: max similarity 1% (how-does-local-seo-work), limit 50%\nPASS banned-patterns: clean\nPASS keyword-stuffing: density 0.83% (<2%), in 0/7 H2s (<=30%)\nPASS offer-accuracy: prices match config\nPASS quotes: no long quotes\nPASS schema: BlogPosting/Organization/FAQPage/BreadcrumbList inputs valid\nPASS readability: Flesch-Kincaid grade 4.5 (<=9)\nPASS style: sd 6.7, 2.3 contractions/100w\nPASS variety: differs from recent posts\nPASS build: npm run build succeeded\nPASS jsonld-validate: JSON-LD, titles, canonicals valid\nPASS performance: mobile performance median 97 of [96, 97, 97] (>=90)",
+  "scores": {
+    "helpfulness": 4,
+    "originalValue": 4,
+    "accuracy": 3,
+    "specificity": 4,
+    "voice": 4,
+    "intentMatch": 5,
+    "honesty": 5
+  }
+}

@@ -81,6 +81,11 @@
       "at": "2026-11-17T22:48:10.949Z",
       "ok": true,
       "reason": "last post went out 1.0 days ago (twice-weekly needs 3); queued 0; set aside 0; usage-limit"
+    },
+    {
+      "at": "2026-11-24T02:41:17.722Z",
+      "ok": true,
+      "reason": "published what-is-generative-engine-optimization; queued 1; set aside 0"
     }
   ],
   "siteImpressionsHistory": [

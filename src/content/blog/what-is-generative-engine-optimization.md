@@ -36,7 +36,7 @@ faq:
     a: No one can. Google says AI Overviews and AI Mode run on its core ranking and quality systems, and you don't need special optimizations to appear. The engine picks sources for each question. An honest provider can fix crawl access, indexing and content gaps, then show you the citation data. A promise of placement is a red flag.
   - q: Does blocking AI training crawlers keep me out of AI search answers?
     a: It depends on the crawler. Google-Extended has no effect on AI Overviews or AI Mode in Google Search. For ChatGPT search, the crawler that matters is OAI-SearchBot, so blocking it can keep you out. Read your robots.txt line by line before you block anything you don't recognize.
-date: "2026-11-09"
+date: "2026-11-23"
 author: Mayfly Web Design
 draft: false
 ---

@@ -154,3 +154,5 @@ Start with the basics. None of this is exotic.
 For the local, step-by-step version, read our guide on [getting your Montana business found in ChatGPT and AI search](/blog/montana-business-chatgpt-ai-search/). Local signals matter too, so [set up your Google Business Profile](/blog/how-to-get-google-business-profile/) and cover the [near-me search basics](/blog/local-seo-montana-near-me-searches/) if you haven't.
 
 You can do all of this yourself. It's mostly checking settings and writing better pages. If you'd rather hand it off, our [SEO and AI search service](/services/seo-gaio/) is the Local SEO plan at $299 a month, and Google Business Profile setup is a $199 add-on. Nobody can promise citations, us included. Full details are on our [pricing page](/pricing/).
+
+Related: [What Is Generative Engine Optimization? GEO vs SEO Compared](/blog/what-is-generative-engine-optimization/)
