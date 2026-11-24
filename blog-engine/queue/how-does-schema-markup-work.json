@@ -1,0 +1,17 @@
+{
+  "slug": "how-does-schema-markup-work",
+  "keyword": "how does schema markup work",
+  "pillar": "ai-search",
+  "format": "myth-vs-fact",
+  "queuedAt": "2026-11-24T05:29:09.121Z",
+  "gateText": "PASS length: 1221 words (700-1800)\nPASS direct-answer: first paragraph 67 words (50-75)\nPASS title-meta: title 46 (<=60), description 141 (140-155)\nPASS headings: 10 H2s, 10 questions, 0 colon-style\nPASS faq: 4 items, 40-60 words each\nPASS sources: 9 sources, all stats cited\nPASS internal-links: 5 links incl. a service page\nPASS duplicate: max similarity 0% (what-is-generative-engine-optimization-geo), limit 50%\nPASS banned-patterns: clean\nPASS keyword-stuffing: density 0.41% (<2%), in 0/10 H2s (<=30%)\nPASS offer-accuracy: prices match config\nPASS quotes: no long quotes\nPASS schema: BlogPosting/Organization/FAQPage/BreadcrumbList inputs valid\nPASS readability: Flesch-Kincaid grade 5.9 (<=9)\nPASS style: sd 6.8, 4.5 contractions/100w\nPASS variety: differs from recent posts\nPASS build: npm run build succeeded\nPASS jsonld-validate: JSON-LD, titles, canonicals valid\nPASS performance: mobile performance median 96 of [96, 96, 96] (>=90)",
+  "scores": {
+    "helpfulness": 5,
+    "originalValue": 4,
+    "accuracy": 5,
+    "specificity": 4,
+    "voice": 4,
+    "intentMatch": 5,
+    "honesty": 3
+  }
+}

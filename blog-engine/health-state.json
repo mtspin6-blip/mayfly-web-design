@@ -86,6 +86,11 @@
       "at": "2026-11-24T02:41:17.722Z",
       "ok": true,
       "reason": "published what-is-generative-engine-optimization; queued 1; set aside 0"
+    },
+    {
+      "at": "2026-11-24T05:29:09.129Z",
+      "ok": true,
+      "reason": "hard cap: already published today; queued 1; set aside 0"
     }
   ],
   "siteImpressionsHistory": [
