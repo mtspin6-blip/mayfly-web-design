@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const $ = (s) => document.querySelector(s);
-  const V = '20261128c'; // bump on every release so phones never mix old and new files
+  const V = '20261128e'; // bump on every release so phones never mix old and new files
   const isPhone = () => window.matchMedia('(max-width: 899px)').matches;
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const fmtDate = (iso) => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
@@ -17,7 +17,7 @@
 
   const TOGGLES = [
     { id: 'heat', label: 'Mallard heat map', note: 'Where mallards are this week (eBird model).', on: true, layers: ['heat'] },
-    { id: 'paths', label: 'Flight paths', note: 'Likely routes between areas; width follows this week.', on: true, layers: ['paths', 'path-arrows'] },
+    { id: 'paths', label: 'Flight paths', note: 'Likely routes, including where birds come from and go beyond Montana (dashed). Width follows this week.', on: true, layers: ['paths', 'paths-out', 'paths-case', 'path-arrows'] },
     { id: 'spots', label: 'Best spots', note: 'Top 10 for this week in the area you picked.', on: true, layers: [] },
     { id: 'wet', label: 'Marshes & wetlands', note: 'Every mapped marsh and pond (USFWS). Zoom in to see them.', on: true, layers: ['nwi'] },
     { id: 'places', label: 'Public land & duck water', note: 'Refuges, WMAs, WPAs and well-known water.', on: false, layers: ['places-pts'] },
@@ -27,13 +27,16 @@
 
   const st = { region: 'Statewide', week: 0, playing: null, me: null, meLL: null };
   const D = {};
+  let flyMarkers = [];
+  // flyway labels only when zoomed out far enough to see beyond Montana, so they never cover the spot pins
+  function flyLabels() { const show = on('paths') && map.getZoom() < 5.6; flyMarkers.forEach((m) => { m.getElement().style.display = show ? '' : 'none'; }); }
   let map, weeks = [], pins = [], heatBytes = null, heatCanvas, IDX = 1;
 
   const j = (p) => fetch(p + '?v=' + V).then((r) => { if (!r.ok) throw new Error(p); return r.json(); });
   Promise.all([j('data/reference.json'), j('data/spots.json'), j('data/ebird.json'), j('data/corridors_season.geojson'),
-    j('data/timing.json'), j('data/weather.json'), fetch('data/ebird.bin?v=' + V).then((r) => r.arrayBuffer())])
-    .then(([ref, spots, eb, paths, timing, wx, bin]) => {
-      Object.assign(D, { ref, spots, eb, paths, timing, wx });
+    j('data/timing.json'), j('data/weather.json'), fetch('data/ebird.bin?v=' + V).then((r) => r.arrayBuffer()), j('data/flyway_labels.json')])
+    .then(([ref, spots, eb, paths, timing, wx, bin, fly]) => {
+      Object.assign(D, { ref, spots, eb, paths, timing, wx, fly });
       heatBytes = new Uint8Array(bin);
       weeks = eb.seasonWeeks.slice().sort((a, b) => order(a) - order(b));
       IDX = Math.max(...spots.flatMap((s) => weeks.map((w) => s.w[w])));
@@ -65,6 +68,7 @@
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
     map.addControl(new maplibregl.ScaleControl({ unit: 'imperial' }), 'bottom-left');
     map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: 'Imagery: Esri, Maxar. Birds: eBird Status & Trends (Cornell Lab), USGS. Wetlands: USFWS NWI.' }), 'bottom-right');
+    map.on('zoomend', () => { if (flyMarkers.length) flyLabels(); });
     map.on('load', () => { addLayers(); buildUI(); update(); $('#loading').classList.add('hidden'); });
     map.on('error', (e) => { if (!map.loaded()) $('#loadMsg').textContent = 'Map error: ' + ((e && e.error && e.error.message) || 'unknown'); });
     window.duckMap = map;
@@ -103,12 +107,16 @@
 
     map.addImage('arrow', arrow(), { pixelRatio: 2 });
     map.addSource('paths', { type: 'geojson', data: pathData() });
-    map.addLayer({ id: 'paths', type: 'line', source: 'paths', layout: { 'line-cap': 'round' }, paint: {
-      'line-color': '#c59bff',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 5, ['+', 1, ['*', 16, ['sqrt', ['get', 'now']]]], 9, ['+', 2, ['*', 30, ['sqrt', ['get', 'now']]]]],
-      'line-opacity': ['+', 0.18, ['*', 0.7, ['min', 1, ['*', 4, ['get', 'now']]]]] } });
-    map.addLayer({ id: 'path-arrows', type: 'symbol', source: 'paths', filter: ['>', ['get', 'now'], 0.04], layout: {
-      'symbol-placement': 'line', 'symbol-spacing': 80, 'icon-image': 'arrow', 'icon-size': 1.1, 'icon-allow-overlap': true, 'icon-ignore-placement': true } });
+    const W = (extra) => ['interpolate', ['linear'], ['zoom'], 4, ['+', 1.5 + extra, ['*', 12, ['sqrt', ['get', 'now']]]], 6, ['+', 2 + extra, ['*', 18, ['sqrt', ['get', 'now']]]], 9, ['+', 3 + extra, ['*', 30, ['sqrt', ['get', 'now']]]]];
+    const OP = ['+', 0.45, ['*', 0.5, ['min', 1, ['*', 4, ['get', 'now']]]]];
+    map.addLayer({ id: 'paths-case', type: 'line', source: 'paths', layout: { 'line-cap': 'round' }, paint: {
+      'line-color': '#1a0636', 'line-width': W(3), 'line-opacity': ['*', 0.55, OP], 'line-blur': 1 } });
+    map.addLayer({ id: 'paths-out', type: 'line', source: 'paths', filter: ['==', ['get', 'out'], 1], paint: {
+      'line-color': '#e2c8ff', 'line-width': W(0), 'line-opacity': OP, 'line-dasharray': [2, 1.2] } });
+    map.addLayer({ id: 'paths', type: 'line', source: 'paths', filter: ['!=', ['get', 'out'], 1], layout: { 'line-cap': 'round' }, paint: {
+      'line-color': '#d9b8ff', 'line-width': W(0), 'line-opacity': OP } });
+    map.addLayer({ id: 'path-arrows', type: 'symbol', source: 'paths', filter: ['>', ['get', 'now'], 0.03], layout: {
+      'symbol-placement': 'line', 'symbol-spacing': 70, 'icon-image': 'arrow', 'icon-size': 1.3, 'icon-allow-overlap': true, 'icon-ignore-placement': true } });
 
     map.addSource('places-pts', { type: 'geojson', data: D.ref.places });
     map.addLayer({ id: 'places-pts', type: 'circle', source: 'places-pts', paint: {
@@ -119,11 +127,17 @@
       const q = (ids) => map.queryRenderedFeatures([[ev.point.x - 10, ev.point.y - 10], [ev.point.x + 10, ev.point.y + 10]], { layers: ids.filter((l) => map.getLayoutProperty(l, 'visibility') !== 'none') });
       closePanels();
       const pl = q(['places-pts']); if (pl.length) return showPlace(pl[0].properties, pl[0].geometry.coordinates);
-      const pa = q(['paths']); if (pa.length) return showPath(pa.sort((a, b) => b.properties.now - a.properties.now)[0].properties);
+      const pa = q(['paths', 'paths-out']); if (pa.length) return showPath(pa.sort((a, b) => b.properties.now - a.properties.now)[0].properties);
       const zo = q(['zones-fill']); if (zo.length) return showZone(zo[0].properties);
       hide('card');
     });
-    ['paths', 'places-pts'].forEach((l) => {
+    // labels for where birds come from / go beyond Montana
+    for (const f of D.fly) {
+      const el = document.createElement('div'); el.className = 'flylabel ' + f.k;
+      el.innerHTML = `<span>${f.k === 'from' ? 'From' : 'To'}</span> ${esc(f.name.replace(' (real median trip from here)', ''))}`;
+      flyMarkers.push(new maplibregl.Marker({ element: el }).setLngLat([f.lon, f.lat]).addTo(map));
+    }
+    ['paths', 'paths-out', 'places-pts'].forEach((l) => {
       map.on('mouseenter', l, () => { map.getCanvas().style.cursor = 'pointer'; });
       map.on('mouseleave', l, () => { map.getCanvas().style.cursor = ''; });
     });
@@ -152,7 +166,7 @@
   const qToVal = (q) => (q < 2 ? 0 : Math.expm1(((q - 2) / 253) * Math.log1p(D.eb.vmax)));
 
   function pathData() {
-    return { type: 'FeatureCollection', features: D.paths.features.map((f) => ({ ...f, properties: { ...f.properties, w: undefined, now: f.properties.w[st.week] || 0 } })) };
+    return { type: 'FeatureCollection', features: D.paths.features.map((f) => ({ ...f, properties: { ...f.properties, w: undefined, out: f.properties.out || 0, now: f.properties.w[st.week] || 0 } })) };
   }
 
   // ---------------------------------------------------------------- update on week/region change
@@ -161,6 +175,7 @@
     for (const t of TOGGLES) t.layers.forEach((l) => setVis(l, t.on));
     if (on('heat')) map.getSource('heat').updateImage({ url: heatPng(), coordinates: map.getSource('heat').coordinates });
     map.getSource('paths').setData(pathData());
+    flyLabels();
     drawPins(); weekLabel();
     if (!$('#spots').classList.contains('hidden')) renderSpots();
   }
@@ -224,10 +239,13 @@
   }
   function showPath(p) {
     const lvl = p.now >= 0.25 ? 'Heavy' : p.now >= 0.08 ? 'Moderate' : p.now > 0.01 ? 'Light' : 'Little or none';
-    const kind = p.kind === 'entry' ? 'Birds arriving in Montana' : p.kind === 'exit' ? 'Birds leaving Montana' : 'Birds moving within Montana';
+    const kind = p.kind === 'up' ? 'Where Montana\'s arriving birds come from' : p.kind === 'down' ? 'Where birds leaving Montana head next' : p.kind === 'entry' ? 'Birds arriving in Montana' : p.kind === 'exit' ? 'Birds leaving Montana' : 'Birds moving within Montana';
+    const outNote = p.kind === 'up' ? 'Band recoveries show most of this region\'s fall mallards come from southern Alberta and Saskatchewan (Cox et al. 2023). Broad direction, not a tracked route.'
+      : p.kind === 'down' ? (p.to.includes('real median') ? 'Placed using real tracked mallards: their median first fall trip was 838 km (520 mi) at a heading of 158° (south-southeast), from GPS birds in the Dakotas (USGS). Many birds stop sooner or go farther.' : 'Band recoveries show Pacific-route prairie mallards winter in Washington, Oregon and Idaho (Verheijen et al. 2024; Cox et al. 2023). Broad direction, not a tracked route.') : '';
     openCard(`<h2>${esc(p.from)} → ${esc(p.to)}</h2>
       <div class="kv"><b>What</b><span>${kind}</span><b>This week</b><span><b>${lvl}</b></span>
       <b>Whole season</b><span>${Math.round(p.share * 100)}% of all estimated moves</span><b>Distance</b><span>${Math.round(p.km * 0.621)} miles</span></div>
+      ${outNote ? `<p class="note"><b>Beyond Montana:</b> ${outNote}</p>` : ''}
       <p class="note">An estimate, not a tracked flight. It comes from eBird's weekly mallard numbers: when one area loses birds and another gains them,
       the route between them is drawn, steered by the directions real tracked mallards flew. Ducks migrate at night in broad fronts, so read it as
       "birds move from here toward there", not an exact line. See Guide → How the map works.</p>`);
@@ -307,8 +325,10 @@
       Object.keys(BASES).forEach((k) => setVis('base-' + k, k === b.dataset.base)); setVis('places', b.dataset.base === 'sat');
     }));
     const chips = $('#chips');
-    for (const r of D.ref.regions.filter((x) => x.name !== 'Whole flyway' && x.name !== 'MT + neighbors')) {
-      const c = document.createElement('button'); c.className = 'chip' + (r.name === st.region ? ' on' : ''); c.textContent = r.name === 'Statewide' ? 'All Montana' : r.name;
+    const regs = D.ref.regions.filter((x) => x.name !== 'Whole flyway' && x.name !== 'MT + neighbors');
+    regs.splice(1, 0, { name: 'Big picture', bbox: [-121, 36.5, -97, 52.5] });
+    for (const r of regs) {
+      const c = document.createElement('button'); c.className = 'chip' + (r.name === st.region ? ' on' : ''); c.textContent = r.name === 'Statewide' ? 'All Montana' : r.name === 'Big picture' ? 'Big picture 🌎' : r.name;
       c.onclick = () => {
         st.region = r.name; chips.querySelectorAll('.chip').forEach((x) => x.classList.toggle('on', x === c));
         map.fitBounds([[r.bbox[0], r.bbox[1]], [r.bbox[2], r.bbox[3]]], { padding: pad(), duration: 800 }); hide('card'); update();

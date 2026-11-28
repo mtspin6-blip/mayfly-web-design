@@ -40,7 +40,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sw.heat{background:linear-gradient(90deg,rgba(255,240,150,.9),#f7a440,#e0442b,#8f1240)}
 .sw.path{background:var(--path);height:8px}
 .sw.wet{background:#5fbf9a;height:10px}
-.pin{flex:0 0 auto;width:26px;height:26px;border-radius:13px;background:var(--pin);color:#fff;font-weight:700;font-size:12px;display:inline-flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45)}
+.pin{flex:0 0 auto;width:32px;height:32px;border-radius:16px;background:#7b2cbf;color:#fff;font-weight:800;font-size:14px;display:inline-flex;align-items:center;justify-content:center;border:3px solid #fff;box-shadow:0 0 0 2px rgba(26,6,54,.55),0 2px 8px rgba(0,0,0,.6)}
 button.pin{cursor:pointer;padding:0}
 .lg .pin{margin:0 2px}
 
@@ -86,3 +86,8 @@ button.pin{cursor:pointer;padding:0}
 .maplibregl-ctrl-attrib{font-size:10px}
 .loading{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:#1f3a2e;color:#fff;text-align:center;padding:24px}
 .loading p{margin:8px 0;opacity:.85}.loading small{opacity:.6}
+.lg .pin{width:24px;height:24px;font-size:11px;border-width:2px}
+.flylabel{font-size:11.5px;font-weight:700;color:#fff;background:rgba(26,6,54,.78);padding:3px 8px;border-radius:10px;max-width:170px;white-space:normal;line-height:1.25;pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.flylabel span{font-weight:800;color:#e2c8ff;text-transform:uppercase;font-size:10px;letter-spacing:.4px}
+.sw.path{background:#d9b8ff;height:9px;box-shadow:0 0 0 2px rgba(26,6,54,.5)}
+.sw.pathout{background:repeating-linear-gradient(90deg,#e2c8ff 0 8px,transparent 8px 13px);height:7px}

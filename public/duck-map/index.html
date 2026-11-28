@@ -6,12 +6,12 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1f3a2e">
 <title>Montana Duck Map</title>
-<link rel="stylesheet" href="vendor/maplibre-gl.css?v=20261128c">
-<link rel="stylesheet" href="style.css?v=20261128c">
+<link rel="stylesheet" href="vendor/maplibre-gl.css?v=20261128e">
+<link rel="stylesheet" href="style.css?v=20261128e">
 </head>
 <body>
 <div id="map" aria-label="Map"></div>
-<div id="loading" class="loading"><div><b>Loading mallard map…</b><p id="loadMsg">Getting this season's data.</p><small>Version 20261128c</small></div></div>
+<div id="loading" class="loading"><div><b>Loading mallard map…</b><p id="loadMsg">Getting this season's data.</p><small>Version 20261128e</small></div></div>
 
 <header class="bar">
   <div class="brand">Montana Mallards</div>
@@ -24,7 +24,8 @@
   <button class="keytoggle" id="keyToggle" aria-expanded="false">Key</button>
   <div class="keybody hidden" id="keyBody">
     <div class="lg"><span class="sw heat"></span>Mallards this week: few → many</div>
-    <div class="lg"><span class="sw path"></span>Likely flight path (wider = more birds moving this week)</div>
+    <div class="lg"><span class="sw path"></span>Likely flight path in Montana (wider = more birds moving this week)</div>
+    <div class="lg"><span class="sw pathout"></span>Where birds come from &amp; go beyond Montana (broad direction)</div>
     <div class="lg"><span class="pin">1</span>Best spots this week, ranked</div>
     <div class="lg"><span class="sw wet"></span>Marshes &amp; wetlands (zoom in)</div>
     <p class="note">Everything on this map is estimated from eBird and real tracked birds. Tap any line or pin for details.</p>
@@ -72,7 +73,7 @@
 <script>
   window.addEventListener('error', function (e) { var m = document.getElementById('loadMsg'); if (m) m.textContent = 'Error: ' + (e.message || 'unknown') + ' (' + (e.filename || '').split('/').pop() + ')'; });
 </script>
-<script src="vendor/maplibre-gl.js?v=20261128c"></script>
-<script src="app.js?v=20261128c"></script>
+<script src="vendor/maplibre-gl.js?v=20261128e"></script>
+<script src="app.js?v=20261128e"></script>
 </body>
 </html>

@@ -17,6 +17,12 @@ Method (`scripts/build_app.py: corridors`):
    Real fall headings near Montana: mallards SE/S (USGS), blue-winged teal mean 136° (SE; 64 legs, 24 birds, our
    analysis of S3). The model's out-of-state flow is mostly S/SE, consistent with both.
 
+Beyond Montana (added 2026-11-28): each border entry/exit is extended with a dashed leg whose weekly width is the sum of
+the flows through it. Sources: southern Alberta and SW Saskatchewan (band recoveries; Cox et al. 2023). Central Flyway
+exits are projected 838 km at 158° (REAL median first-migration distance and mean heading, USGS ND/SD) and land in
+Nebraska (Platte/Sandhills), Kansas, and Colorado (San Luis and Arkansas valleys). Pacific exits go to the Columbia
+Basin, WA and Snake River Plain, ID (band-recovery wintering areas; Verheijen et al. 2024). Broad direction only.
+
 Limits: eBird sees only net change (real traffic is higher); ducks migrate at night on broad fronts, so a path means
 "birds move from this area toward that one", not a literal line; no Montana mallard tracks exist to validate it. First
 real check: NABBP band recoveries.

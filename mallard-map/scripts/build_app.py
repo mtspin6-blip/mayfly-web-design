@@ -491,6 +491,18 @@ def arc(a, b, n=18, bend=0.18):
     return pts
 
 
+def place_dest(lat, lon):
+    """Rough region name for an out-of-state point (state + broad landscape)."""
+    if lat > 44.5 and lon > -104: return "Western South Dakota"
+    if 40 <= lat <= 43 and lon > -104: return "Nebraska Platte & Sandhills"
+    if 37 <= lat < 40 and lon > -102.1: return "Kansas"
+    if 36.5 <= lat < 39.5 and -107.5 <= lon < -105.4: return "San Luis Valley & upper Arkansas, Colorado"
+    if 36.5 <= lat < 39.5 and -105.4 <= lon <= -102.05: return "Arkansas River valley, SE Colorado"
+    if 39.5 <= lat <= 41 and -105.4 <= lon <= -102.05: return "South Platte, NE Colorado"
+    if 41 < lat <= 45 and -111 <= lon <= -104: return "Wyoming"
+    return f"{lat:.1f}N {abs(lon):.1f}W"
+
+
 def place_name(lat, lon):
     water, town, mi = describe(lat, lon)
     if not water.startswith("no major"):
@@ -620,6 +632,63 @@ def corridors(out, tr, names):
                                       "share": round(f / stot, 3), "rel": round(f / smax, 3),
                                       "w": [round(float(x / wmax), 3) for x in weekly.get((i, j), np.zeros(52))],
                                       "km": round(float(hav(ni[1], ni[2], nj[1], nj[2])))}})
+    # ---- beyond Montana: where birds come from and where they go (MODELED, anchored on REAL data) ----
+    # Upstream: band recoveries show most fall mallards in this region come from Alberta and Saskatchewan (Cox et al.
+    # 2023; 76% of Pacific Flyway mallards banded in Alberta). Downstream, Central Flyway exits are placed with the REAL
+    # median first-migration distance (838 km) and mean heading (158 deg) of USGS GPS mallards; Pacific exits go to the
+    # wintering areas band recoveries show (WA/OR via the Columbia Basin; Idaho's Snake River Plain).
+    first = um[um.First_M == 1]
+    med_km = float(first.Move_d.median())
+    br = math.radians(float((math.degrees(math.atan2(np.sin(np.radians(first.Bearing)).mean(), np.cos(np.radians(first.Bearing)).mean())) + 360) % 360))
+
+    def project(lat, lon, km, b):
+        R = 6371.0; la1, lo1 = math.radians(lat), math.radians(lon); d = km / R
+        la2 = math.asin(math.sin(la1) * math.cos(d) + math.cos(la1) * math.sin(d) * math.cos(b))
+        lo2 = lo1 + math.atan2(math.sin(b) * math.sin(d) * math.cos(la1), math.cos(d) - math.sin(la1) * math.sin(la2))
+        return round(math.degrees(la2), 3), round(math.degrees(lo2), 3)
+    UP = {"Alberta / BC (north, west of the Divide)": ("Southern Alberta foothills & lakes", 51.0, -114.2),
+          "Alberta (north)": ("Southern Alberta grain country & irrigation lakes", 50.4, -112.2),
+          "Saskatchewan (north)": ("SW Saskatchewan & Missouri Coteau", 50.6, -106.4)}
+    DOWN = {"Idaho (west)": ("Columbia Basin, WA (Pacific wintering)", 46.9, -119.3),
+            "Idaho via Lolo Pass": ("Columbia Basin, WA (Pacific wintering)", 46.9, -119.3),
+            "Idaho via Lost Trail Pass": ("Snake River Plain, ID", 43.6, -116.2),
+            "Idaho (southwest)": ("Snake River Plain, ID", 43.2, -112.8)}
+    agg = {}
+    for (i, j), wv in weekly.items():
+        if i >= nh and nodes[i][3] == "entry":
+            agg.setdefault(("up", i), np.zeros(52)); agg[("up", i)] += wv
+        if j >= nh and nodes[j][3] == "exit":
+            agg.setdefault(("down", j), np.zeros(52)); agg[("down", j)] += wv
+    ext, dest = [], {}
+    for (kind, k), wv in agg.items():
+        name, la, lo, _ = nodes[k]
+        if kind == "up":
+            src, sla, slo = UP[name]
+            a_, b_, fr, to = (slo, sla), (lo, la), src, name
+        else:
+            if name in DOWN: dn, dla, dlo = DOWN[name]
+            else:
+                dla, dlo = project(la, lo, med_km, br)
+                dn = f"{place_dest(dla, dlo)} (real median trip from here)"
+            a_, b_, fr, to = (lo, la), (dlo, dla), name, dn
+            dest[dn] = (dla, dlo)
+        ext.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": arc(a_, b_, bend=0.12)},
+                    "properties": {"from": fr, "to": to, "kind": kind, "out": 1, "share": round(float(wv.sum() / stot), 3),
+                                   "km": round(float(hav(a_[1], a_[0], b_[1], b_[0]))),
+                                   "w": [round(float(x / wmax), 3) for x in wv]}})
+    sfeats.extend(ext)
+    labels = [{"name": "Southern Alberta", "lat": 50.9, "lon": -113.3, "k": "from"},
+              {"name": "SW Saskatchewan", "lat": 50.8, "lon": -106.4, "k": "from"}]
+    short = lambda n: ("Colorado (San Luis & Arkansas valleys)" if "Colorado" in n else n.replace(" (real median trip from here)", "")
+                       .replace(" (Pacific wintering)", "").replace("Nebraska Platte & Sandhills", "Nebraska (Platte & Sandhills)"))
+    grp = {}
+    for n, (la, lo) in dest.items():
+        grp.setdefault(short(n), []).append((la, lo))
+    labels += [{"name": n, "lat": round(float(np.mean([x[0] for x in v])), 3), "lon": round(float(np.mean([x[1] for x in v])), 3), "k": "to"}
+               for n, v in grp.items()]
+    (OUT / "flyway_labels.json").write_text(json.dumps(labels))
+    log(f"Beyond Montana: {len(ext)} flyway legs (sources AB/SK; Central destinations at the REAL median first-migration "
+        f"distance {med_km:.0f} km and heading {math.degrees(br):.0f} deg; Pacific destinations from band-recovery wintering areas).")
     stale = OUT / "corridors_week.geojson"
     if stale.exists(): stale.unlink()
     # check against REAL headings: where does the model send birds that leave Montana?
