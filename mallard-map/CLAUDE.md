@@ -28,7 +28,7 @@ Must work well on a **phone** first, and also on a laptop.
 9. Secrets (eBird key, Movebank login) live in `.env`, never in code or commits.
 10. **Lines first.** The main view is real flight-path lines + time-spent stops. Heat maps are the knowledge underneath:
     off by default, shown on demand.
-11. **Topo base map by default.** Every panel closes with a visible ✕; legend starts closed on phones.
+11. **Satellite base map (with place names) by default** (Mitch, 2026-11-28; wetlands overlay on so marshes show; Topo and Plain are options). Every panel closes with a visible ✕; legend starts closed on phones.
 12. **No emails to researchers.** Use public data and browser downloads only (Claude in Chrome is OK for clicks).
 13. **Work autonomously.** Run the gather → learn → model → show loop in SPEC §5; keep `docs/kb/` and `data/catalog.csv`
     current; ask Mitch only for decisions, sign-ins, or hosting details.

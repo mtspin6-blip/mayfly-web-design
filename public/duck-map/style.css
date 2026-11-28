@@ -86,3 +86,7 @@ table.t td,table.t th{border-bottom:1px solid var(--line);padding:4px 6px;text-a
 .hs-pin{width:28px;height:28px;border-radius:14px;background:var(--hot);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);cursor:pointer}
 .town{font-size:11.5px;font-weight:600;color:#2d3a33;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 2px #fff;pointer-events:none;white-space:nowrap;padding-left:9px;position:relative}
 .town::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;background:#2d3a33}
+.hs-pin.tier-Medium{background:#9b6fd6}
+.hs-pin.tier-Low{background:#c9b3ea;color:#3b2466}
+.tier{padding:0 6px;border-radius:4px;color:#fff;background:#7b2cbf}
+.tier.tier-Medium{background:#9b6fd6}.tier.tier-Low{background:#c9b3ea;color:#3b2466}

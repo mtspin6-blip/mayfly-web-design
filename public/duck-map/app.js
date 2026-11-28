@@ -36,10 +36,12 @@
       note: 'Top eBird cells for the season, per region. Not time spent.', ml: [] },
     { group: 'Abundance (heat)', id: 'heat', label: 'Mallard abundance by week', ev: 'MODELED', sp: 'mall', on: false,
       note: 'eBird Status & Trends, ~9 km cells, Montana only.', ml: ['heat'] },
-    { group: 'Habitat', id: 'nwi', label: 'Wetlands (NWI)', ev: 'REF', sp: 'any', on: false,
-      note: 'USFWS National Wetlands Inventory. Shows at closer zoom.', ml: ['nwi'] },
+    { group: 'Habitat', id: 'nwi', label: 'Wetlands & marshes (NWI)', ev: 'REF', sp: 'any', on: true,
+      note: 'Every mapped marsh, pond and wet meadow (USFWS). Zoom in past the state view to see it.', ml: ['nwi'] },
+    { group: 'Reference', id: 'zones', label: 'Duck zones & season dates', ev: 'REF', sp: 'any', on: true,
+      note: 'Pacific Flyway, Central Zone 1 and 2 (FWP). Tap a zone for dates.', ml: ['zones-fill', 'zones-line'] },
     { group: 'Reference', id: 'towns', label: 'Extra town labels', ev: 'REF', sp: 'any', on: false, note: 'Topo and Satellite already show town names; this adds labels on the Plain map.', ml: [] },
-    { group: 'Reference', id: 'refuges', label: 'Refuges & WMAs', ev: 'REF', sp: 'any', on: true, note: 'Approximate center points.', ml: ['refuges'] },
+    { group: 'Reference', id: 'refuges', label: 'Refuges, WMAs & duck water', ev: 'REF', sp: 'any', on: true, note: 'Named public areas and well-known water. Approximate points.', ml: ['refuges'] },
     { group: 'Reference', id: 'water', label: 'Major rivers & lakes', ev: 'REF', sp: 'any', on: false, note: 'Natural Earth.', ml: ['rivers', 'lakes'] },
   ];
 
@@ -107,13 +109,13 @@
   function addLayers() {
     for (const [k, b] of Object.entries(BASES)) {
       map.addSource('base-' + k, { type: 'raster', tiles: b.tiles, tileSize: 256, maxzoom: 18, attribution: b.attribution });
-      map.addLayer({ id: 'base-' + k, type: 'raster', source: 'base-' + k, layout: { visibility: k === 'topo' ? 'visible' : 'none' },
+      map.addLayer({ id: 'base-' + k, type: 'raster', source: 'base-' + k, layout: { visibility: k === 'sat' ? 'visible' : 'none' },
         paint: { 'raster-opacity': k === 'sat' ? 0.9 : 0.85, 'raster-saturation': k === 'topo' ? -0.35 : 0 } });
     }
     map.addSource('places', { type: 'raster', tiles: [PLACES], tileSize: 256, maxzoom: 18 });
-    map.addLayer({ id: 'places', type: 'raster', source: 'places', layout: { visibility: 'none' } });
-    map.addSource('nwi', { type: 'raster', tiles: [NWI], tileSize: 256, minzoom: 8, attribution: 'USFWS NWI' });
-    map.addLayer({ id: 'nwi', type: 'raster', source: 'nwi', minzoom: 8, paint: { 'raster-opacity': 0.55 } });
+    map.addLayer({ id: 'places', type: 'raster', source: 'places', layout: { visibility: 'visible' } });
+    map.addSource('nwi', { type: 'raster', tiles: [NWI], tileSize: 256, minzoom: 7, attribution: 'USFWS NWI' });
+    map.addLayer({ id: 'nwi', type: 'raster', source: 'nwi', minzoom: 7, paint: { 'raster-opacity': 0.6 } });
 
     // MODELED heat (canvas rendered to an image)
     heatCanvas = document.createElement('canvas'); heatCanvas.width = D.eb.w; heatCanvas.height = D.eb.h;
@@ -121,16 +123,20 @@
     map.addSource('heat', { type: 'image', url: blankPng(), coordinates: [[w, n], [e, n], [e, s], [w, s]] });
     map.addLayer({ id: 'heat', type: 'raster', source: 'heat', paint: { 'raster-opacity': 0.75, 'raster-resampling': 'nearest' } });
 
+    map.addSource('zones', { type: 'geojson', data: D.ref.zones });
+    map.addLayer({ id: 'zones-fill', type: 'fill', source: 'zones', paint: { 'fill-color': '#ffffff', 'fill-opacity': 0.01 } });
+    map.addLayer({ id: 'zones-line', type: 'line', source: 'zones', paint: { 'line-color': '#ffe08a', 'line-width': 1.4, 'line-opacity': 0.75, 'line-dasharray': [4, 3] } });
     map.addSource('mt', { type: 'geojson', data: D.ref.mt });
-    map.addLayer({ id: 'mt', type: 'line', source: 'mt', paint: { 'line-color': '#5b6b62', 'line-width': 1.6, 'line-opacity': 0.8, 'line-dasharray': [3, 2] } });
+    map.addLayer({ id: 'mt', type: 'line', source: 'mt', paint: { 'line-color': '#ffffff', 'line-width': 1.8, 'line-opacity': 0.85, 'line-dasharray': [3, 2] } });
     map.addSource('lakes', { type: 'geojson', data: D.ref.lakes });
     map.addLayer({ id: 'lakes', type: 'fill', source: 'lakes', paint: { 'fill-color': '#9cc4dd', 'fill-opacity': 0.5 } });
     map.addSource('rivers', { type: 'geojson', data: D.ref.rivers });
     map.addLayer({ id: 'rivers', type: 'line', source: 'rivers', paint: { 'line-color': '#7fb0cf', 'line-width': 1.2, 'line-opacity': 0.8 } });
-    map.addSource('refuges', { type: 'geojson', data: D.ref.refuges });
+    map.addSource('refuges', { type: 'geojson', data: D.ref.places });
     map.addLayer({ id: 'refuges', type: 'circle', source: 'refuges', paint: {
-      'circle-radius': ['interpolate', ['linear'], ['zoom'], 4, 3, 9, 7], 'circle-color': '#4f7a52', 'circle-opacity': 0.7,
-      'circle-stroke-color': '#fff', 'circle-stroke-width': 1 } });
+      'circle-radius': ['interpolate', ['linear'], ['zoom'], 4, 3.5, 9, 8],
+      'circle-color': ['case', ['==', ['get', 'k'], 'water'], '#3d8fd1', '#3f9a4a'], 'circle-opacity': 0.9,
+      'circle-stroke-color': '#fff', 'circle-stroke-width': 1.2 } });
 
     // DERIVED stops
     map.addSource('stops', { type: 'geojson', data: D.stops });
@@ -146,9 +152,10 @@
     map.addSource('corrS', { type: 'geojson', data: D.corrS });
     map.addSource('corrW', { type: 'geojson', data: D.corrW });
     map.addLayer({ id: 'corr-season', type: 'line', source: 'corrS', layout: { 'line-cap': 'round' }, paint: {
-      'line-color': C.corr, 'line-opacity': 0.32,
+      'line-color': '#b794f6',
+      'line-opacity': ['interpolate', ['linear'], ['zoom'], 5.5, ['case', ['>=', ['get', 'share'], 0.01], 0.55, 0], 7, ['case', ['>=', ['get', 'share'], 0.01], 0.55, 0.5]],
       'line-width': ['interpolate', ['linear'], ['zoom'], 4, ['+', 2, ['*', 12, ['get', 'rel']]], 8, ['+', 4, ['*', 26, ['get', 'rel']]]] } });
-    map.addLayer({ id: 'corr-arrows', type: 'symbol', source: 'corrS', layout: {
+    map.addLayer({ id: 'corr-arrows', type: 'symbol', source: 'corrS', filter: ['>=', ['get', 'share'], 0.01], layout: {
       'symbol-placement': 'line', 'symbol-spacing': 70, 'icon-image': 'arrowP', 'icon-size': 1.1,
       'icon-allow-overlap': true, 'icon-ignore-placement': true } });
     map.addLayer({ id: 'corr-week', type: 'line', source: 'corrW', layout: { 'line-cap': 'round' }, paint: {
@@ -173,18 +180,19 @@
       paint: { 'line-color': C.sel, 'line-width': 2.5, 'line-opacity': 0.9, 'line-dasharray': [1, 0] } });
 
     // taps
-    const tapLayers = ['trk-week', 'trk-base', 'stops', 'refuges', 'corr-week', 'corr-season'];
+    const tapLayers = ['trk-week', 'trk-base', 'stops', 'refuges', 'corr-week', 'corr-season', 'zones-fill'];
     map.on('click', (ev) => {
       const box = 10;
       const f = map.queryRenderedFeatures([[ev.point.x - box, ev.point.y - box], [ev.point.x + box, ev.point.y + box]],
         { layers: tapLayers.filter((l) => map.getLayer(l) && map.getLayoutProperty(l, 'visibility') !== 'none') });
       closePanels(['layers', 'info', 'legend']);
       if (f.length) {
-        const top = f.find((x) => x.layer.id === 'stops') || f.find((x) => x.layer.id.startsWith('trk')) ||
-          f.find((x) => x.layer.id === 'corr-week') || f[0];
+        const pri = ['stops', 'trk-week', 'trk-base', 'refuges', 'corr-week', 'corr-season', 'zones-fill'];
+        const top = pri.map((id) => f.find((x) => x.layer.id === id)).find(Boolean) || f[0];
         if (top.layer.id.startsWith('corr')) return showCorr(top.properties, top.layer.id === 'corr-week');
         if (top.layer.id === 'stops') return showStop(top.properties);
         if (top.layer.id === 'refuges') return showRefuge(top.properties, top.geometry.coordinates);
+        if (top.layer.id === 'zones-fill') { if (layerOn('heat')) return showCell(ev.lngLat); return showZone(top.properties); }
         return showTrack(top.properties);
       }
       if (layerOn('heat')) return showCell(ev.lngLat);
@@ -277,7 +285,7 @@
     const reg = regs.has(st.region) ? st.region : 'Statewide';
     for (const h of D.hot.filter((x) => x.region === reg)) {
       const el = document.createElement('button');
-      el.className = 'hs-pin'; el.textContent = h.rank; el.setAttribute('aria-label', `Mallard hot spot ${h.rank}`);
+      el.className = 'hs-pin tier-' + h.tier; el.textContent = h.rank; el.setAttribute('aria-label', `Mallard hot spot ${h.rank}`);
       el.addEventListener('click', (e) => { e.stopPropagation(); showHot(h); });
       hotMarkers.push(new maplibregl.Marker({ element: el }).setLngLat([h.lon, h.lat]).addTo(map));
     }
@@ -323,8 +331,21 @@
       <div class="kv"><b>When</b><span>${fmtDate(p.d0)} → ${fmtDate(p.d1)} ${p.d0.slice(0, 4)}</span>
       <b>Where</b><span>${esc(p.r)}</span><b>Bird</b><span>${esc(p.b)}</span></div>`);
   }
+  function zoneOpen(win, md) {
+    return JSON.parse(win).some(([a, b]) => (a <= b ? md >= a && md <= b : md >= a || md <= b));
+  }
+  function showZone(p) {
+    const md = weekName(st.week).slice(5), open = zoneOpen(p.win, md);
+    openCard(`<h2>${esc(p.zone)}</h2>
+      <div class="kv"><b>2026–27 ducks</b><span>${esc(p.dates)}</span><b>Youth days</b><span>Sep 26–27 (statewide)</span>
+      <b>Slider week</b><span>${fmtDate(weekName(st.week))}: ${open ? 'open' : 'closed'}</span></div>
+      <p class="note">Zones follow county lines (FWP). Dates from the 2026 FWP migratory bird regulations as reported by several outlets.
+      <b>Check the FWP regulations before you hunt.</b></p>
+      <div class="btnrow"><a href="https://fwp.mt.gov/hunt/regulations/migratory-bird" target="_blank" rel="noopener">FWP regulations</a></div>`);
+  }
   function showRefuge(p, c) {
-    openCard(`<h2>${esc(p.name)}</h2><p class="note">Reference point (approximate center). Check FWP / USFWS for hunting rules and access.</p>
+    openCard(`<h2>${esc(p.name)}</h2><p class="note">${p.k === 'water' ? 'Well-known duck water' : 'Public area (' + esc(p.k) + ')'}, approximate point.
+      Check FWP / USFWS for access, closures and hunting rules.</p>
       <div class="btnrow"><a href="https://www.google.com/maps/search/?api=1&query=${c[1]},${c[0]}" target="_blank" rel="noopener">Open in Maps</a></div>`);
   }
   function sparkSVG(row, col, title) {
@@ -344,15 +365,17 @@
       const cell = lngLatToCell({ lng: h.lon, lat: h.lat });
       const sp = cell ? sparkSVG(cell.row, cell.col, 'Weekly mallard abundance') : { svg: '', vals: [] };
       const now = sp.vals.length ? sp.vals[st.week] : null;
+      const tierNote = { High: 'top 2% of Montana cells', Medium: 'top 10% of Montana cells', Low: 'below the top 10% statewide' }[h.tier];
       openCard(`<h2>Mallard hot spot #${h.rank} · ${esc(h.region)} ${badge('MODELED')}</h2>
         <p class="note">eBird model estimate of where mallards are. Not tracked birds and not a flight path.</p>
-        <div class="kv"><b>Season avg</b><span>${h.v} (relative abundance)</span>
+        <div class="kv"><b>Where</b><span>${esc(h.water)} · ${h.townMi} mi from ${esc(h.town)}</span>
+        <b>Strength</b><span><b class="tier tier-${h.tier}">${h.tier}</b> (${tierNote}; season avg ${h.v})</span>
         ${now !== null ? `<b>Slider week</b><span>${now.toFixed(1)}</span>` : ''}
-        <b>Peak week</b><span>${fmtDate(h.peakWeek)}</span>
-        <b>Nearest refuge</b><span>${esc(h.refuge)} (${h.refugeKm} km)</span>
-        <b>Location</b><span>${h.lat.toFixed(3)}, ${h.lon.toFixed(3)} (~9 km cell)</span></div>
+        <b>Peak week</b><span>${fmtDate(h.peakWeek)}${h.peakInSeason ? '' : ' (after the season closes)'}</span>
+        <b>Public area</b><span>${esc(h.refuge)} (${Math.round(h.refugeKm * 0.621)} mi)</span>
+        <b>Location</b><span>${h.lat.toFixed(3)}, ${h.lon.toFixed(3)} (the model's cell is ~6 mi wide)</span></div>
         ${sp.svg}
-        <p class="note">Why here? Coming next: habitat, water, grain fields, elevation and weather for this cell.</p>
+        <p class="note">Switch to Satellite and zoom in to see the marshes, open water and grain fields in this cell. Access and private land: check FWP / onX.</p>
         <div class="btnrow"><button id="zHot">Zoom in</button>
         <a href="https://www.google.com/maps/search/?api=1&query=${h.lat},${h.lon}" target="_blank" rel="noopener">Open in Maps</a></div>`);
       $('#zHot').onclick = () => map.flyTo({ center: [h.lon, h.lat], zoom: 10, padding: cardPad() });
@@ -390,6 +413,7 @@
       document.querySelectorAll('#baseSeg button').forEach((x) => x.classList.toggle('on', x === b));
       Object.keys(BASES).forEach((k) => setVis('base-' + k, k === b.dataset.base));
       setVis('places', b.dataset.base === 'sat');
+      map.setPaintProperty('mt', 'line-color', b.dataset.base === 'sat' ? '#ffffff' : '#5b6b62');
       LAYERS.find((l) => l.id === 'towns').on = b.dataset.base === 'plain'; applyAll();
     }));
     const chips = $('#chips');
@@ -445,7 +469,11 @@
     if (layerOn('stops')) rows.push(`<div class="lg"><span class="sw" style="background:${C.stop};border-radius:50%;flex-basis:14px;height:14px;margin:0 7px"></span>Teal stop, size = days ${badge('DERIVED')}</div>`);
     if (layerOn('hot')) rows.push(`<div class="lg"><span class="hs-pin" style="width:22px;height:22px;font-size:11px;margin:0 3px">1</span>Mallard hot spot (rank) ${badge('MODELED')}</div>`);
     if (layerOn('heat')) rows.push(`<div class="lg"><span class="sw" style="background:linear-gradient(90deg,#ffffcc,#41b6c4,#253494)"></span>Mallard abundance, low → high ${badge('MODELED')}</div>`);
-    if (layerOn('refuges')) rows.push(`<div class="lg"><span class="sw" style="background:#4f7a52;border-radius:50%;flex-basis:10px;height:10px;margin:0 9px"></span>Refuge / WMA</div>`);
+    if (layerOn('hot')) rows.push(`<div class="lg"><span class="hs-pin tier-High" style="width:18px;height:18px;font-size:0;margin:0 1px"></span><span class="hs-pin tier-Medium" style="width:18px;height:18px;font-size:0;margin:0 1px"></span><span class="hs-pin tier-Low" style="width:18px;height:18px;font-size:0;margin:0 1px"></span>Strength: high · medium · low</div>`);
+    if (layerOn('refuges')) rows.push(`<div class="lg"><span class="sw" style="background:#3f9a4a;border-radius:50%;flex-basis:10px;height:10px;margin:0 9px"></span>Refuge / WMA / WPA</div>`,
+      `<div class="lg"><span class="sw" style="background:#3d8fd1;border-radius:50%;flex-basis:10px;height:10px;margin:0 9px"></span>Well-known duck water</div>`);
+    if (layerOn('nwi')) rows.push(`<div class="lg"><span class="sw" style="background:#7fc8a9"></span>Wetlands &amp; marshes (zoom in)</div>`);
+    if (layerOn('zones')) rows.push(`<div class="lg"><span class="sw" style="border-top:2px dashed #e0b400;height:0;border-radius:0"></span>Duck zone boundary (tap for dates)</div>`);
     rows.push(`<div class="lg"><span class="sw" style="border-top:2px dashed #5b6b62;height:0;border-radius:0"></span>Montana border</div>`);
     if (!rows.length) rows.push('<p class="note">No data layers on.</p>');
     $('#legendBody').innerHTML = rows.join('') + `<p class="note">${badge('REAL')} measured birds · ${badge('DERIVED')} computed from real birds · ${badge('MODELED')} statistical estimate</p>`;
@@ -484,12 +512,14 @@
       <tr><td>Teal stops 3+ days</td><td>${badge('DERIVED')}</td><td>${s.tealStops}</td><td>${s.tealStopsMt}</td></tr>
       <tr><td>Mallard hot spots</td><td>${badge('MODELED')}</td><td>${D.hot.length}</td><td>${D.hot.length}</td></tr></table>
       <h3>How the estimated flight paths work ${badge('MODELED')}</h3>
-      <p class="note">Montana is split into 16 mallard areas around the top eBird cells. For each week of the season, areas that lose birds send them
-      to areas that gain birds, or out of state; gains with no source come in from Canada. Routes take the shortest path, with a preference for the
-      south-southeast heading that real GPS mallards flew (USGS, ND/SD). It is an estimate: it sees only net change and has not been checked
+      <p class="note">Montana is split into 20 mallard areas: every region's strongest eBird area plus the next strongest. For each week of the season,
+      areas that lose birds send them to areas that gain birds, or out of state; gains with no source come in from Canada. Routes take the shortest
+      path, prefer the south-southeast heading real GPS mallards flew (USGS, ND/SD), and avoid crossing the Continental Divide unless nothing
+      cheaper fits. Small valleys like the Bitterroot get thin paths. It is an estimate: it sees only net change and has not been checked
       against real Montana tracks. Real band recoveries will be the first check.</p>
       <h3>2026–27 Montana duck season</h3>
-      <p class="note">Youth days Sep 26–27 · Pacific Flyway Oct 3–Jan 15 · Central Zone 1 Oct 3–Jan 7 · Central Zone 2 Oct 3–11 &amp; Oct 24–Jan 19.
+      <p class="note">Youth days Sep 26–27 · Pacific Flyway Oct 3–Jan 15 (scaup close Dec 27) · Central Zone 1 Oct 3–Jan 7 · Central Zone 2 Oct 3–11 &amp; Oct 24–Jan 19.
+      Pacific Flyway = Hill, Chouteau, Cascade, Meagher, Park counties and everything west (includes Great Falls). Zone 2 = Big Horn, Carbon, Custer, Prairie, Rosebud, Treasure, Yellowstone.
       <b>Verify in the FWP regulations before you hunt.</b> The map uses Sep 26–Jan 19 as the season window.</p>
       <h3>What real mallards do ${badge('REAL')}</h3>
       <p class="note">USGS GPS study of ${u.birds} young mallards tagged in North and South Dakota, 2018–2020 (summary tables only; no coordinates are public).</p>
@@ -507,8 +537,10 @@
       <li>${esc(u.citation)}</li>
       <li>${esc(D.eb.citation)}</li>
       <li>U.S. Fish &amp; Wildlife Service, National Wetlands Inventory (WMS). Public domain.</li>
+      <li>Montana Fish, Wildlife &amp; Parks, 2026 Migratory Bird Regulations (flyway and zone counties). Season dates as reported for 2026–27; confirm with FWP.</li>
+      <li>Public area and duck-water points: approximate, for naming only (project knowledge base, docs/kb/topics/places.md).</li>
       <li>Montana outline, rivers and lakes: Natural Earth (public domain). State boundaries for labels: US Census via us-atlas (public domain); countries: Natural Earth via world-atlas.</li>
-      <li>Base maps: Esri World Topo, World Imagery and Light Gray Canvas (Esri terms of use). Map software: MapLibre GL JS (BSD-3).</li></ul>
+      <li>Base maps: Esri World Imagery with Boundaries &amp; Places (default), World Topo and Light Gray Canvas (Esri terms of use). Map software: MapLibre GL JS (BSD-3).</li></ul>
       <p class="note">Built ${s.built}. Personal, non-commercial use. Not a hunting regulation source.</p>`;
   }
 })();

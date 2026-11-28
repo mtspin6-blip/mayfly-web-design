@@ -26,14 +26,23 @@ REGIONS = [  # name, [west, south, east, north]
     ("Fort Peck–NE", [-107.6, 47.4, -104.0, 49.0]), ("Billings–Yellowstone", [-109.3, 45.0, -107.2, 46.5]),
     ("SW Montana", [-113.4, 44.4, -111.2, 45.9]), ("MT + neighbors", [-117.5, 42.0, -96.5, 54.5]),
     ("Whole flyway", [-115, 15, -75, 56])]
-# Approximate center points, not boundaries. Freezeout, Canyon Ferry, Warm Springs are state WMAs.
-REFUGES = [
-    ("Freezeout Lake WMA", 47.67, -112.02), ("Benton Lake NWR", 47.67, -111.33), ("Bowdoin NWR", 48.40, -107.66),
-    ("Medicine Lake NWR", 48.47, -104.40), ("Red Rock Lakes NWR", 44.62, -111.75), ("Lee Metcalf NWR", 46.56, -114.08),
-    ("Ninepipe NWR", 47.43, -114.10), ("Pablo NWR", 47.62, -114.10), ("Charles M. Russell NWR", 47.63, -107.20),
-    ("UL Bend NWR", 47.58, -107.85), ("Lake Mason NWR", 46.57, -108.62), ("Hailstone NWR", 45.93, -109.20),
-    ("Swan River NWR", 47.93, -113.88), ("Lost Trail NWR", 48.03, -114.58), ("Canyon Ferry WMA", 46.45, -111.55),
-    ("Warm Springs Ponds WMA", 46.18, -112.78)]
+# Public waterfowl areas and well-known duck water. APPROXIMATE center points (+/- a few km), not boundaries; used only
+# to name nearby places. Spelling "Freezout" follows FWP. Check access rules with FWP / USFWS before hunting.
+PLACES = [  # name, lat, lon, kind
+    ("Freezout Lake WMA", 47.66, -112.03, "WMA"), ("Benton Lake NWR", 47.67, -111.33, "NWR"),
+    ("Bowdoin NWR", 48.40, -107.66, "NWR"), ("Medicine Lake NWR", 48.47, -104.40, "NWR"),
+    ("Red Rock Lakes NWR", 44.63, -111.73, "NWR"), ("Lee Metcalf NWR", 46.56, -114.07, "NWR"),
+    ("Ninepipe NWR", 47.43, -114.10, "NWR"), ("Pablo NWR", 47.62, -114.12, "NWR"),
+    ("UL Bend NWR", 47.58, -107.85, "NWR"), ("Lake Mason NWR", 46.60, -108.62, "NWR"),
+    ("Hailstone NWR", 45.88, -109.27, "NWR"), ("Swan River NWR", 47.91, -113.84, "NWR"),
+    ("Lost Trail NWR", 48.02, -114.59, "NWR"), ("Flathead WPA / North Shore WMA", 48.02, -114.07, "WPA"),
+    ("Canyon Ferry WMA", 46.33, -111.52, "WMA"), ("Warm Springs WMA", 46.18, -112.78, "WMA"),
+    ("Fort Peck dredge cuts", 48.01, -106.42, "water"), ("Nelson Reservoir", 48.49, -107.55, "water"),
+    ("Fresno Reservoir", 48.62, -109.96, "water"), ("Tiber Reservoir (Lake Elwell)", 48.33, -111.10, "water"),
+    ("Bighorn River, Fort Smith to Hardin", 45.45, -107.80, "water"), ("Missouri Headwaters (Three Forks)", 45.93, -111.50, "water"),
+    ("Lake Helena", 46.68, -111.96, "water"), ("Ennis Lake", 45.43, -111.70, "water"),
+    ("Clark Canyon Reservoir", 45.00, -112.86, "water"), ("Missouri River at Great Falls", 47.51, -111.30, "water")]
+REFUGES = [(n, la, lo) for n, la, lo, k in PLACES if k != "water"]
 TOWNS = [("Billings", 45.783, -108.500), ("Missoula", 46.872, -113.994), ("Great Falls", 47.506, -111.300),
          ("Bozeman", 45.677, -111.043), ("Butte", 46.004, -112.535), ("Helena", 46.589, -112.039),
          ("Kalispell", 48.196, -114.313), ("Havre", 48.550, -109.684), ("Miles City", 46.408, -105.840),
@@ -42,7 +51,13 @@ TOWNS = [("Billings", 45.783, -108.500), ("Missoula", 46.872, -113.994), ("Great
          ("Choteau", 47.813, -112.184), ("Shelby", 48.505, -111.857), ("Dillon", 45.216, -112.638),
          ("Livingston", 45.662, -110.561), ("Hamilton", 46.247, -114.160), ("Polson", 47.693, -114.163),
          ("Cut Bank", 48.633, -112.326), ("Plentywood", 48.775, -104.563), ("Hardin", 45.732, -107.612),
-         ("Roundup", 46.445, -108.542), ("Conrad", 48.170, -111.946), ("Fort Benton", 47.818, -110.668)]
+         ("Roundup", 46.445, -108.542), ("Conrad", 48.170, -111.946), ("Fort Benton", 47.818, -110.668),
+         ("Bigfork", 48.063, -114.072), ("Ronan", 47.529, -114.101), ("Stevensville", 46.509, -114.093),
+         ("Lolo", 46.759, -114.080), ("Townsend", 46.319, -111.520), ("Three Forks", 45.892, -111.552),
+         ("Belgrade", 45.776, -111.177), ("Ennis", 45.349, -111.732), ("Fort Peck", 48.008, -106.449),
+         ("Saco", 48.458, -107.341), ("Chester", 48.510, -110.967), ("Fairfield", 47.615, -111.981),
+         ("Augusta", 47.492, -112.394), ("Laurel", 45.669, -108.772), ("Columbus", 45.637, -109.252),
+         ("Medicine Lake", 48.500, -104.498), ("Fort Smith", 45.312, -107.928)]
 US_ABBR = {"Montana": "MT", "North Dakota": "ND", "South Dakota": "SD", "Wyoming": "WY", "Idaho": "ID",
            "Nebraska": "NE", "Kansas": "KS", "Oklahoma": "OK", "Texas": "TX", "Louisiana": "LA", "Arkansas": "AR",
            "Missouri": "MO", "Iowa": "IA", "Minnesota": "MN", "Colorado": "CO", "New Mexico": "NM", "Mississippi": "MS",
@@ -72,8 +87,28 @@ def week_idx(ts):  # nearest eBird S&T week (weeks centred on Jan 4, 11, ...)
     return np.clip(np.round((ts.dt.dayofyear - 4) / 7), 0, 51).astype(int)
 
 
+_GEO = {}
+
+
+def describe(lat, lon):
+    """Plain-language location of a ~9 km cell: nearby named place or water, and nearest town."""
+    import geopandas as gpd
+    if not _GEO:
+        _GEO["lakes"] = gpd.read_file(DATA / "reference" / "lakes.geojson").to_crs(32612)
+        _GEO["rivers"] = gpd.read_file(DATA / "reference" / "rivers.geojson").to_crs(32612)
+    p = gpd.GeoSeries(gpd.points_from_xy([lon], [lat]), crs=4326).to_crs(32612).iloc[0]
+    pkm, pname = min((float(hav(lat, lon, la, lo)), n) for n, la, lo, k in PLACES)
+    dl, dr = _GEO["lakes"].distance(p), _GEO["rivers"].distance(p)
+    if pkm <= 10: water = pname
+    elif dl.min() < 8000: water = _GEO["lakes"].name[dl.idxmin()]
+    elif dr.min() < 8000: water = f"{_GEO['rivers'].name[dr.idxmin()]} River"
+    else: water = "no major lake or river within 5 mi (ponds, wetlands or fields)"
+    tkm, town = min((float(hav(lat, lon, la, lo)), n) for n, la, lo in TOWNS)
+    return water, town, round(tkm * 0.621)
+
+
 def nearest_refuge(lat, lon):
-    d = [(float(hav(lat, lon, la, lo)), n) for n, la, lo in REFUGES]
+    d = [(float(hav(lat, lon, la, lo)), n) for n, la, lo, k in PLACES]
     km, n = min(d)
     return n, round(km)
 
@@ -257,11 +292,13 @@ def ebird():
     pts = gpd.GeoSeries(gpd.points_from_xy(xs, ys), crs=3857).to_crs(4326)
     cells = pd.DataFrame({"lat": pts.y.values, "lon": pts.x.values, "v": mean_season[rows, cols], "r": rows, "c": cols})
     cells = cells.sort_values("v", ascending=False).reset_index(drop=True)
+    q98, q90 = np.nanpercentile(cells.v, 98), np.nanpercentile(cells.v, 90)
+
     spots = []
     for reg, (w_, s_, e_, n_) in REGIONS[:9]:
         sub = cells[cells.lon.between(w_, e_) & cells.lat.between(s_, n_)]
         picked = []
-        for _, r in sub.iterrows():
+        for _, r in sub[sub.v >= 1.0].iterrows():  # drop cells with almost no modeled mallards
             if all(hav(r.lat, r.lon, p.lat, p.lon) > 20 for p in picked):
                 picked.append(r)
             if len(picked) == (10 if reg == "Statewide" else 5):
@@ -270,11 +307,26 @@ def ebird():
             ref, km = nearest_refuge(r.lat, r.lon)
             curve = out[:, int(r.r), int(r.c)]
             peak = int(np.nanargmax(curve))
+            water, town, tmi = describe(r.lat, r.lon)
             spots.append({"region": reg, "rank": rank, "lat": round(r.lat, 4), "lon": round(r.lon, 4),
-                          "v": round(float(r.v), 2), "peakWeek": names[peak], "refuge": ref, "refugeKm": km})
+                          "v": round(float(r.v), 2), "peakWeek": names[peak], "refuge": ref, "refugeKm": km,
+                          "tier": "High" if r.v >= q98 else "Medium" if r.v >= q90 else "Low",
+                          "peakInSeason": bool(names[peak][5:] >= SEASON[0] or names[peak][5:] <= SEASON[1]),
+                          "water": water, "town": town, "townMi": tmi})
     (OUT / "hotspots.json").write_text(json.dumps(spots))
+    kb = ["# Hot spot audit (auto-generated by scripts/build_app.py; do not hand-edit)", "",
+          "MODELED: eBird S&T v2025 mallard, mean weekly relative abundance Sep 26 - Jan 19, ~9 km cells (~6 mi). Ranked per",
+          "region, >= 20 km apart, cells < 1.0 dropped. Tier vs all Montana cells: High = top 2%, Medium = top 10%, Low = rest.",
+          "'Where' = named public area/water within 10 km, else Natural Earth lake/river within 8 km. Place points are",
+          "approximate (see topics/places.md). Not time spent, not tracked birds.", "",
+          "| Region | # | Tier | Season avg | Peak week | Where | Nearest town | Lat, Lon |", "|---|---|---|---|---|---|---|---|"]
+    for x in spots:
+        kb.append(f"| {x['region']} | {x['rank']} | {x['tier']} | {x['v']} | {x['peakWeek'][5:]}{'' if x['peakInSeason'] else ' (after season)'} | "
+                  f"{x['water']} | {x['townMi']} mi {x['town']} | {x['lat']}, {x['lon']} |")
+    (ROOT / "docs" / "kb" / "topics" / "hotspots.md").write_text("\n".join(kb) + "\n")
     log(f"Hot spots (MODELED): {len(spots)} cells (top 10 statewide, top 5 per region), ranked by mean eBird relative "
-        f"abundance {SEASON[0]} to {SEASON[1]}, >= 20 km apart. This is a proxy for where birds are, not time spent.")
+        f"abundance {SEASON[0]} to {SEASON[1]}, >= 20 km apart, cells < 1.0 dropped. Strength tier vs all MT cells: High = top 2% "
+        f"(>= {q98:.1f}), Medium = top 10% (>= {q90:.1f}), Low = rest. This is a proxy for where birds are, not time spent.")
     corridors(out, tr, names)
     return spots
 
@@ -282,9 +334,10 @@ def ebird():
 # ----------------------------------------------------------------------------- MODELED: estimated mallard flight paths
 FALL_BEARING = 158.0   # REAL prior: mean heading of first fall migration, USGS ND/SD mallards (usgs.json)
 BORDER = [  # name, lat, lon, kind  (entry = birds arriving from outside MT, exit = leaving MT)
-    ("Alberta (north)", 49.0, -113.5, "entry"), ("Alberta (north)", 49.0, -111.0, "entry"),
+    ("Alberta / BC (north, west of the Divide)", 49.0, -114.6, "entry"), ("Alberta (north)", 49.0, -113.0, "entry"), ("Alberta (north)", 49.0, -111.0, "entry"),
     ("Saskatchewan (north)", 49.0, -108.0, "entry"), ("Saskatchewan (north)", 49.0, -105.0, "entry"),
-    ("Idaho (west)", 47.3, -115.6, "exit"), ("Idaho (southwest)", 44.6, -112.6, "exit"),
+    ("Idaho (west)", 47.3, -115.6, "exit"), ("Idaho via Lolo Pass", 46.63, -114.58, "exit"),
+    ("Idaho via Lost Trail Pass", 45.69, -113.94, "exit"), ("Idaho (southwest)", 44.6, -112.6, "exit"),
     ("Wyoming (south)", 45.0, -110.0, "exit"), ("Wyoming (south)", 45.0, -107.0, "exit"),
     ("South Dakota (southeast)", 45.4, -104.05, "exit"), ("North Dakota (east)", 47.3, -104.05, "exit"),
     ("North Dakota (east)", 48.6, -104.05, "exit")]
@@ -311,15 +364,16 @@ def arc(a, b, n=18, bend=0.18):
 
 
 def place_name(lat, lon):
-    cands = [(float(hav(lat, lon, la, lo)), n) for n, la, lo in TOWNS + REFUGES]
-    km, n = min(cands)
-    return n if km < 15 else f"{round(km * 0.621)} mi from {n}"
+    water, town, mi = describe(lat, lon)
+    if not water.startswith("no major"):
+        return water if mi > 12 or water.startswith(town) else f"{water} ({town})"
+    return town if mi <= 8 else f"{mi} mi from {town}"
 
 
 def corridors(out, tr, names):
     """Week-to-week mallard movement between areas, estimated from eBird abundance change (MODELED).
 
-    1. Hubs: the 16 highest duck-season cells, >= 45 km apart; every Montana cell joins its nearest hub.
+    1. Hubs: each region's strongest cell, then the highest duck-season cells, >= 45 km apart; every Montana cell joins its nearest hub.
     2. For each pair of weeks, a hub that loses birds sends them to hubs that gain birds, or out of the state;
        hubs that gain more than others lose get birds from the north border.
     3. Routing = cheapest total distance, with moves against the real mallard fall heading (SSE, from USGS
@@ -338,10 +392,14 @@ def corridors(out, tr, names):
     lat, lon = pts.y.values, pts.x.values
     order = np.argsort(-np.nan_to_num(mean[rows, cols]))
     hubs = []
+    for reg, (w_, s_, e_, n_) in REGIONS[1:9]:  # every region gets its strongest cell as a hub, so no region is skipped
+        inreg = [k for k in order if w_ <= lon[k] <= e_ and s_ <= lat[k] <= n_ and np.nan_to_num(mean[rows[k], cols[k]]) >= 1]
+        if inreg and all(hav(lat[inreg[0]], lon[inreg[0]], h[0], h[1]) > 30 for h in hubs):
+            hubs.append((float(lat[inreg[0]]), float(lon[inreg[0]])))
     for k in order:
         if all(hav(lat[k], lon[k], h[0], h[1]) > 45 for h in hubs):
             hubs.append((float(lat[k]), float(lon[k])))
-        if len(hubs) == 16:
+        if len(hubs) == 20:
             break
     H = np.array(hubs)
     member = np.argmin(np.stack([hav(lat, lon, h[0], h[1]) for h in hubs]), axis=0)
@@ -353,11 +411,22 @@ def corridors(out, tr, names):
     hub_names = [place_name(a, b) for a, b in hubs]
     nodes = [(n, a, b, "hub") for n, (a, b) in zip(hub_names, hubs)] + list(BORDER)
 
+    # West of the Continental Divide (approx. by county). Crossing the Divide costs 2.5x: mountain crossings happen,
+    # but the model should prefer routes that stay on one side.
+    cty = gpd.read_file(DATA / "reference" / "mt_counties.geojson")
+    west_ct = cty[cty.name.isin(["Lincoln", "Flathead", "Sanders", "Lake", "Mineral", "Missoula", "Ravalli", "Granite",
+                                 "Powell", "Deer Lodge"])].union_all()
+    from shapely.geometry import Point as _P
+    west_border = {"Idaho (west)", "Idaho via Lolo Pass", "Idaho via Lost Trail Pass"}
+    side = [(n in west_border) if k != "hub" else bool(west_ct.contains(_P(lo, la))) for n, la, lo, k in nodes]
+    side = [s_ if nodes[i][3] != "entry" else nodes[i][2] < -114.0 for i, s_ in enumerate(side)]
+
     def cost(i, j):
         _, la1, lo1, _ = nodes[i]; _, la2, lo2, _ = nodes[j]
         d = float(hav(la1, lo1, la2, lo2))
         off = math.cos(math.radians(bearing(la1, lo1, la2, lo2) - FALL_BEARING))
-        return d * (1 + max(0.0, -off) * 2) + 1.0
+        divide = 2.5 if side[i] != side[j] else 1.0
+        return d * (1 + max(0.0, -off) * 2) * divide + 1.0
 
     feats, season = [], {}
     nh = len(hubs)
@@ -379,8 +448,12 @@ def corridors(out, tr, names):
             log(f"corridor LP failed for week {names[w1]}: {r.message}")
             continue
         tot = r.x.sum()
+        change = np.abs(delta)
         for (i, j), f in zip(var, r.x):
-            if f <= 0 or f / tot < 0.04:
+            # keep a path if it matters statewide (>= 2% of the week) or locally (>= 25% of a small area's change),
+            # so low-abundance valleys such as the Bitterroot still show their (thin) paths
+            local = max(f / change[i] if i < nh and change[i] else 0, f / change[j] if j < nh and change[j] else 0)
+            if f <= 0 or f / tot < 0.003 or (f / tot < 0.02 and local < 0.25):
                 continue
             ni, nj = nodes[i], nodes[j]
             kind = "entry" if i >= nh else "exit" if j >= nh else "move"
@@ -396,7 +469,7 @@ def corridors(out, tr, names):
     smax, stot = max(season.values()), sum(season.values())
     sfeats = []
     for (i, j), f in sorted(season.items(), key=lambda kv: kv[1]):
-        if f / stot < 0.008:
+        if f / stot < 0.001:
             continue
         ni, nj = nodes[i], nodes[j]
         sfeats.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": arc((ni[2], ni[1]), (nj[2], nj[1]))},
@@ -438,9 +511,29 @@ def reference():
             {"type": "Feature", "geometry": {"type": "Point", "coordinates": [lo, la]}, "properties": {"name": n, "k": kind}}
             for n, la, lo in rows]}
     ref = DATA / "reference"
+    import geopandas as gpd
+    c = gpd.read_file(ref / "mt_counties.geojson")
+    pac = {"Hill", "Chouteau", "Cascade", "Meagher", "Park", "Lincoln", "Flathead", "Sanders", "Lake", "Mineral", "Missoula",
+           "Ravalli", "Granite", "Powell", "Lewis and Clark", "Teton", "Pondera", "Glacier", "Toole", "Liberty", "Deer Lodge",
+           "Silver Bow", "Beaverhead", "Madison", "Jefferson", "Broadwater", "Gallatin"}
+    z2 = {"Big Horn", "Carbon", "Custer", "Prairie", "Rosebud", "Treasure", "Yellowstone"}
+    c["zone"] = ["Pacific Flyway" if n in pac else "Central Flyway Zone 2" if n in z2 else "Central Flyway Zone 1" for n in c.name]
+    missing = (pac | z2) - set(c.name)
+    assert not missing, missing
+    zones = c.dissolve("zone").reset_index()[["zone", "geometry"]]
+    zones["geometry"] = zones.geometry.simplify(0.01)
+    dates = {"Pacific Flyway": "Oct 3 - Jan 15 (scaup close Dec 27)", "Central Flyway Zone 1": "Oct 3 - Jan 7",
+             "Central Flyway Zone 2": "Oct 3 - 11 and Oct 24 - Jan 19"}
+    windows = {"Pacific Flyway": [["10-03", "01-15"]], "Central Flyway Zone 1": [["10-03", "01-07"]],
+               "Central Flyway Zone 2": [["10-03", "10-11"], ["10-24", "01-19"]]}
+    zones["dates"] = zones.zone.map(dates)
+    zones["win"] = zones.zone.map(lambda z: json.dumps(windows[z]))
+    zones_gj = json.loads(zones.to_json())
     bundle = {"mt": json.loads((ref / "mt.geojson").read_text()), "rivers": json.loads((ref / "rivers.geojson").read_text()),
               "lakes": json.loads((ref / "lakes.geojson").read_text()), "refuges": pts(REFUGES, "refuge"),
-              "towns": pts(TOWNS, "town"), "regions": [{"name": n, "bbox": b} for n, b in REGIONS], "season": SEASON}
+              "towns": pts(TOWNS, "town"), "zones": zones_gj,
+              "places": {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [lo, la]},
+                         "properties": {"name": n, "k": k}} for n, la, lo, k in PLACES]}, "regions": [{"name": n, "bbox": b} for n, b in REGIONS], "season": SEASON}
     (OUT / "reference.json").write_text(json.dumps(bundle, separators=(",", ":")))
 
 
