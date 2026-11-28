@@ -14,11 +14,8 @@
 
 <header class="bar">
   <div class="brand">MT Duck Map <span class="ver">v5</span></div>
-  <select id="species" aria-label="Species">
-    <option value="all">All ducks</option>
-    <option value="mall">Mallard</option>
-    <option value="bwte">Blue-winged teal</option>
-  </select>
+  <button id="btnSpots" class="iconbtn" aria-label="Best spots this week">★<span>Spots</span></button>
+  <button id="btnGuide" class="iconbtn" aria-label="Expert guide">📖<span>Guide</span></button>
   <button id="btnLayers" class="iconbtn" aria-label="Layers">☰<span>Layers</span></button>
   <button id="btnInfo" class="iconbtn" aria-label="About and sources">ⓘ<span>Info</span></button>
 </header>
@@ -38,6 +35,18 @@
 <section id="layers" class="panel sheet hidden" aria-label="Layers">
   <button class="x" data-close="layers" aria-label="Close">✕</button>
   <h2>Layers</h2>
+  <div class="seg presets" id="presets">
+    <button data-preset="hunt" class="on">Hunt planner</button>
+    <button data-preset="migration">Migration</button>
+    <button data-preset="habitat">Habitat</button>
+  </div>
+  <p class="note" id="presetNote">Hot spots, this week's moves, wetlands, zones and public areas.</p>
+  <h3>Species</h3>
+  <select id="species" aria-label="Species" class="fullsel">
+    <option value="all">All ducks (each labeled)</option>
+    <option value="mall">Mallard</option>
+    <option value="bwte">Blue-winged teal</option>
+  </select>
   <div id="layerList"></div>
   <h3>Base map</h3>
   <div class="seg" id="baseSeg">
@@ -45,6 +54,16 @@
     <button data-base="topo">Topo</button>
     <button data-base="plain">Plain</button>
   </div>
+</section>
+
+<section id="spots" class="panel sheet hidden" aria-label="Best spots this week">
+  <button class="x" data-close="spots" aria-label="Close">✕</button>
+  <div id="spotsBody"></div>
+</section>
+
+<section id="guide" class="panel sheet hidden" aria-label="Expert guide">
+  <button class="x" data-close="guide" aria-label="Close">✕</button>
+  <div id="guideBody"><p class="note">Loading…</p></div>
 </section>
 
 <section id="info" class="panel sheet hidden" aria-label="About">

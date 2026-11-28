@@ -8,6 +8,7 @@ primary check; **approx** = location good to a few km.
 
 | File | What's in it |
 |---|---|
+| `EXPERT_GUIDE.md` | **Start here.** The synthesized expert analysis: regions, weather rules, daily movement, confidence |
 | `sources.md` | Every source with link, license and what we used it for |
 | `states/MT.md` | Montana summary: what we know, by region |
 | `topics/season-and-zones.md` | 2026–27 dates, flyway and zone county lists |
@@ -15,6 +16,11 @@ primary check; **approx** = location good to a few km.
 | `topics/mallard-behavior.md` | What moves mallards (cold, freeze-up, food), with evidence type |
 | `topics/hotspots.md` | Auto-generated audit of every hot spot on the map |
 | `topics/estimated-paths.md` | How the estimated flight paths are made, results, limits |
+| `topics/regional-timing.md` | Auto: when each region holds mallards (early / all / late season) |
+| `topics/weather-triggers-data.md` | Auto: weather on 147 real departure days vs stay days |
+| `topics/comparison-states.md` | What transfers from ND/SD, AB/SK, WA/OR/ID, WY/CO, NE and GPS studies elsewhere |
+| `topics/daily-movement.md` | Roost-to-field distances, field feeding, hunting pressure |
+| `topics/species.md` | Harvest by species, teal timing, other ducks |
 | `topics/data-gaps.md` | What's missing, ranked |
 
 Last full review: 2026-11-28.

@@ -18,5 +18,6 @@ Built 2026-11-28 by `scripts/build_app.py`.
 - Teal stopovers (DERIVED): 470 stays of >= 3 days within 5 km. Argos error can be 0.25 to >10 km, so these are approximate.
 - eBird S&T mallard (MODELED): 52 weeks, ~9 km cells, reprojected to Web Mercator (162x60), clipped to Montana; values stored log-scaled to 1 byte (max 53.3 = 99.5th percentile).
 - Hot spots (MODELED): 49 cells (top 10 statewide, top 5 per region), ranked by mean eBird relative abundance 09-26 to 01-19, >= 20 km apart, cells < 1.0 dropped. Strength tier vs all MT cells: High = top 2% (>= 38.2), Medium = top 10% (>= 12.6), Low = rest. This is a proxy for where birds are, not time spent.
+- Regional timing (MODELED): 8 regions classified early / all / late season from eBird weekly totals.
 - Estimated mallard flight paths (MODELED): 20 areas + 14 border points, 18 week-to-week steps, 310 weekly paths, 85 season paths. Method: eBird weekly abundance change routed by least distance with a 158 deg (SSE) heading preference from USGS tracked mallards. Not observed flights.
 - USGS mallards (REAL, summary only, ND/SD juveniles): 97 birds, 562 moves; first migration median 838 km heading ~158 deg.

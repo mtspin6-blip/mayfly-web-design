@@ -16,5 +16,8 @@ Try it locally: `cd public/duck-map && python3 -m http.server 8000`, then open h
 | `data/stops.geojson` | Teal stays ≥ 3 days within 5 km | DERIVED |
 | `data/hotspots.json` | Top mallard cells: 10 statewide, 5 per region, with peak week and nearest refuge | MODELED |
 | `data/ebird.bin` + `ebird.json` | eBird S&T mallard weekly abundance, 52 weeks × 162 × 60 cells, 1 byte each (log scale) | MODELED |
+| `data/timing.json` | Weekly mallards per region + season type (early / all / late) | MODELED |
+| `data/weather.json` | Weather on real departure days vs stay days (scripts/analyze_weather.py) | REAL |
+| `guide.html` | In-app expert guide (short version of docs/kb/EXPERT_GUIDE.md) | mixed |
 | `data/usgs.json` | USGS ND/SD mallard movement summary (no coordinates) | REAL |
 | `data/reference.json` | Montana outline, rivers, lakes, refuges, towns, region boxes, season window | reference |

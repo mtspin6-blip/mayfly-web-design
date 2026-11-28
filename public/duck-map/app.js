@@ -53,9 +53,9 @@
   const j = (p) => fetch(p).then((r) => { if (!r.ok) throw new Error(p); return r.json(); });
   Promise.all([j('data/reference.json'), j('data/tracks.geojson'), j('data/stops.geojson'), j('data/birds.json'),
     j('data/hotspots.json'), j('data/ebird.json'), j('data/usgs.json'), j('data/summary.json'),
-    j('data/corridors_season.geojson'), j('data/corridors_week.geojson')])
-    .then(([ref, tracks, stops, birds, hot, eb, usgs, summary, corrS, corrW]) => {
-      Object.assign(D, { ref, tracks, stops, hot, eb, usgs, summary, corrS, corrW, birds: Object.fromEntries(birds.map((b) => [b.id, b])) });
+    j('data/corridors_season.geojson'), j('data/corridors_week.geojson'), j('data/timing.json'), j('data/weather.json')])
+    .then(([ref, tracks, stops, birds, hot, eb, usgs, summary, corrS, corrW, timing, wx]) => {
+      Object.assign(D, { ref, tracks, stops, hot, eb, usgs, summary, corrS, corrW, timing, wx, birds: Object.fromEntries(birds.map((b) => [b.id, b])) });
       init();
     }).catch((e) => { document.body.insertAdjacentHTML('beforeend', `<p style="position:fixed;top:80px;left:16px;z-index:9;background:#fff;padding:8px">Could not load map data (${esc(e.message)}).</p>`); });
 
@@ -185,7 +185,7 @@
       const box = 10;
       const f = map.queryRenderedFeatures([[ev.point.x - box, ev.point.y - box], [ev.point.x + box, ev.point.y + box]],
         { layers: tapLayers.filter((l) => map.getLayer(l) && map.getLayoutProperty(l, 'visibility') !== 'none') });
-      closePanels(['layers', 'info', 'legend']);
+      closePanels([...PANELS, 'legend']);
       if (f.length) {
         const pri = ['stops', 'trk-week', 'trk-base', 'refuges', 'corr-week', 'corr-season', 'zones-fill'];
         const top = pri.map((id) => f.find((x) => x.layer.id === id)).find(Boolean) || f[0];
@@ -292,7 +292,8 @@
   }
 
   // ------------------------------------------------------------------ cards
-  function openCard(html) { $('#cardBody').innerHTML = html; show('card'); closePanels(['layers', 'info']); }
+  const PANELS = ['layers', 'info', 'spots', 'guide'];
+  function openCard(html) { $('#cardBody').innerHTML = html; show('card'); closePanels(PANELS); }
   function selectBird(id) { st.selBird = id; map.setFilter('trk-sel', ['==', ['get', 'b'], id || '']); }
   function showTrack(p) {
     const b = D.birds[p.b]; selectBird(p.b);
@@ -397,7 +398,7 @@
   function show(id) { $('#' + id).classList.remove('hidden'); }
   function hide(id) { $('#' + id).classList.add('hidden'); if (id === 'legend') $('#btnLegend').classList.remove('hidden'); }
   function closePanels(ids) { ids.forEach(hide); }
-  function toggle(id) { const el = $('#' + id); const was = el.classList.contains('hidden'); ['layers', 'info'].forEach(hide); if (was) { show(id); hide('card'); } }
+  function toggle(id) { const el = $('#' + id); const was = el.classList.contains('hidden'); PANELS.forEach(hide); if (was) { show(id); hide('card'); hide('banner'); } }
 
   function buildUI() {
     document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => {
@@ -406,6 +407,9 @@
     }));
     $('#btnLayers').onclick = () => toggle('layers');
     $('#btnInfo').onclick = () => { renderInfo(); toggle('info'); };
+    $('#btnSpots').onclick = () => { renderSpots(); toggle('spots'); };
+    $('#btnGuide').onclick = () => { renderGuide(); toggle('guide'); };
+    document.querySelectorAll('#presets button').forEach((b) => b.addEventListener('click', () => applyPreset(b.dataset.preset)));
     $('#btnLegend').onclick = () => { show('legend'); $('#btnLegend').classList.add('hidden'); };
     if (!isPhone()) { show('legend'); $('#btnLegend').classList.add('hidden'); }
     $('#species').onchange = (e) => { st.species = e.target.value; applyAll(); };
@@ -423,10 +427,11 @@
         st.region = r.name; chips.querySelectorAll('.chip').forEach((x) => x.classList.toggle('on', x === c));
         map.fitBounds([[r.bbox[0], r.bbox[1]], [r.bbox[2], r.bbox[3]]], { padding: fitPad(), duration: 800 });
         drawHotspots(); hide('card');
+        if (!$('#spots').classList.contains('hidden')) renderSpots();
       };
       chips.appendChild(c);
     }
-    $('#week').oninput = (e) => { st.week = weeksList[+e.target.value]; applyWeek(); };
+    $('#week').oninput = (e) => { st.week = weeksList[+e.target.value]; applyWeek(); if (!$('#spots').classList.contains('hidden')) renderSpots(); };
     $('#onlyWeek').onchange = (e) => { st.onlyWeek = e.target.checked; applyWeek(); };
     $('#fullYear').onchange = (e) => { st.fullYear = e.target.checked; buildWeeks(); applyWeek(); };
     $('#play').onclick = () => {
@@ -439,11 +444,89 @@
     $('#nearMe').onclick = () => {
       if (!navigator.geolocation) return;
       navigator.geolocation.getCurrentPosition((p) => {
-        const c = [p.coords.longitude, p.coords.latitude];
+        const c = [p.coords.longitude, p.coords.latitude]; st.meLL = c;
         if (!st.me) st.me = new maplibregl.Marker({ color: '#1a73e8' }).setLngLat(c).addTo(map); else st.me.setLngLat(c);
         map.flyTo({ center: c, zoom: 9 });
       }, () => alert('Location not available. Check your browser location permission.'), { enableHighAccuracy: false, timeout: 10000 });
     };
+  }
+
+  // ---------------------------------------------------------------- presets
+  const PRESETS = {
+    hunt: { on: ['corr', 'hot', 'nwi', 'zones', 'refuges'], note: 'Hot spots, estimated paths, wetlands, zones and public areas.' },
+    migration: { on: ['corr', 'tracks', 'zones'], note: 'Estimated mallard paths plus real teal tracks. Press ▶ to watch the season move.' },
+    habitat: { on: ['nwi', 'refuges', 'zones'], note: 'Just the land: satellite, marshes, public areas. Zoom in to see the wetlands.' },
+  };
+  function applyPreset(k) {
+    const pr = PRESETS[k];
+    for (const l of LAYERS) if (!l.empty && l.id !== 'towns') l.on = pr.on.includes(l.id);
+    document.querySelectorAll('#presets button').forEach((x) => x.classList.toggle('on', x.dataset.preset === k));
+    $('#presetNote').textContent = pr.note;
+    applyAll();
+  }
+
+  // ---------------------------------------------------------------- best spots this week
+  function seasonPrev(wk) { const i = weeksList.indexOf(wk); return i > 0 ? weeksList[i - 1] : (wk + 51) % 52; }
+  function regionChart(weekly) {
+    const W = 340, H = 56, max = Math.max(...weekly, 1), x = (i) => (i / 51) * W, y = (v) => H - 3 - (v / max) * (H - 8);
+    const sw = new Set(D.eb.seasonWeeks), runs = [];
+    for (let i = 0; i < 52; i++) if (sw.has(i)) { if (runs.length && runs[runs.length - 1][1] === i - 1) runs[runs.length - 1][1] = i; else runs.push([i, i]); }
+    return `<svg class="spark" style="height:56px" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Mallards in this region by week">
+      ${runs.map(([a, b]) => `<rect x="${Math.max(0, x(a) - 3)}" y="0" width="${x(b) - x(a) + 6}" height="${H}" fill="#2f855a" opacity=".12"/>`).join('')}
+      <polyline points="${weekly.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')}" fill="none" stroke="#5b3fa0" stroke-width="2"/>
+      <line x1="${x(st.week)}" x2="${x(st.week)}" y1="0" y2="${H}" stroke="#e8590c" stroke-width="2"/></svg>`;
+  }
+  function renderSpots() {
+    loadHeat().then(() => {
+      const regs = new Set(D.hot.map((h) => h.region));
+      const reg = regs.has(st.region) ? st.region : 'Statewide';
+      const prev = seasonPrev(st.week);
+      const rows = D.hot.filter((h) => h.region === reg).map((h) => {
+        const c = lngLatToCell({ lng: h.lon, lat: h.lat });
+        const now = c ? qToVal(cellQ(st.week, c.row, c.col)) : 0, before = c ? qToVal(cellQ(prev, c.row, c.col)) : 0;
+        const pct = before > 0.05 ? Math.round(((now - before) / before) * 100) : null;
+        let km = null;
+        if (st.meLL) km = hav(st.meLL[1], st.meLL[0], h.lat, h.lon);
+        return { h, now, pct, km };
+      }).sort((a, b) => b.now - a.now);
+      const t = D.timing.regions[reg];
+      const head = t ? `<p><span class="rtype">${t.type}</span>${t.share}% of Montana's in-season mallards · fall peak ${fmtDate(t.peak)}</p>
+        ${regionChart(t.weekly)}<p class="note">Mallards in ${esc(reg)} by week (Jan → Dec). Green = season. Orange = slider week.</p>`
+        : `<p class="note">Statewide top spots. Pick a region chip below for local spots and timing.</p>`;
+      const list = rows.map((r, i) => {
+        const tr = r.pct === null ? '<span class="flat">–</span>' : r.pct >= 5 ? `<span class="up">▲ ${r.pct}%</span>` : r.pct <= -5 ? `<span class="down">▼ ${Math.abs(r.pct)}%</span>` : '<span class="flat">steady</span>';
+        return `<button class="spot" data-i="${D.hot.indexOf(r.h)}"><span class="rk tier-${r.h.tier}">${i + 1}</span>
+          <span class="mid"><b>${esc(r.h.water.startsWith('no major') ? 'Fields & small water' : r.h.water)}</b>
+          <small>${r.h.townMi} mi from ${esc(r.h.town)} · ${r.h.tier}${r.km !== null ? ` · ${Math.round(r.km * 0.621)} mi from you` : ''}</small></span>
+          <span class="tr">${r.now.toFixed(1)}<br>${tr}</span></button>`;
+      }).join('');
+      $('#spotsBody').innerHTML = `<h2>Best mallard spots · week of ${fmtDate(weekName(st.week))} ${badge('MODELED')}</h2>${head}
+        <h3>Ranked for this week</h3>${list}
+        <p class="note">Number = eBird modeled mallards this week (relative). ▲▼ = change from the week before: birds arriving or leaving.
+        Each spot is a ~6 mi cell; zoom in on satellite to find the actual water and fields. Move the slider to plan ahead.</p>`;
+      document.querySelectorAll('#spotsBody .spot').forEach((b) => b.addEventListener('click', () => {
+        const h = D.hot[+b.dataset.i]; map.flyTo({ center: [h.lon, h.lat], zoom: 9.5, padding: cardPad() }); showHot(h);
+      }));
+    });
+  }
+  function hav(la1, lo1, la2, lo2) {
+    const r = Math.PI / 180, a = Math.sin(((la2 - la1) * r) / 2) ** 2 + Math.cos(la1 * r) * Math.cos(la2 * r) * Math.sin(((lo2 - lo1) * r) / 2) ** 2;
+    return 6371 * 2 * Math.asin(Math.sqrt(a));
+  }
+
+  // ---------------------------------------------------------------- guide
+  let guideLoaded = false;
+  function renderGuide() {
+    if (guideLoaded) return;
+    fetch('guide.html').then((r) => r.text()).then((html) => {
+      $('#guideBody').innerHTML = html; guideLoaded = true;
+      $('#wxTable').innerHTML = `<table><tr><th>Condition</th><th>On days birds left</th><th>Other days</th></tr>
+        ${D.wx.rules.map((r) => `<tr><td>${esc(r.label)}</td><td><b>${r.departDays}%</b></td><td>${r.otherDays}%</td></tr>`).join('')}</table>`;
+      const order = ['Fort Peck–NE', 'Flathead', 'Hi-Line', 'Billings–Yellowstone', 'Great Falls', 'Helena–Bozeman', 'SW Montana', 'Bitterroot'];
+      $('#regionTable').innerHTML = `<table><tr><th>Region</th><th>Type</th><th>Share</th><th>Fall peak</th></tr>
+        ${order.map((n) => { const t = D.timing.regions[n]; return `<tr><td>${esc(n)}</td><td>${t.type}</td><td>${t.share}%</td><td>${fmtDate(t.peak)}</td></tr>`; }).join('')}</table>
+        <p class="note">Early season = birds leave at freeze-up (hunt Oct–early Nov). Late season = open water keeps building birds into Dec–Jan. ${badge('MODELED')}</p>`;
+    }).catch(() => { $('#guideBody').innerHTML = '<p>Guide could not load.</p>'; });
   }
 
   function renderLayerList() {
@@ -484,7 +567,7 @@
       ? '<b>Mallard view: all modeled.</b> No real mallard tracks cross Montana yet, so the paths are estimates. Band-recovery lines are next.'
       : st.species === 'bwte'
         ? '<b>Blue-winged teal only.</b> 42 birds tagged in SK, AB, TX and LA (2013–16); 3 passed through Montana.'
-        : '<b>Purple lines are estimated mallard flight paths</b> (modeled from eBird, not tracked birds). Orange dashes = this week. Pins = hot spots.';
+        : '<b>Tap ★ for this week\'s best spots.</b> Purple lines = estimated mallard paths (modeled, not tracked birds); orange = this week. 📖 = expert guide.';
     $('#bannerText').innerHTML = msg;
     if (dismissed && st.species === 'all') hide('banner'); else show('banner');
   }
