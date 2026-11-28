@@ -13,62 +13,42 @@
 <div id="map" aria-label="Map"></div>
 
 <header class="bar">
-  <div class="brand">MT Duck Map <span class="ver">v5</span></div>
-  <button id="btnSpots" class="iconbtn" aria-label="Best spots this week">★<span>Spots</span></button>
-  <button id="btnGuide" class="iconbtn" aria-label="Expert guide">📖<span>Guide</span></button>
-  <button id="btnLayers" class="iconbtn" aria-label="Layers">☰<span>Layers</span></button>
-  <button id="btnInfo" class="iconbtn" aria-label="About and sources">ⓘ<span>Info</span></button>
+  <div class="brand">Montana Mallards</div>
+  <button id="btnSpots" class="topbtn">Best spots</button>
+  <button id="btnGuide" class="topbtn">Guide</button>
+  <button id="btnMap" class="topbtn icon" aria-label="Map settings">⚙</button>
 </header>
 
-<div id="banner" class="banner" role="status">
-  <p id="bannerText"></p>
-  <button class="x" data-close="banner" aria-label="Close">✕</button>
-</div>
-
-<button id="btnLegend" class="legendbtn">Legend</button>
-<section id="legend" class="panel legend hidden" aria-label="Legend">
-  <button class="x" data-close="legend" aria-label="Close">✕</button>
-  <h3>Legend</h3>
-  <div id="legendBody"></div>
-</section>
-
-<section id="layers" class="panel sheet hidden" aria-label="Layers">
-  <button class="x" data-close="layers" aria-label="Close">✕</button>
-  <h2>Layers</h2>
-  <div class="seg presets" id="presets">
-    <button data-preset="hunt" class="on">Hunt planner</button>
-    <button data-preset="migration">Migration</button>
-    <button data-preset="habitat">Habitat</button>
-  </div>
-  <p class="note" id="presetNote">Hot spots, this week's moves, wetlands, zones and public areas.</p>
-  <h3>Species</h3>
-  <select id="species" aria-label="Species" class="fullsel">
-    <option value="all">All ducks (each labeled)</option>
-    <option value="mall">Mallard</option>
-    <option value="bwte">Blue-winged teal</option>
-  </select>
-  <div id="layerList"></div>
-  <h3>Base map</h3>
-  <div class="seg" id="baseSeg">
-    <button data-base="sat" class="on">Satellite</button>
-    <button data-base="topo">Topo</button>
-    <button data-base="plain">Plain</button>
+<section id="key" class="key" aria-label="Map key">
+  <button class="keytoggle" id="keyToggle" aria-expanded="false">Key</button>
+  <div class="keybody hidden" id="keyBody">
+    <div class="lg"><span class="sw heat"></span>Mallards this week: few → many</div>
+    <div class="lg"><span class="sw path"></span>Likely flight path (wider = more birds moving this week)</div>
+    <div class="lg"><span class="pin">1</span>Best spots this week, ranked</div>
+    <div class="lg"><span class="sw wet"></span>Marshes &amp; wetlands (zoom in)</div>
+    <p class="note">Everything on this map is estimated from eBird and real tracked birds. Tap any line or pin for details.</p>
   </div>
 </section>
 
-<section id="spots" class="panel sheet hidden" aria-label="Best spots this week">
+<section id="spots" class="panel hidden" aria-label="Best spots">
   <button class="x" data-close="spots" aria-label="Close">✕</button>
   <div id="spotsBody"></div>
 </section>
 
-<section id="guide" class="panel sheet hidden" aria-label="Expert guide">
+<section id="guide" class="panel hidden" aria-label="Guide">
   <button class="x" data-close="guide" aria-label="Close">✕</button>
   <div id="guideBody"><p class="note">Loading…</p></div>
 </section>
 
-<section id="info" class="panel sheet hidden" aria-label="About">
-  <button class="x" data-close="info" aria-label="Close">✕</button>
-  <div id="infoBody"></div>
+<section id="settings" class="panel hidden" aria-label="Map settings">
+  <button class="x" data-close="settings" aria-label="Close">✕</button>
+  <h2>Map settings</h2>
+  <div id="toggles"></div>
+  <h3>Background</h3>
+  <div class="seg" id="baseSeg">
+    <button data-base="sat" class="on">Satellite</button>
+    <button data-base="topo">Topo</button>
+  </div>
 </section>
 
 <section id="card" class="panel card hidden" aria-label="Details">
@@ -79,14 +59,13 @@
 <footer class="dock">
   <div class="chips" id="chips"></div>
   <div class="timeline">
-    <button id="play" class="play" aria-label="Play weeks">▶</button>
+    <button id="play" class="round" aria-label="Play the season">▶</button>
     <div class="tl-mid">
-      <div class="tl-top"><span id="weekLabel">Week</span>
-        <label class="mini"><input type="checkbox" id="onlyWeek"> only this week</label>
-        <label class="mini"><input type="checkbox" id="fullYear"> full year</label></div>
-      <input type="range" id="week" min="0" max="16" value="9" aria-label="Week">
+      <div class="tl-top"><b id="weekLabel">Week</b><span id="weekNote"></span></div>
+      <input type="range" id="week" min="0" max="16" value="9" aria-label="Week of the season">
+      <div class="tl-ends"><span>Late Sep</span><span>Mid Jan</span></div>
     </div>
-    <button id="nearMe" class="play" aria-label="Near me" title="Near me">◎</button>
+    <button id="nearMe" class="round" aria-label="Show my location" title="My location">◎</button>
   </div>
 </footer>
 <script src="vendor/maplibre-gl.js"></script>

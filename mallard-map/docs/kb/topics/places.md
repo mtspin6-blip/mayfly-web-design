@@ -12,3 +12,4 @@ check FWP / USFWS maps. Source list: `PLACES` in `scripts/build_app.py`.
   Headwaters, Lake Helena, Ennis Lake, Clark Canyon Reservoir, Missouri River at Great Falls.
 - Fixed 2026-11-28: the old list called the #1 statewide cell "Swan River NWR (15 km)". It is the north shore of
   Flathead Lake (Flathead WPA / North Shore WMA, ~8 mi from Bigfork).
+- Fixed 2026-11-28: Natural Earth labels the Missouri from Three Forks to Canyon Ferry as "Madison"; the build renames it Missouri north of 45.93°N.

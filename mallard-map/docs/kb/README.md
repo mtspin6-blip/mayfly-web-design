@@ -14,7 +14,7 @@ primary check; **approx** = location good to a few km.
 | `topics/season-and-zones.md` | 2026–27 dates, flyway and zone county lists |
 | `topics/places.md` | Public waterfowl areas and duck water used to name hot spots |
 | `topics/mallard-behavior.md` | What moves mallards (cold, freeze-up, food), with evidence type |
-| `topics/hotspots.md` | Auto-generated audit of every hot spot on the map |
+| `topics/spots.md` | Auto: every mallard spot on the map (distinct, no repeats), tier and peak week |
 | `topics/estimated-paths.md` | How the estimated flight paths are made, results, limits |
 | `topics/regional-timing.md` | Auto: when each region holds mallards (early / all / late season) |
 | `topics/weather-triggers-data.md` | Auto: weather on 147 real departure days vs stay days |

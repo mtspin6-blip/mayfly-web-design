@@ -11,10 +11,11 @@ Try it locally: `cd public/duck-map && python3 -m http.server 8000`, then open h
 
 | File | What it is | Evidence |
 |---|---|---|
+| `data/corridors_season.geojson` | Estimated flight paths with a 52-week strength array `w` | MODELED (REAL headings) |
 | `data/tracks.geojson` | Blue-winged teal tracks, one line per bird per week (`s`=1 in duck season, `wk`=eBird week) | REAL |
 | `data/birds.json` | One summary per teal (tag site, dates, km, states visited, fixes in MT) | REAL |
 | `data/stops.geojson` | Teal stays ≥ 3 days within 5 km | DERIVED |
-| `data/hotspots.json` | Top mallard cells: 10 statewide, 5 per region, with peak week and nearest refuge | MODELED |
+| `data/spots.json` | Distinct mallard spots with weekly values (ranked per week in the app) | MODELED |
 | `data/ebird.bin` + `ebird.json` | eBird S&T mallard weekly abundance, 52 weeks × 162 × 60 cells, 1 byte each (log scale) | MODELED |
 | `data/timing.json` | Weekly mallards per region + season type (early / all / late) | MODELED |
 | `data/weather.json` | Weather on real departure days vs stay days (scripts/analyze_weather.py) | REAL |

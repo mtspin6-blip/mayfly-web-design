@@ -26,8 +26,10 @@ Must work well on a **phone** first, and also on a laptop.
    or requested from the data owner. Never scrape around a Cloudflare challenge.
 8. Season window comes from FWP regulations, verified each year (2026–27: Sep 26 – Jan 19 covers youth days and all zones).
 9. Secrets (eBird key, Movebank login) live in `.env`, never in code or commits.
-10. **Lines first.** The main view is real flight-path lines + time-spent stops. Heat maps are the knowledge underneath:
-    off by default, shown on demand.
+10. **Purpose first (Mitch, 2026-11-28):** the map answers "where are the mallards this week, and how do they move?".
+    Default view = mallard heat map + one set of season flight paths whose width follows the selected week + top-10
+    spots for that week (distinct, no repeated names). Keep the UI simple: no extra layers, species pickers or jargon.
+    Paths are MODELED but steered by REAL headings; say so in plain words.
 11. **Satellite base map (with place names) by default** (Mitch, 2026-11-28; wetlands overlay on so marshes show; Topo and Plain are options). Every panel closes with a visible ✕; legend starts closed on phones.
 12. **No emails to researchers.** Use public data and browser downloads only (Claude in Chrome is OK for clicks).
 13. **Work autonomously.** Run the gather → learn → model → show loop in SPEC §5; keep `docs/kb/` and `data/catalog.csv`

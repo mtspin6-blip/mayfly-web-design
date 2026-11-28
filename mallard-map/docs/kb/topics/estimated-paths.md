@@ -1,20 +1,22 @@
-# Estimated mallard flight paths (MODELED) — updated 2026-11-28
+# Estimated mallard flight paths (MODELED, steered by REAL data) — updated 2026-11-28
+
+What the map shows: one set of season paths. Each path's width follows the selected week (how many birds the model
+moves along it that week), so paths swell during migration pulses and fade when birds sit still.
 
 Method (`scripts/build_app.py: corridors`):
-1. **Areas (hubs):** each region's strongest eBird cell, then the strongest remaining cells (≥ 45 km apart), 20 in all.
-   Every Montana cell joins its nearest hub. Hubs are named by nearby water/public area and town.
-2. **Each week to the next** (2 weeks before the season through Jan 19): hubs that lose birds send them to hubs that
-   gain, or out of state; gains without a source come in across the north border. Solved as a min-cost flow (scipy).
-3. **Cost** = distance × (up to 3× for flying against 158°, the REAL mallard fall heading, S2) × (2.5× for crossing
-   the Continental Divide, by county). Border points: AB/BC and SK entries; exits to Idaho (west, Lolo Pass, Lost
-   Trail Pass), Wyoming (south), SD and ND (east).
-4. **Shown:** a path if it is ≥ 2% of the week's movement, or ≥ 25% of a small area's change (so valleys like the
-   Bitterroot appear, thin). Season view sums all weeks.
+1. **Areas:** 20 hubs = each region's strongest eBird cell, then the strongest remaining (≥ 45 km apart). Every Montana
+   cell joins its nearest hub. Weekly hub totals are smoothed with a 3-week running mean (eBird weeks wobble).
+2. **Who moves where:** each week, hubs that lose birds send them to hubs that gain, or out of state; gains with no
+   source come in across the north border (AB/BC, SK). Solved as a minimum-cost flow (scipy linprog).
+3. **Cost = distance × direction × Divide:**
+   - Direction uses the **REAL compass spread of 147 GPS mallard migrations** (USGS ND/SD: SE 72, S 62, all other
+     sectors ≤ 6). East of the Divide that spread is used as is; west of the Divide the same spread is turned to point
+     SW, because band recoveries show Pacific-route prairie mallards winter in WA/OR (S15, S16).
+   - Crossing the Continental Divide (by county) costs 2.5×.
+4. **Check against real data:** model exits = south (WY) 43%, east/southeast (Dakotas) 31%, west/southwest (ID) 26%.
+   Real fall headings near Montana: mallards SE/S (USGS), blue-winged teal mean 136° (SE; 64 legs, 24 birds, our
+   analysis of S3). The model's out-of-state flow is mostly S/SE, consistent with both.
 
-Results (shares of estimated season movement): Flathead north shore → Idaho (west) ~10%; AB/BC → Flathead ~8%;
-Saskatchewan → Fort Peck dredge cuts ~7%; Fort Peck → North Dakota ~6% + ~4%; Alberta → Fresno/Havre ~4%; Bitterroot:
-in from the northwest, out over Lost Trail Pass (< 1%).
-
-Limits: sees only **net** change (real traffic is higher); eBird is relative abundance; Montana-only raster, so the
-out-of-state ends are fixed border points; the Divide line is by county; **not validated** (no Montana mallard tracks).
-First check: NABBP band recoveries (data-gaps #1).
+Limits: eBird sees only net change (real traffic is higher); ducks migrate at night on broad fronts, so a path means
+"birds move from this area toward that one", not a literal line; no Montana mallard tracks exist to validate it. First
+real check: NABBP band recoveries.

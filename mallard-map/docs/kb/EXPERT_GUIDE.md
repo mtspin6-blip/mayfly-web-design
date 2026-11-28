@@ -16,6 +16,16 @@ estimate · **REG** regulation · **INF** our inference from the evidence (reaso
   lean on northern migrants and weather.
 - **Mallards are the main bird:** 41–65% of Montana's duck harvest each year (REAL, S17), with teal, wigeon and gadwall growing.
 
+## 1b. Why mallards move (REAL, published; S25, S26, S14, S22)
+- **Day length prepares, weather triggers.** Shortening days prime birds physiologically; weather events start the
+  actual flights (DU). In tracked ND/SD juveniles, photoperiod affected whether any move started; minimum temperature
+  drove the first migration; snow drove later ones (+80% per cm) (S14).
+- **Mallards are hardy late migrants.** A mallard in good condition can go about a week without food and ride out short
+  cold snaps; adult males winter in North Dakota on high fat reserves, not body size (S25). They leave when **ice and snow
+  cut off food and open water**, more than from cold itself. In Nebraska, energy needs and competition for scarce food
+  limited how far north mallards wintered; in cold spells they moved to warmer roosts and fed harder in fields (S26, S22).
+- **Divers stay later** than mallards because their deep-water food freezes last (DU).
+
 ## 2. Two flyways, two playbooks (REG + MODELED)
 | | Pacific Flyway (west of Hill–Chouteau–Cascade–Meagher–Park line, incl. Great Falls) | Central Flyway (east) |
 |---|---|---|
