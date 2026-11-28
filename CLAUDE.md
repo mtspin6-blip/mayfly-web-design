@@ -16,6 +16,8 @@ Mitchell is learning web development: explain in plain English.
 - Prices come from `blog-engine/config.json` (`offer`). Source of truth for pricing is `../business/Mayfly_Web_Design_Pricing_Plan.md`.
 - `llms.txt`, `rss.xml`, OG images (`/og/<slug>.png`), topic hubs and IndexNow key file are generated at build. Don't hand-edit or add static copies in `public/`.
 
+- `public/duck-map/` is Mitch's personal duck map app (noindex via `public/_headers` and meta; skipped by `validate`). Its data is built from `mallard-map/` (`python mallard-map/scripts/build_app.py`); see `mallard-map/CLAUDE.md`.
+
 ## Blog engine (`blog-engine/`), see `docs/BLOG-ENGINE.md` and `docs/SETUP.md`
 Automated weekly pipeline with a ready queue (`blog-engine/queue/`): the writer fills it (brief, draft, humanize, editor repair, fact-check, gates, targeted fix passes); the publisher (no model calls) publishes the oldest queued post; then index and alert. Weekly health check with a circuit breaker; monthly optimization and report. Runs in GitHub Actions (`.github/workflows/blog-*.yml`).
 

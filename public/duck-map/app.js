@@ -4,7 +4,7 @@
   'use strict';
   const $ = (s) => document.querySelector(s);
   const isPhone = () => window.matchMedia('(max-width: 899px)').matches;
-  const C = { teal: '#0e8a8a', tealFaint: '#5aa9a9', week: '#e8590c', sel: '#111', stop: '#d98c1a', hot: '#7b2cbf' };
+  const C = { corr: '#6a3fb5', corrWeek: '#e8590c', teal: '#0e8a8a', tealFaint: '#5aa9a9', week: '#e8590c', sel: '#111', stop: '#d98c1a', hot: '#7b2cbf' };
   const fmtDate = (iso) => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const badge = (t) => `<span class="badge b-${t}">${t}</span>`;
@@ -17,17 +17,20 @@
     plain: { tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'],
       attribution: 'Base: Esri, HERE, Garmin' },
   };
+  const PLACES = 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}';
   const NWI = 'https://fwspublicservices.wim.usgs.gov/wetlandsmapservice/services/Wetlands/MapServer/WMSServer?service=WMS&request=GetMap&layers=0&styles=&format=image/png&transparent=true&version=1.1.1&width=256&height=256&srs=EPSG:3857&bbox={bbox-epsg-3857}';
 
   // Layer registry: id -> {label, evidence, species, on, maplayers, note}
   const LAYERS = [
-    { group: 'Flight paths', id: 'tracks', label: 'Blue-winged teal tracks', ev: 'REAL', sp: 'bwte', on: true,
+    { group: 'Flight paths', id: 'corr', label: 'Estimated mallard flight paths', ev: 'MODELED', sp: 'mall', on: true,
+      note: 'Where mallards likely move week to week, from eBird changes + real mallard heading. Not observed flights.', ml: ['corr-season', 'corr-week', 'corr-arrows', 'corr-warrows'] },
+    { group: 'Flight paths', id: 'tracks', label: 'Blue-winged teal tracks', ev: 'REAL', sp: 'bwte', on: false,
       note: 'Argos satellite fixes, 42 birds 2013–16. Bold = duck season.', ml: ['trk-base', 'trk-arrows', 'trk-week', 'trk-sel'] },
     { group: 'Flight paths', id: 'mallTracks', label: 'Mallard tracks', ev: 'REAL', sp: 'mall', on: false, empty: true,
       note: 'No public mallard GPS crosses Montana yet.', ml: [] },
     { group: 'Flight paths', id: 'bands', label: 'Mallard band → recovery lines', ev: 'REAL', sp: 'mall', on: false, empty: true,
       note: 'Waiting on the NABBP download (needs a browser click).', ml: [] },
-    { group: 'Time spent', id: 'stops', label: 'Teal stops (3+ days)', ev: 'DERIVED', sp: 'bwte', on: true,
+    { group: 'Time spent', id: 'stops', label: 'Teal stops (3+ days)', ev: 'DERIVED', sp: 'bwte', on: false,
       note: 'Circle size = days within 5 km. Approximate (Argos error).', ml: ['stops'] },
     { group: 'Hot spots', id: 'hot', label: 'Mallard hot spots', ev: 'MODELED', sp: 'mall', on: true,
       note: 'Top eBird cells for the season, per region. Not time spent.', ml: [] },
@@ -35,6 +38,7 @@
       note: 'eBird Status & Trends, ~9 km cells, Montana only.', ml: ['heat'] },
     { group: 'Habitat', id: 'nwi', label: 'Wetlands (NWI)', ev: 'REF', sp: 'any', on: false,
       note: 'USFWS National Wetlands Inventory. Shows at closer zoom.', ml: ['nwi'] },
+    { group: 'Reference', id: 'towns', label: 'Extra town labels', ev: 'REF', sp: 'any', on: false, note: 'Topo and Satellite already show town names; this adds labels on the Plain map.', ml: [] },
     { group: 'Reference', id: 'refuges', label: 'Refuges & WMAs', ev: 'REF', sp: 'any', on: true, note: 'Approximate center points.', ml: ['refuges'] },
     { group: 'Reference', id: 'water', label: 'Major rivers & lakes', ev: 'REF', sp: 'any', on: false, note: 'Natural Earth.', ml: ['rivers', 'lakes'] },
   ];
@@ -46,9 +50,10 @@
   // ------------------------------------------------------------------ load
   const j = (p) => fetch(p).then((r) => { if (!r.ok) throw new Error(p); return r.json(); });
   Promise.all([j('data/reference.json'), j('data/tracks.geojson'), j('data/stops.geojson'), j('data/birds.json'),
-    j('data/hotspots.json'), j('data/ebird.json'), j('data/usgs.json'), j('data/summary.json')])
-    .then(([ref, tracks, stops, birds, hot, eb, usgs, summary]) => {
-      Object.assign(D, { ref, tracks, stops, hot, eb, usgs, summary, birds: Object.fromEntries(birds.map((b) => [b.id, b])) });
+    j('data/hotspots.json'), j('data/ebird.json'), j('data/usgs.json'), j('data/summary.json'),
+    j('data/corridors_season.geojson'), j('data/corridors_week.geojson')])
+    .then(([ref, tracks, stops, birds, hot, eb, usgs, summary, corrS, corrW]) => {
+      Object.assign(D, { ref, tracks, stops, hot, eb, usgs, summary, corrS, corrW, birds: Object.fromEntries(birds.map((b) => [b.id, b])) });
       init();
     }).catch((e) => { document.body.insertAdjacentHTML('beforeend', `<p style="position:fixed;top:80px;left:16px;z-index:9;background:#fff;padding:8px">Could not load map data (${esc(e.message)}).</p>`); });
 
@@ -91,10 +96,10 @@
   }
   function fitPad() { return isPhone() ? { top: 80, bottom: 150, left: 16, right: 16 } : { top: 80, bottom: 150, left: 40, right: 40 }; }
 
-  function arrowImage() {
+  function arrowImage(fill, stroke) {
     const s = 24, c = document.createElement('canvas'); c.width = c.height = s;
     const x = c.getContext('2d');
-    x.fillStyle = '#ffffff'; x.strokeStyle = '#0b5d5d'; x.lineWidth = 1.6;
+    x.fillStyle = fill; x.strokeStyle = stroke; x.lineWidth = 1.6;
     x.beginPath(); x.moveTo(5, 6); x.lineTo(19, 12); x.lineTo(5, 18); x.lineTo(8.5, 12); x.closePath(); x.fill(); x.stroke();
     return x.getImageData(0, 0, s, s);
   }
@@ -105,6 +110,8 @@
       map.addLayer({ id: 'base-' + k, type: 'raster', source: 'base-' + k, layout: { visibility: k === 'topo' ? 'visible' : 'none' },
         paint: { 'raster-opacity': k === 'sat' ? 0.9 : 0.85, 'raster-saturation': k === 'topo' ? -0.35 : 0 } });
     }
+    map.addSource('places', { type: 'raster', tiles: [PLACES], tileSize: 256, maxzoom: 18 });
+    map.addLayer({ id: 'places', type: 'raster', source: 'places', layout: { visibility: 'none' } });
     map.addSource('nwi', { type: 'raster', tiles: [NWI], tileSize: 256, minzoom: 8, attribution: 'USFWS NWI' });
     map.addLayer({ id: 'nwi', type: 'raster', source: 'nwi', minzoom: 8, paint: { 'raster-opacity': 0.55 } });
 
@@ -132,8 +139,26 @@
       'circle-color': C.stop, 'circle-opacity': ['case', ['==', ['get', 's'], 1], 0.55, 0.22],
       'circle-stroke-color': '#7a4a00', 'circle-stroke-width': ['case', ['==', ['get', 's'], 1], 1.2, 0.5] } });
 
+    // MODELED estimated mallard flight paths
+    map.addImage('arrow', arrowImage('#ffffff', '#0b5d5d'), { pixelRatio: 2 });
+    map.addImage('arrowP', arrowImage('#ffffff', C.corr), { pixelRatio: 2 });
+    map.addImage('arrowO', arrowImage('#e8590c', '#ffffff'), { pixelRatio: 2 });
+    map.addSource('corrS', { type: 'geojson', data: D.corrS });
+    map.addSource('corrW', { type: 'geojson', data: D.corrW });
+    map.addLayer({ id: 'corr-season', type: 'line', source: 'corrS', layout: { 'line-cap': 'round' }, paint: {
+      'line-color': C.corr, 'line-opacity': 0.32,
+      'line-width': ['interpolate', ['linear'], ['zoom'], 4, ['+', 2, ['*', 12, ['get', 'rel']]], 8, ['+', 4, ['*', 26, ['get', 'rel']]]] } });
+    map.addLayer({ id: 'corr-arrows', type: 'symbol', source: 'corrS', layout: {
+      'symbol-placement': 'line', 'symbol-spacing': 70, 'icon-image': 'arrowP', 'icon-size': 1.1,
+      'icon-allow-overlap': true, 'icon-ignore-placement': true } });
+    map.addLayer({ id: 'corr-week', type: 'line', source: 'corrW', layout: { 'line-cap': 'round' }, paint: {
+      'line-color': C.corrWeek, 'line-opacity': 0.8, 'line-dasharray': [2, 1.2],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 4, ['+', 1.5, ['*', 7, ['get', 'rel']]], 8, ['+', 3, ['*', 14, ['get', 'rel']]]] } });
+    map.addLayer({ id: 'corr-warrows', type: 'symbol', source: 'corrW', layout: {
+      'symbol-placement': 'line', 'symbol-spacing': 60, 'icon-image': 'arrowO', 'icon-size': 1.2,
+      'icon-allow-overlap': true, 'icon-ignore-placement': true } });
+
     // REAL tracks
-    map.addImage('arrow', arrowImage(), { pixelRatio: 2 });
     map.addSource('tracks', { type: 'geojson', data: D.tracks });
     map.addLayer({ id: 'trk-base', type: 'line', source: 'tracks', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: {
       'line-color': ['case', ['==', ['get', 's'], 1], C.teal, C.tealFaint],
@@ -148,14 +173,16 @@
       paint: { 'line-color': C.sel, 'line-width': 2.5, 'line-opacity': 0.9, 'line-dasharray': [1, 0] } });
 
     // taps
-    const tapLayers = ['trk-week', 'trk-base', 'stops', 'refuges'];
+    const tapLayers = ['trk-week', 'trk-base', 'stops', 'refuges', 'corr-week', 'corr-season'];
     map.on('click', (ev) => {
       const box = 10;
       const f = map.queryRenderedFeatures([[ev.point.x - box, ev.point.y - box], [ev.point.x + box, ev.point.y + box]],
         { layers: tapLayers.filter((l) => map.getLayer(l) && map.getLayoutProperty(l, 'visibility') !== 'none') });
       closePanels(['layers', 'info', 'legend']);
       if (f.length) {
-        const top = f.find((x) => x.layer.id === 'stops') || f.find((x) => x.layer.id.startsWith('trk')) || f[0];
+        const top = f.find((x) => x.layer.id === 'stops') || f.find((x) => x.layer.id.startsWith('trk')) ||
+          f.find((x) => x.layer.id === 'corr-week') || f[0];
+        if (top.layer.id.startsWith('corr')) return showCorr(top.properties, top.layer.id === 'corr-week');
         if (top.layer.id === 'stops') return showStop(top.properties);
         if (top.layer.id === 'refuges') return showRefuge(top.properties, top.geometry.coordinates);
         return showTrack(top.properties);
@@ -214,13 +241,15 @@
   function setVis(id, v) { if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', v ? 'visible' : 'none'); }
   function applyAll() {
     for (const l of LAYERS) for (const m of l.ml) setVis(m, layerOn(l.id));
-    applyWeek(); drawHotspots(); renderLegend(); renderLayerList(); renderBanner();
+    applyWeek(); drawHotspots(); drawTowns(); renderLegend(); renderLayerList(); renderBanner();
   }
   function applyWeek() {
     const wk = st.week, nm = weekName(wk);
     const moving = layerOn('tracks') ? new Set(D.tracks.features.filter((f) => f.properties.wk === wk).map((f) => f.properties.b)).size : null;
     $('#weekLabel').textContent = `Week of ${fmtDate(nm)}` + (inSeason(nm) ? ' · in season' : ' · off season') +
       (moving === null ? '' : ` · ${moving} teal moving`);
+    map.setFilter('corr-week', ['==', ['get', 'wk'], wk]); map.setFilter('corr-warrows', ['==', ['get', 'wk'], wk]);
+    setVis('corr-season', layerOn('corr') && !st.onlyWeek); setVis('corr-arrows', layerOn('corr') && !st.onlyWeek);
     map.setFilter('trk-week', ['==', ['get', 'wk'], wk]);
     map.setFilter('trk-base', st.onlyWeek ? ['==', ['get', 'wk'], wk] : null);
     map.setFilter('trk-arrows', st.onlyWeek ? ['all', ['==', ['get', 'wk'], wk]] : ['==', ['get', 's'], 1]);
@@ -232,6 +261,15 @@
   }
   function inSeason(nm) { const md = nm.slice(5), [a, b] = D.ref.season; return md >= a || md <= b; }
 
+  let townMarkers = [];
+  function drawTowns() {
+    townMarkers.forEach((m) => m.remove()); townMarkers = [];
+    if (!layerOn('towns')) return;
+    for (const f of D.ref.towns.features) {
+      const el = document.createElement('div'); el.className = 'town'; el.textContent = f.properties.name;
+      townMarkers.push(new maplibregl.Marker({ element: el, anchor: 'left', offset: [-4, 0] }).setLngLat(f.geometry.coordinates).addTo(map));
+    }
+  }
   function drawHotspots() {
     hotMarkers.forEach((m) => m.remove()); hotMarkers = [];
     if (!layerOn('hot')) return;
@@ -265,6 +303,18 @@
       const bb = fs.reduce((a, c) => [Math.min(a[0], c[0]), Math.min(a[1], c[1]), Math.max(a[2], c[0]), Math.max(a[3], c[1])], [180, 90, -180, -90]);
       map.fitBounds([[bb[0], bb[1]], [bb[2], bb[3]]], { padding: cardPad() });
     };
+  }
+  function showCorr(p, week) {
+    const kind = p.kind === 'entry' ? 'Arriving in Montana' : p.kind === 'exit' ? 'Leaving Montana' : 'Moving within Montana';
+    openCard(`<h2>Estimated mallard flight path ${badge('MODELED')}</h2>
+      <p class="note">An estimate of where mallards likely move. Not an observed flight. No real mallard tracks cross Montana yet.</p>
+      <div class="kv"><b>From</b><span>${esc(p.from)}</span><b>To</b><span>${esc(p.to)}</span><b>Type</b><span>${kind}</span>
+      <b>Distance</b><span>${Math.round(p.km * 0.621)} mi straight line</span>
+      <b>Share</b><span>${Math.round(p.share * 100)}% of estimated movement ${week ? 'during the week of ' + fmtDate(weekName(st.week)) : 'over the whole season'}</span></div>
+      <p class="note"><b>How it's estimated:</b> eBird shows how many mallards are in each area each week. When one area drops and another rises,
+      we route birds along the shortest path, preferring the south-southeast heading real GPS-tracked mallards flew in the Dakotas (USGS).
+      Birds that appear with no nearby source come in from Canada; birds that vanish leave the state. It only sees net change, so real traffic is higher.
+      Confidence: low to medium. It can't be checked against real Montana mallard tracks yet.</p>`);
   }
   function showStop(p) {
     selectBird(p.b);
@@ -339,6 +389,8 @@
     document.querySelectorAll('#baseSeg button').forEach((b) => b.addEventListener('click', () => {
       document.querySelectorAll('#baseSeg button').forEach((x) => x.classList.toggle('on', x === b));
       Object.keys(BASES).forEach((k) => setVis('base-' + k, k === b.dataset.base));
+      setVis('places', b.dataset.base === 'sat');
+      LAYERS.find((l) => l.id === 'towns').on = b.dataset.base === 'plain'; applyAll();
     }));
     const chips = $('#chips');
     for (const r of D.ref.regions) {
@@ -385,6 +437,8 @@
   }
   function renderLegend() {
     const rows = [];
+    if (layerOn('corr')) rows.push(`<div class="lg"><span class="sw" style="background:${C.corr};opacity:.45;height:10px"></span>Estimated mallard path, season (width = birds) ${badge('MODELED')}</div>`,
+      `<div class="lg"><span class="sw" style="border-top:4px dashed ${C.corrWeek};height:0;border-radius:0"></span>Estimated mallard moves, slider week ${badge('MODELED')}</div>`);
     if (layerOn('tracks')) rows.push(`<div class="lg"><span class="sw" style="background:${C.teal}"></span>Teal track, duck season ${badge('REAL')}</div>`,
       `<div class="lg"><span class="sw" style="background:${C.tealFaint};opacity:.5;height:4px"></span>Teal track, rest of year</div>`,
       `<div class="lg"><span class="sw" style="background:${C.week}"></span>Moves during slider week</div>`);
@@ -399,10 +453,10 @@
   function renderBanner() {
     let dismissed = false; try { dismissed = localStorage.getItem('duckmap.banner') === '1'; } catch (e) { /* ignore */ }
     const msg = st.species === 'mall'
-      ? '<b>No public mallard tracks cross Montana yet.</b> Mallard view shows modeled hot spots and abundance only. Band-recovery lines are next (needs a NABBP download).'
+      ? '<b>Mallard view: all modeled.</b> No real mallard tracks cross Montana yet, so the paths are estimates. Band-recovery lines are next.'
       : st.species === 'bwte'
         ? '<b>Blue-winged teal only.</b> 42 birds tagged in SK, AB, TX and LA (2013–16); 3 passed through Montana.'
-        : '<b>Lines are blue-winged teal, not mallards.</b> No public mallard GPS crosses Montana yet. Purple pins are modeled mallard hot spots.';
+        : '<b>Purple lines are estimated mallard flight paths</b> (modeled from eBird, not tracked birds). Orange dashes = this week. Pins = hot spots.';
     $('#bannerText').innerHTML = msg;
     if (dismissed && st.species === 'all') hide('banner'); else show('banner');
   }
@@ -423,11 +477,17 @@
       <p>How ducks move through Montana in duck season: real tracks first, modeled hot spots and abundance underneath.</p>
       <h3>What's on the map</h3>
       <table class="t"><tr><th>Layer</th><th>Type</th><th>Total</th><th>In MT</th></tr>
+      <tr><td>Estimated mallard flight paths</td><td>${badge('MODELED')}</td><td>${D.corrS.features.length} season paths</td><td>all</td></tr>
       <tr><td>Mallard GPS tracks</td><td>${badge('REAL')}</td><td>0</td><td>0</td></tr>
       <tr><td>Mallard band → recovery</td><td>${badge('REAL')}</td><td>0</td><td>0</td></tr>
       <tr><td>Blue-winged teal tracks</td><td>${badge('REAL')}</td><td>${s.tealBirds} birds</td><td>${s.tealMtBirds} birds, ${s.tealMtFixes} fixes</td></tr>
       <tr><td>Teal stops 3+ days</td><td>${badge('DERIVED')}</td><td>${s.tealStops}</td><td>${s.tealStopsMt}</td></tr>
       <tr><td>Mallard hot spots</td><td>${badge('MODELED')}</td><td>${D.hot.length}</td><td>${D.hot.length}</td></tr></table>
+      <h3>How the estimated flight paths work ${badge('MODELED')}</h3>
+      <p class="note">Montana is split into 16 mallard areas around the top eBird cells. For each week of the season, areas that lose birds send them
+      to areas that gain birds, or out of state; gains with no source come in from Canada. Routes take the shortest path, with a preference for the
+      south-southeast heading that real GPS mallards flew (USGS, ND/SD). It is an estimate: it sees only net change and has not been checked
+      against real Montana tracks. Real band recoveries will be the first check.</p>
       <h3>2026–27 Montana duck season</h3>
       <p class="note">Youth days Sep 26–27 · Pacific Flyway Oct 3–Jan 15 · Central Zone 1 Oct 3–Jan 7 · Central Zone 2 Oct 3–11 &amp; Oct 24–Jan 19.
       <b>Verify in the FWP regulations before you hunt.</b> The map uses Sep 26–Jan 19 as the season window.</p>

@@ -34,8 +34,8 @@ Must work well on a **phone** first, and also on a laptop.
     current; ask Mitch only for decisions, sign-ins, or hosting details.
 
 ## Layout
-- `app/`: **v5 map app** (MapLibre, static files). Data built by `python scripts/build_app.py` → `app/data/`. See `app/README.md`.
-  The eBird `.tif` is not in git (license); without it the build keeps the existing `app/data/ebird.*`.
+- `app/`: **v5 map app** (MapLibre, static files). Lives at `../public/duck-map/` (served at mayflywebdesign.com/duck-map/ once merged; branch previews on Cloudflare Pages). Data built by `python scripts/build_app.py` → `../public/duck-map/data/`. See `APP_README.md`.
+  The eBird `.tif` is not in git (license); without it the build keeps the existing eBird files.
 - `scripts/mallard_map.py`: current working pipeline (folium map + report). Run: `python scripts/mallard_map.py --data data --ref reference --out outputs/map.html --report outputs/report.md`
 - `scripts/get_ebird_mallard.py`: eBird S&T downloader (Python, uses `EBIRDST_KEY`).
 - `scripts/get_bbl_mallard.py`: banding data filter (needs files Mitch downloads from ScienceBase).

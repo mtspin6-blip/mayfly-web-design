@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np, pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA, OUT = ROOT / "data", ROOT / "app" / "data"
+DATA, OUT = ROOT / "data", ROOT.parent / "public" / "duck-map" / "data"
 OUT.mkdir(parents=True, exist_ok=True)
 
 SEASON = ("09-26", "01-19")        # 2026-27 MT duck season envelope (youth days -> latest zone close). Verify at fwp.mt.gov.
@@ -275,7 +275,140 @@ def ebird():
     (OUT / "hotspots.json").write_text(json.dumps(spots))
     log(f"Hot spots (MODELED): {len(spots)} cells (top 10 statewide, top 5 per region), ranked by mean eBird relative "
         f"abundance {SEASON[0]} to {SEASON[1]}, >= 20 km apart. This is a proxy for where birds are, not time spent.")
+    corridors(out, tr, names)
     return spots
+
+
+# ----------------------------------------------------------------------------- MODELED: estimated mallard flight paths
+FALL_BEARING = 158.0   # REAL prior: mean heading of first fall migration, USGS ND/SD mallards (usgs.json)
+BORDER = [  # name, lat, lon, kind  (entry = birds arriving from outside MT, exit = leaving MT)
+    ("Alberta (north)", 49.0, -113.5, "entry"), ("Alberta (north)", 49.0, -111.0, "entry"),
+    ("Saskatchewan (north)", 49.0, -108.0, "entry"), ("Saskatchewan (north)", 49.0, -105.0, "entry"),
+    ("Idaho (west)", 47.3, -115.6, "exit"), ("Idaho (southwest)", 44.6, -112.6, "exit"),
+    ("Wyoming (south)", 45.0, -110.0, "exit"), ("Wyoming (south)", 45.0, -107.0, "exit"),
+    ("South Dakota (southeast)", 45.4, -104.05, "exit"), ("North Dakota (east)", 47.3, -104.05, "exit"),
+    ("North Dakota (east)", 48.6, -104.05, "exit")]
+
+
+def bearing(la1, lo1, la2, lo2):
+    la1, lo1, la2, lo2 = map(math.radians, (la1, lo1, la2, lo2))
+    y = math.sin(lo2 - lo1) * math.cos(la2)
+    x = math.cos(la1) * math.sin(la2) - math.sin(la1) * math.cos(la2) * math.cos(lo2 - lo1)
+    return (math.degrees(math.atan2(y, x)) + 360) % 360
+
+
+def arc(a, b, n=18, bend=0.18):
+    """Gentle curve from a to b (lon, lat) so two-way flows don't overlap."""
+    (x0, y0), (x1, y1) = a, b
+    mx, my = (x0 + x1) / 2, (y0 + y1) / 2
+    cx, cy = mx - (y1 - y0) * bend, my + (x1 - x0) * bend
+    pts = []
+    for i in range(n + 1):
+        t = i / n
+        pts.append([round((1 - t) ** 2 * x0 + 2 * (1 - t) * t * cx + t * t * x1, 4),
+                    round((1 - t) ** 2 * y0 + 2 * (1 - t) * t * cy + t * t * y1, 4)])
+    return pts
+
+
+def place_name(lat, lon):
+    cands = [(float(hav(lat, lon, la, lo)), n) for n, la, lo in TOWNS + REFUGES]
+    km, n = min(cands)
+    return n if km < 15 else f"{round(km * 0.621)} mi from {n}"
+
+
+def corridors(out, tr, names):
+    """Week-to-week mallard movement between areas, estimated from eBird abundance change (MODELED).
+
+    1. Hubs: the 16 highest duck-season cells, >= 45 km apart; every Montana cell joins its nearest hub.
+    2. For each pair of weeks, a hub that loses birds sends them to hubs that gain birds, or out of the state;
+       hubs that gain more than others lose get birds from the north border.
+    3. Routing = cheapest total distance, with moves against the real mallard fall heading (SSE, from USGS
+       tracked birds) made up to 3x more expensive. Only net change is visible, so real traffic is higher.
+    """
+    import rasterio
+    from scipy.optimize import linprog
+    import geopandas as gpd
+    with np.errstate(all="ignore"):
+        import warnings; warnings.simplefilter("ignore", RuntimeWarning)
+        season_ix = [i for i, n in enumerate(names) if n[5:] >= SEASON[0] or n[5:] <= SEASON[1]]
+        mean = np.nanmean(out[season_ix], axis=0)
+    rows, cols = np.where(np.isfinite(mean))
+    xs, ys = rasterio.transform.xy(tr, rows, cols)
+    pts = gpd.GeoSeries(gpd.points_from_xy(xs, ys), crs=3857).to_crs(4326)
+    lat, lon = pts.y.values, pts.x.values
+    order = np.argsort(-np.nan_to_num(mean[rows, cols]))
+    hubs = []
+    for k in order:
+        if all(hav(lat[k], lon[k], h[0], h[1]) > 45 for h in hubs):
+            hubs.append((float(lat[k]), float(lon[k])))
+        if len(hubs) == 16:
+            break
+    H = np.array(hubs)
+    member = np.argmin(np.stack([hav(lat, lon, h[0], h[1]) for h in hubs]), axis=0)
+    # sequence of weeks: two weeks before the season through the end of the season
+    first = season_ix.index(min(i for i in season_ix if names[i][5:] >= SEASON[0]))
+    seq = season_ix[first:] + season_ix[:first]
+    seq = [(seq[0] - 2) % 52, (seq[0] - 1) % 52] + seq
+    totals = {w: np.array([np.nansum(out[w][rows[member == h], cols[member == h]]) for h in range(len(hubs))]) for w in seq}
+    hub_names = [place_name(a, b) for a, b in hubs]
+    nodes = [(n, a, b, "hub") for n, (a, b) in zip(hub_names, hubs)] + list(BORDER)
+
+    def cost(i, j):
+        _, la1, lo1, _ = nodes[i]; _, la2, lo2, _ = nodes[j]
+        d = float(hav(la1, lo1, la2, lo2))
+        off = math.cos(math.radians(bearing(la1, lo1, la2, lo2) - FALL_BEARING))
+        return d * (1 + max(0.0, -off) * 2) + 1.0
+
+    feats, season = [], {}
+    nh = len(hubs)
+    for w0, w1 in zip(seq[:-1], seq[1:]):
+        delta = totals[w1] - totals[w0]
+        losers = [i for i in range(nh) if delta[i] < 0]
+        gainers = [j for j in range(nh) if delta[j] > 0]
+        src = losers + [k for k in range(nh, len(nodes)) if nodes[k][3] == "entry"]
+        dst = gainers + [k for k in range(nh, len(nodes)) if nodes[k][3] == "exit"]
+        var = [(i, j) for i in src for j in dst if not (i >= nh and j >= nh)]
+        c = [cost(i, j) for i, j in var]
+        A, b_ = [], []
+        for i in losers:
+            A.append([1.0 if v[0] == i else 0.0 for v in var]); b_.append(-delta[i])
+        for j in gainers:
+            A.append([1.0 if v[1] == j else 0.0 for v in var]); b_.append(delta[j])
+        r = linprog(c, A_eq=A, b_eq=b_, bounds=(0, None), method="highs")
+        if not r.success:
+            log(f"corridor LP failed for week {names[w1]}: {r.message}")
+            continue
+        tot = r.x.sum()
+        for (i, j), f in zip(var, r.x):
+            if f <= 0 or f / tot < 0.04:
+                continue
+            ni, nj = nodes[i], nodes[j]
+            kind = "entry" if i >= nh else "exit" if j >= nh else "move"
+            feats.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": arc((ni[2], ni[1]), (nj[2], nj[1]))},
+                          "properties": {"wk": int(w1), "from": ni[0], "to": nj[0], "kind": kind,
+                                         "share": round(float(f / tot), 3), "f": float(f),
+                                         "km": round(float(hav(ni[1], ni[2], nj[1], nj[2])))}})
+            key = (i, j)
+            season[key] = season.get(key, 0) + float(f)
+    fmax = max(x["properties"]["f"] for x in feats)
+    for x in feats:
+        x["properties"]["rel"] = round(x["properties"].pop("f") / fmax, 3)
+    smax, stot = max(season.values()), sum(season.values())
+    sfeats = []
+    for (i, j), f in sorted(season.items(), key=lambda kv: kv[1]):
+        if f / stot < 0.008:
+            continue
+        ni, nj = nodes[i], nodes[j]
+        sfeats.append({"type": "Feature", "geometry": {"type": "LineString", "coordinates": arc((ni[2], ni[1]), (nj[2], nj[1]))},
+                       "properties": {"from": ni[0], "to": nj[0], "kind": "entry" if i >= nh else "exit" if j >= nh else "move",
+                                      "share": round(f / stot, 3), "rel": round(f / smax, 3),
+                                      "km": round(float(hav(ni[1], ni[2], nj[1], nj[2])))}})
+    (OUT / "corridors_week.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": feats}, separators=(",", ":")))
+    (OUT / "corridors_season.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": sfeats}, separators=(",", ":")))
+    (OUT / "corridor_hubs.json").write_text(json.dumps([{"name": n, "lat": round(a, 4), "lon": round(b, 4)} for n, (a, b) in zip(hub_names, hubs)]))
+    log(f"Estimated mallard flight paths (MODELED): {len(hubs)} areas + {len(BORDER)} border points, {len(seq) - 1} week-to-week "
+        f"steps, {len(feats)} weekly paths, {len(sfeats)} season paths. Method: eBird weekly abundance change routed by "
+        f"least distance with a {FALL_BEARING:.0f} deg (SSE) heading preference from USGS tracked mallards. Not observed flights.")
 
 
 # ----------------------------------------------------------------------------- REAL summary: USGS 2018-2020 mallards

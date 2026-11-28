@@ -47,7 +47,7 @@ function checkNode(node, file) {
 
 for (const file of walk(dist)) {
   const rel = path.relative(dist, file);
-  if (rel === '404.html' || rel.startsWith('services/seo-geo')) continue;
+  if (rel === '404.html' || rel.startsWith('services/seo-geo') || rel.startsWith('duck-map/')) continue; // duck-map: private app, noindex
   const html = fs.readFileSync(file, 'utf8');
 
   const title = (html.match(/<title>([^<]*)<\/title>/) || [])[1];
