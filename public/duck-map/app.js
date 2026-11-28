@@ -38,7 +38,7 @@
       IDX = Math.max(...spots.flatMap((s) => weeks.map((w) => s.w[w])));
       init();
     })
-    .catch((e) => document.body.insertAdjacentHTML('beforeend', `<p style="position:fixed;top:80px;left:16px;z-index:9;background:#fff;padding:8px">Could not load map data (${esc(e.message)}).</p>`));
+    .catch((e) => { $('#loadMsg').textContent = `Could not load map data (${e.message}). Check your connection and reload.`; });
 
   // season order: Sep (week ~38) first, then into January
   function order(w) { return w < 20 ? w + 52 : w; }
@@ -46,6 +46,10 @@
   const index = (v) => Math.max(0, Math.round((Math.log1p(v) / Math.log1p(IDX)) * 100)); // ~10 points = twice the birds
 
   function init() {
+    if (!window.maplibregl) { $('#loadMsg').textContent = 'The map engine did not load. Reload the page.'; return; }
+    if (!maplibregl.supported || (maplibregl.supported && !maplibregl.supported())) { /* v4 has no supported(); WebGL check below */ }
+    const gl = document.createElement('canvas').getContext('webgl2') || document.createElement('canvas').getContext('webgl');
+    if (!gl) { $('#loadMsg').textContent = 'This browser has 3D graphics (WebGL) turned off, which the map needs. Try Safari or Chrome.'; return; }
     const now = new Date(), doy = Math.floor((now - Date.UTC(now.getUTCFullYear(), 0, 1)) / 864e5) + 1;
     const today = Math.max(0, Math.min(51, Math.round((doy - 4) / 7)));
     st.week = weeks.includes(today) ? today : weeks[Math.floor(weeks.length / 2)];
@@ -60,7 +64,8 @@
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
     map.addControl(new maplibregl.ScaleControl({ unit: 'imperial' }), 'bottom-left');
     map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: 'Imagery: Esri, Maxar. Birds: eBird Status & Trends (Cornell Lab), USGS. Wetlands: USFWS NWI.' }), 'bottom-right');
-    map.on('load', () => { addLayers(); buildUI(); update(); });
+    map.on('load', () => { addLayers(); buildUI(); update(); $('#loading').classList.add('hidden'); });
+    map.on('error', (e) => { if (!map.loaded()) $('#loadMsg').textContent = 'Map error: ' + ((e && e.error && e.error.message) || 'unknown'); });
     window.duckMap = map;
   }
   const pad = () => (isPhone() ? { top: 70, bottom: 140, left: 14, right: 14 } : { top: 80, bottom: 150, left: 40, right: 40 });

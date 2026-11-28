@@ -84,3 +84,5 @@ button.pin{cursor:pointer;padding:0}
 .maplibregl-ctrl-top-right{top:calc(env(safe-area-inset-top) + 60px)}
 .maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right{bottom:calc(env(safe-area-inset-bottom) + 118px)}
 .maplibregl-ctrl-attrib{font-size:10px}
+.loading{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:#1f3a2e;color:#fff;text-align:center;padding:24px}
+.loading p{margin:8px 0;opacity:.85}.loading small{opacity:.6}
