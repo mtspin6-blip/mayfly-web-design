@@ -16,6 +16,21 @@ import { goodPost, clone } from './helpers.js';
 import { BLOG_DIR, readJson } from '../lib/paths.js';
 import { STATE_FILES, type BacklogItem } from '../lib/state.js';
 import { mtToDate } from '../lib/schedule.js';
+import { queueDir } from '../lib/queue.js';
+
+// These tests assume an empty ready queue, but the live engine commits real posts to blog-engine/queue/. Set them
+// aside while this file runs and always put them back, so the tests behave the same whatever is queued today.
+const realQueue = queueDir();
+const heldQueue = `${realQueue}.held-by-tests`;
+const restoreQueue = () => {
+  if (!fs.existsSync(heldQueue)) return;
+  fs.rmSync(realQueue, { recursive: true, force: true });
+  fs.renameSync(heldQueue, realQueue);
+};
+restoreQueue(); // a previous run that crashed
+if (fs.existsSync(realQueue)) fs.renameSync(realQueue, heldQueue);
+process.on('exit', restoreQueue);
+test.after(restoreQueue);
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixture = fs.readFileSync(path.join(here, 'fixtures/good-post.md'), 'utf8');
