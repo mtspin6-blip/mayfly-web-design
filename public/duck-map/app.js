@@ -3,6 +3,7 @@
 (() => {
   'use strict';
   const $ = (s) => document.querySelector(s);
+  const V = '20261128c'; // bump on every release so phones never mix old and new files
   const isPhone = () => window.matchMedia('(max-width: 899px)').matches;
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const fmtDate = (iso) => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
@@ -28,9 +29,9 @@
   const D = {};
   let map, weeks = [], pins = [], heatBytes = null, heatCanvas, IDX = 1;
 
-  const j = (p) => fetch(p).then((r) => { if (!r.ok) throw new Error(p); return r.json(); });
+  const j = (p) => fetch(p + '?v=' + V).then((r) => { if (!r.ok) throw new Error(p); return r.json(); });
   Promise.all([j('data/reference.json'), j('data/spots.json'), j('data/ebird.json'), j('data/corridors_season.geojson'),
-    j('data/timing.json'), j('data/weather.json'), fetch('data/ebird.bin').then((r) => r.arrayBuffer())])
+    j('data/timing.json'), j('data/weather.json'), fetch('data/ebird.bin?v=' + V).then((r) => r.arrayBuffer())])
     .then(([ref, spots, eb, paths, timing, wx, bin]) => {
       Object.assign(D, { ref, spots, eb, paths, timing, wx });
       heatBytes = new Uint8Array(bin);
@@ -271,7 +272,7 @@
   let guideDone = false;
   function renderGuide() {
     if (guideDone) return;
-    fetch('guide.html').then((r) => r.text()).then((html) => {
+    fetch('guide.html?v=' + V).then((r) => r.text()).then((html) => {
       $('#guideBody').innerHTML = html; guideDone = true;
       const wt = $('#wxTable');
       if (wt) wt.innerHTML = `<table><tr><th>Weather</th><th>Days birds left</th><th>Days they stayed</th></tr>${D.wx.rules.map((r) => `<tr><td>${esc(r.label)}</td><td><b>${r.departDays}%</b></td><td>${r.otherDays}%</td></tr>`).join('')}</table>`;

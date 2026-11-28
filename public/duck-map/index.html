@@ -6,12 +6,12 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1f3a2e">
 <title>Montana Duck Map</title>
-<link rel="stylesheet" href="vendor/maplibre-gl.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="vendor/maplibre-gl.css?v=20261128c">
+<link rel="stylesheet" href="style.css?v=20261128c">
 </head>
 <body>
 <div id="map" aria-label="Map"></div>
-<div id="loading" class="loading"><div><b>Loading mallard map…</b><p id="loadMsg">Getting this season's data.</p><small>Version 2026-11-28b</small></div></div>
+<div id="loading" class="loading"><div><b>Loading mallard map…</b><p id="loadMsg">Getting this season's data.</p><small>Version 20261128c</small></div></div>
 
 <header class="bar">
   <div class="brand">Montana Mallards</div>
@@ -72,7 +72,7 @@
 <script>
   window.addEventListener('error', function (e) { var m = document.getElementById('loadMsg'); if (m) m.textContent = 'Error: ' + (e.message || 'unknown') + ' (' + (e.filename || '').split('/').pop() + ')'; });
 </script>
-<script src="vendor/maplibre-gl.js"></script>
-<script src="app.js"></script>
+<script src="vendor/maplibre-gl.js?v=20261128c"></script>
+<script src="app.js?v=20261128c"></script>
 </body>
 </html>
