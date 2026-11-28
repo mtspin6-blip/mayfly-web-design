@@ -1,0 +1,5 @@
+source,species,years,area,evidence,license,citation,rows,file
+USGS ASC Argos (Movebank 446107870),Blue-winged teal,2013-2016,SK/AB/TX/LA -> Mexico/Caribbean,REAL,Public domain,"Ramey et al. 2019, doi:10.5066/P9Z9BA9F",33583,data/movebank_other/blueWingedTeal_USGS_ASC_argos.csv
+USGS NPWRC mallard movements,Mallard,2018-2020,ND/SD (summary only),REAL,CC0,"Pearse et al. 2023, doi:10.5066/P9GSUQUU",562,data/usgs/MALL_dist_dir.csv
+USGS NPWRC mallard timing,Mallard,2018-2020,ND/SD (summary only),REAL,CC0,"Pearse et al. 2023, doi:10.5066/P9GSUQUU",6098,data/usgs/MALL_timing.csv
+eBird Status & Trends v2025,Mallard,2025 model,Montana crop,MODELED,"Non-commercial, attribution","Fink et al., eBird S&T v2025, Cornell Lab",52 weeks,data/ebird/mallard_abundance_median_weekly_9km_MT_2025.tif (not in git)

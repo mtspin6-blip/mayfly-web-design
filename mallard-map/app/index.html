@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1f3a2e">
+<title>Montana Duck Map</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="map" aria-label="Map"></div>
+
+<header class="bar">
+  <div class="brand">MT Duck Map <span class="ver">v5</span></div>
+  <select id="species" aria-label="Species">
+    <option value="all">All ducks</option>
+    <option value="mall">Mallard</option>
+    <option value="bwte">Blue-winged teal</option>
+  </select>
+  <button id="btnLayers" class="iconbtn" aria-label="Layers">☰<span>Layers</span></button>
+  <button id="btnInfo" class="iconbtn" aria-label="About and sources">ⓘ<span>Info</span></button>
+</header>
+
+<div id="banner" class="banner" role="status">
+  <p id="bannerText"></p>
+  <button class="x" data-close="banner" aria-label="Close">✕</button>
+</div>
+
+<button id="btnLegend" class="legendbtn">Legend</button>
+<section id="legend" class="panel legend hidden" aria-label="Legend">
+  <button class="x" data-close="legend" aria-label="Close">✕</button>
+  <h3>Legend</h3>
+  <div id="legendBody"></div>
+</section>
+
+<section id="layers" class="panel sheet hidden" aria-label="Layers">
+  <button class="x" data-close="layers" aria-label="Close">✕</button>
+  <h2>Layers</h2>
+  <div id="layerList"></div>
+  <h3>Base map</h3>
+  <div class="seg" id="baseSeg">
+    <button data-base="topo" class="on">Topo</button>
+    <button data-base="sat">Satellite</button>
+    <button data-base="plain">Plain</button>
+  </div>
+</section>
+
+<section id="info" class="panel sheet hidden" aria-label="About">
+  <button class="x" data-close="info" aria-label="Close">✕</button>
+  <div id="infoBody"></div>
+</section>
+
+<section id="card" class="panel card hidden" aria-label="Details">
+  <button class="x" data-close="card" aria-label="Close">✕</button>
+  <div id="cardBody"></div>
+</section>
+
+<footer class="dock">
+  <div class="chips" id="chips"></div>
+  <div class="timeline">
+    <button id="play" class="play" aria-label="Play weeks">▶</button>
+    <div class="tl-mid">
+      <div class="tl-top"><span id="weekLabel">Week</span>
+        <label class="mini"><input type="checkbox" id="onlyWeek"> only this week</label>
+        <label class="mini"><input type="checkbox" id="fullYear"> full year</label></div>
+      <input type="range" id="week" min="0" max="16" value="9" aria-label="Week">
+    </div>
+    <button id="nearMe" class="play" aria-label="Near me" title="Near me">◎</button>
+  </div>
+</footer>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

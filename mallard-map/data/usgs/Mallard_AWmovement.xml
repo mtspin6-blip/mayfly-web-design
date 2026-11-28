@@ -1,0 +1,1178 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>Aaron T. Pearse</origin>
+        <origin>Michael L. Szymanski</origin>
+        <origin>Cynthia E. Anchor</origin>
+        <origin>Rocco M. Murano</origin>
+        <origin>Joshua D. Stafford</origin>
+        <pubdate>20230911</pubdate>
+        <title>Mallard migration and regional movement timing, distance, and direction data, 2018–2020</title>
+        <geoform>tabular digital data</geoform>
+        <pubinfo>
+          <pubplace>Jamestown, North Dakota</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <onlink>https://doi.org/10.5066/P9GSUQUU</onlink>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>The mallard (Anas platyrhynchos) is an abundant and wide-spread duck species that exhibits considerable variation in migratory behavior due to a relatively large body size and behavioral plasticity in habitat use. Understanding migration and other movements of mallards has societal interest in a wildlife management context because mallards are a preferred species of waterfowl by hunters and have the largest annual harvest of all duck species in the United States. We monitored juvenile mallards during autumn-winters 2018-2019 and 2019-2020 to determine factors associated with timing, distance, and direction of regional and migration movements during autumn-winter across the midcontinent of North America.</abstract>
+      <purpose>Describe movement and migration patterns of midcontinent mallards and quantify factors influencing timing, distance, and direction of their relocations during autumn-winter.</purpose>
+    </descript>
+    <timeperd>
+      <timeinfo>
+        <rngdates>
+          <begdate>2018</begdate>
+          <enddate>2020</enddate>
+        </rngdates>
+      </timeinfo>
+      <current>ground condition</current>
+    </timeperd>
+    <status>
+      <progress>Complete</progress>
+      <update>None planned</update>
+    </status>
+    <spdom>
+      <descgeog>Midcontinent of North America</descgeog>
+      <bounding>
+        <westbc>-103.4</westbc>
+        <eastbc>-81.9</eastbc>
+        <northbc>49.2</northbc>
+        <southbc>29.8</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>ISO 19115 Topic Category</themekt>
+        <themekey>biota</themekey>
+        <themekey>environment</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Biocomplexity Thesaurus</themekt>
+        <themekey>Migratory birds</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Thesaurus</themekt>
+        <themekey>plant and animal tagging</themekey>
+        <themekey>birds</themekey>
+        <themekey>migration (organisms)</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Metadata Identifier</themekt>
+        <themekey>USGS:6495a284d34ef77fcb01dcc2</themekey>
+      </theme>
+      <place>
+        <placekt>Common geographic areas</placekt>
+        <placekey>North Dakota</placekey>
+        <placekey>Saskatchewan</placekey>
+        <placekey>Nebraska</placekey>
+        <placekey>Kansas</placekey>
+        <placekey>Oklahoma</placekey>
+        <placekey>Texas</placekey>
+        <placekey>South Dakota</placekey>
+        <placekey>Minnesota</placekey>
+        <placekey>Iowa</placekey>
+        <placekey>Missouri</placekey>
+        <placekey>Arkansas</placekey>
+        <placekey>Louisiana</placekey>
+        <placekey>Mississippi</placekey>
+        <placekey>Tennessee</placekey>
+        <placekey>Alabama</placekey>
+        <placekey>Kentucky</placekey>
+        <placekey>Illinois</placekey>
+        <placekey>Indiana</placekey>
+        <placekey>Ohio</placekey>
+      </place>
+    </keywords>
+    <taxonomy>
+      <keywtax>
+        <taxonkt>USGS Biocomplexity Thesaurus</taxonkt>
+        <taxonkey>Birds</taxonkey>
+      </keywtax>
+      <taxonsys>
+        <classsys>
+          <classcit>
+            <citeinfo>
+              <origin>American Ornithological Society</origin>
+              <pubdate>2017</pubdate>
+              <title>Checklist of North and middle American Birds</title>
+              <geoform>tabular digital data</geoform>
+              <pubinfo>
+                <pubplace>Internet</pubplace>
+                <publish>Retrieved [20170818], from the on-line database</publish>
+              </pubinfo>
+              <onlink>http://checklist.aou.org/</onlink>
+            </citeinfo>
+          </classcit>
+        </classsys>
+        <ider>
+          <cntinfo>
+            <cntperp>
+              <cntper>Cynthia E. Anchor</cntper>
+              <cntorg>South Dakota State University</cntorg>
+            </cntperp>
+            <cntaddr>
+              <addrtype>mailing and physical</addrtype>
+              <address>1390 College Ave.</address>
+              <city>Brookings</city>
+              <state>South Dakota</state>
+              <postal>57007</postal>
+              <country>USA</country>
+            </cntaddr>
+            <cntvoice>1-605-688-5759</cntvoice>
+            <cntemail>cynthia.anchor@sdstate.edu</cntemail>
+          </cntinfo>
+        </ider>
+        <taxonpro>expert advice</taxonpro>
+        <taxoncom>Species were identified in hand as they were captured.</taxoncom>
+      </taxonsys>
+      <taxongen>All individuals were identified to species.</taxongen>
+      <taxoncl>
+        <taxonrn>Kingdom</taxonrn>
+        <taxonrv>Animalia</taxonrv>
+        <taxoncl>
+          <taxonrn>Kingdom</taxonrn>
+          <taxonrv>Animalia</taxonrv>
+          <taxoncl>
+            <taxonrn>Subkingdom</taxonrn>
+            <taxonrv>Bilateria</taxonrv>
+            <taxoncl>
+              <taxonrn>Infrakingdom</taxonrn>
+              <taxonrv>Deuterostomia</taxonrv>
+              <taxoncl>
+                <taxonrn>Phylum</taxonrn>
+                <taxonrv>Chordata</taxonrv>
+                <taxoncl>
+                  <taxonrn>Subphylum</taxonrn>
+                  <taxonrv>Vertebrata</taxonrv>
+                  <taxoncl>
+                    <taxonrn>Infraphylum</taxonrn>
+                    <taxonrv>Gnathostomata</taxonrv>
+                    <taxoncl>
+                      <taxonrn>Superclass</taxonrn>
+                      <taxonrv>Tetrapoda</taxonrv>
+                      <taxoncl>
+                        <taxonrn>Class</taxonrn>
+                        <taxonrv>Aves</taxonrv>
+                        <taxoncl>
+                          <taxonrn>Order</taxonrn>
+                          <taxonrv>Anseriformes</taxonrv>
+                          <taxoncl>
+                            <taxonrn>Family</taxonrn>
+                            <taxonrv>Anatidae</taxonrv>
+                            <taxoncl>
+                              <taxonrn>Subfamily</taxonrn>
+                              <taxonrv>Anatinae</taxonrv>
+                              <taxoncl>
+                                <taxonrn>Genus</taxonrn>
+                                <taxonrv>Anas</taxonrv>
+                                <taxoncl>
+                                  <taxonrn>Species</taxonrn>
+                                  <taxonrv>Anas platyrhynchos</taxonrv>
+                                  <common>Mallard</common>
+                                </taxoncl>
+                              </taxoncl>
+                            </taxoncl>
+                          </taxoncl>
+                        </taxoncl>
+                      </taxoncl>
+                    </taxoncl>
+                  </taxoncl>
+                </taxoncl>
+              </taxoncl>
+            </taxoncl>
+          </taxoncl>
+        </taxoncl>
+      </taxoncl>
+    </taxonomy>
+    <accconst>Authorized distribution is strongly recommended to be direct from the distributor described above or from U.S. Geological Survey ScienceBase Catalog Service (https://www.sciencebase.gov). Data integrity can be verified using authentication information herein. The distributor makes no claims as to the suitability of these data for other purposes than those described herein.</accconst>
+    <useconst>Users should not use these data for critical applications without a full awareness of their limitations. Users should be aware that temporal changes may have occurred since this data set was collected and that some parts of these data may no longer represent actual ground conditions. Users should also be aware that comparison with other data sets for the same area that were generated from other time periods may be inaccurate due to inconsistencies resulting from changes in mapping conventions, data collection, and computer processing methods over time. The distributor shall not be liable for improper or incorrect use of these data, based on the description of appropriate/inappropriate uses described in this metadata document. Acknowledgment of the U.S. Geological Survey Northern Prairie Wildlife Research Center as a data source would be appreciated in products developed from these data, and such acknowledgment as is standard for citation and legal practices for data source is expected by users of this data set. Notification of new data products developed directly from these data would also be appreciated; please notify the listed primary contact or U.S. Geological Survey Northern Prairie Wildlife Center staff.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntperp>
+          <cntper>Aaron T. Pearse</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntpos>Research Wildlife Biologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical address</addrtype>
+          <address>Northern Prairie Wildlife Research Center</address>
+          <address>8711 37th Street SE</address>
+          <city>Jamestown</city>
+          <state>North Dakota</state>
+          <postal>58401</postal>
+          <country>United States</country>
+        </cntaddr>
+        <cntvoice>1-701-253-5509</cntvoice>
+        <cntemail>npwrc_datamanager@usgs.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <datacred>This research was funded by North Dakota Game and Fish and the South Dakota Department of Game, Fish and Parks through the Federal Aid in Wildlife Restoration Fund. Anchor also received financial support through a generous Waterfowl Research Foundation Fellowship from Ducks Unlimited, Canada’s Institute for Wetland and Waterfowl Research. M. Grovijahn, M. McBride, J. McKinney, A. Dinges, R. Herigstad, and members of the North and South Dakota banding crews in 2018 and 2019 assisted with the capture and marking of mallards.</datacred>
+    <crossref>
+      <citeinfo>
+        <origin>Aaron T. Pearse</origin>
+        <origin>Michael L. Szymanski</origin>
+        <origin>Cynthia E. Anchor</origin>
+        <origin>Michael J. Anteau</origin>
+        <origin>Rocco M. Murano</origin>
+        <origin>David A. Brandt</origin>
+        <origin>Joshua D. Stafford</origin>
+        <pubdate>2023</pubdate>
+        <title>Factors influencing autumn-winter movements of midcontinent mallards and consequences for harvest and habitat management</title>
+        <geoform>document</geoform>
+        <serinfo>
+          <sername>Ecology and Evolution</sername>
+          <issue>In review</issue>
+        </serinfo>
+      </citeinfo>
+    </crossref>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>Determination of mallard sex was made during capture using plumage information and is expected to be &gt;99%.
+
+Accuracy of location data used to derive tabular data presented was determined by position dilution of precision information, and is expected have horizontal accuracy of &lt;8 m. 
+
+Accuracy of spatiotemporal environmental data used to derive predictor variables was assessed for outliers – more information on these data can be found at www.movebank.org.</attraccr>
+    </attracc>
+    <logic>For all continuous data values, we inspected minimum and maximum values as a test of permissible or reasonable values (e.g., &gt;0). For categorical values, we checked that all values were of assigned categories only.</logic>
+    <complete>Data set is considered complete for the information presented, as described in the abstract. Users are advised to read the rest of the metadata record carefully for additional details.</complete>
+    <lineage>
+      <method>
+        <methtype>field</methtype>
+        <methdesc>We captured flightless and recently fledged juvenile female and male mallards during 2–30 August 2018, and 16 July–30 August 2019 using multiple methods, including nightlighting, drive trapping, using baited swim-in traps, and rocket-netting. Captured birds were immediately transported to a mobile surgical facility for intracoelomic implantation of a 32 g GPS/GSM transmitter with a percutaneous antenna. All surgeries were performed by licensed wildlife veterinarians, who had experience and training in the implantation procedure. We programmed transmitters to collect 5–8 GPS locations per day while birds were north of 45°N latitude as part of an assessment of post-breeding habitat use (Anchor 2022), and locations every 1–2 days in areas south of 45°N. Our research was approved by the Institutional Animal Care and Use Committee at South Dakota State University (18-048A).</methdesc>
+      </method>
+      <srcinfo>
+        <srccite>
+          <citeinfo>
+            <origin>Somayeh Dodge</origin>
+            <origin>Gil Bohrer</origin>
+            <origin>Rolf Weinzier</origin>
+            <origin>Laura Juliusson</origin>
+            <origin>Sarah C. Davidson</origin>
+            <origin>Roland Kays</origin>
+            <origin>David Douglas</origin>
+            <origin>Sebastian Cruz</origin>
+            <origin>Jiawei Han</origin>
+            <origin>David Brandes</origin>
+            <origin>Martin Wikelski</origin>
+            <pubdate>2013</pubdate>
+            <title>The environmental-data automated track annotation (Env-DATA) system: linking animal tracks with environmental data</title>
+            <geoform>document</geoform>
+            <serinfo>
+              <sername>Movement Ecology</sername>
+              <issue>1</issue>
+            </serinfo>
+          </citeinfo>
+        </srccite>
+        <typesrc>document</typesrc>
+        <srctime>
+          <timeinfo>
+            <rngdates>
+              <begdate>2018</begdate>
+              <enddate>2020</enddate>
+            </rngdates>
+          </timeinfo>
+          <srccurr>ground condition</srccurr>
+        </srctime>
+        <srccitea>Source input 1</srccitea>
+        <srccontr>Source information used for Environmental Data (from MoveBank.org).</srccontr>
+      </srcinfo>
+      <procstep>
+        <procdesc>We censored data collected within 14 days of transmitter deployment for all birds and within 10 days of the last bait dispersal at a site to minimize capture, surgical, or baiting effects. We also limited our analyses to data collected between 20 September and 28 February each autumn-winter. We removed locations from analyses if internal body temperatures were &lt;39° or &gt;46° C, which were indicative of mortality. We also removed locations with an instantaneous velocity of &gt;1.4 m/s, as these locations were likely when birds were in flight.
+
+We used a k-means cluster analysis to identify groupings in daily movement displacement distances that minimized variance within groups. Using the elbow method, we found that 3 clusters provided an adequate categorization of movement distances, and we interpreted the increasing magnitude of movement distances as representing generally local, regional relocation, and migration movements. We used the minimum and maximum values for each categorized cluster to identify threshold distances that separated clusters of movement distances. We used these threshold distances to identify groupings of days where birds were at local use areas, with longer regional or migration movements separating areas of local use. We calculated a geographic centroid for each local use area and determined timing of arrival and departure and days present at local use areas. Using Euclidean geometry, we calculated the distance and movement bearing between local use areas. Finally, we identified and categorized first migration moves from all subsequent migration moves for each bird. For movement analyses, we included all migration movements and shorter regional movements occurring after the first migration move for each marked bird. Predictor variables were derived primarily from services provided by MoveBank automated systems (Source 1).</procdesc>
+        <procdate>2021</procdate>
+      </procstep>
+    </lineage>
+  </dataqual>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>MALL_timing.csv</enttypl>
+        <enttypd>Digital data file containing information on timing of migration and regional movements of mallards, including predictor variables used in analysis.</enttypd>
+        <enttypds>Originator defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>Device_id</attrlabl>
+        <attrdef>Unique identifying variable for each marked mallard.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <udom>Unique identifier</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Sex</attrlabl>
+        <attrdef>Signifies the sex (female or male) of the marked bird.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>F</edomv>
+            <edomvd>Female.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>M</edomv>
+            <edomvd>Male.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Capture_yr</attrlabl>
+        <attrdef>Signifies calendar year of capture.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>2018</edomv>
+            <edomvd>Year 2018.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>2019</edomv>
+            <edomvd>Year 2019.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Area_id</attrlabl>
+        <attrdef>Unique identifying variable for each local use area used by mallards.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <udom>Unique identifier</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Move_type</attrlabl>
+        <attrdef>Signifies whether the movement was a regional or migration movement, identified by distance.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>M</edomv>
+            <edomvd>Migration movement (&gt;310 km)</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>R</edomv>
+            <edomvd>Regional movement (25-310 km).</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>First_M</attrlabl>
+        <attrdef>Signifies if the migration event was the first one of the autumn-winter season.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>1</edomv>
+            <edomvd>Signifies a first migration event.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>0</edomv>
+            <edomvd>Signifies a subsequent migration event if Move_type = M. For Move_type = R, ignore.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Exposure</attrlabl>
+        <attrdef>Number of days of the exposure period.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>1</rdommin>
+            <rdommax>12</rdommax>
+            <attrunit>day</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Move</attrlabl>
+        <attrdef>Signifies if a regional or migration movement occurred during the exposure period.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>1</edomv>
+            <edomvd>No movement. The bird remained stationary at the location.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>0</edomv>
+            <edomvd>Identified that a regional or migration movement occurred during the expsoure period.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>WSI3</attrlabl>
+        <attrdef>3-day cumulative weather severity index for the location during the exposure period (see process step for calculation and source citation).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-24</rdommin>
+            <rdommax>40</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>WSI5</attrlabl>
+        <attrdef>5-day cumulative weather severity index for the location during the exposure period (see process step for calculation and source citation).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-24</rdommin>
+            <rdommax>44</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>WSI7</attrlabl>
+        <attrdef>7-day cumulative weather severity index for the location during the exposure period (see process step for calculation and source citation).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-24</rdommin>
+            <rdommax>48</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Weekend</attrlabl>
+        <attrdef>Proportion of days in the exposure period that were weekend days (Saturday and Sunday).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>1</rdommax>
+            <attrunit>proportion</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Photoperiod</attrlabl>
+        <attrdef>Date- and location-specific number of hours of daylight.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>8.8</rdommin>
+            <rdommax>12.4</rdommax>
+            <attrunit>hour</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_mean</attrlabl>
+        <attrdef>Average daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-26.1</rdommin>
+            <rdommax>24.3</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_min</attrlabl>
+        <attrdef>Minimum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-31.5</rdommin>
+            <rdommax>17.7</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_max</attrlabl>
+        <attrdef>Maximum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-21.6</rdommin>
+            <rdommax>34.8</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Precipitation</attrlabl>
+        <attrdef>daily total precipitation accumulated at surface (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>7.5</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Cloud_cover</attrlabl>
+        <attrdef>Daily average percentage cloud cover from 3-hour maximum of high- (&gt;20,000 ft AGL), mid- (6,500–20,000 ft AGL), and low-level (&lt;6,500 ft AGL) cloud layers.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>100</rdommax>
+            <attrunit>percentage</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Wind_index</attrlabl>
+        <attrdef>Index of wind-aided movement (derivation details in processing step).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-0.887</rdommin>
+            <rdommax>0.964</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_mean3D</attrlabl>
+        <attrdef>3-day average of mean daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-20.8</rdommin>
+            <rdommax>22.7</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_mean5D</attrlabl>
+        <attrdef>5-day average of mean daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-18.4</rdommin>
+            <rdommax>23.7</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_mean7D</attrlabl>
+        <attrdef>7-day average of mean daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-17.9</rdommin>
+            <rdommax>23.3</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_min3D</attrlabl>
+        <attrdef>3-day average of minimum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-27.7</rdommin>
+            <rdommax>16.8</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_min5D</attrlabl>
+        <attrdef>5-day average of minimum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-24.4</rdommin>
+            <rdommax>16.4</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_min7D</attrlabl>
+        <attrdef>7-day average of minimum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-23.2</rdommin>
+            <rdommax>15.4</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_max3D</attrlabl>
+        <attrdef>3-day average of maximum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-14.9</rdommin>
+            <rdommax>32.5</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_max5D</attrlabl>
+        <attrdef>5-day average of maximum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-13.0</rdommin>
+            <rdommax>33.4</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_max7D</attrlabl>
+        <attrdef>7-day average of maximum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-12.5</rdommin>
+            <rdommax>33.2</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Snow_depth</attrlabl>
+        <attrdef>Daily maximum depth of snow cover (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>23.75</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Snow_depth3D</attrlabl>
+        <attrdef>3-day average daily maximum depth of snow cover (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>21.47</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Snow_depth5D</attrlabl>
+        <attrdef>5-day average daily maximum depth of snow cover (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>21.34</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Snow_depth7D</attrlabl>
+        <attrdef>7-day average daily maximum depth of snow cover (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>20.26</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <detailed>
+      <enttyp>
+        <enttypl>MALL_dist_dir.csv</enttypl>
+        <enttypd>Digital data file containing information on distance and direction of migration and regional movements of mallards, including predictor variables used in analysis.</enttypd>
+        <enttypds>Originator defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>Device_id</attrlabl>
+        <attrdef>Unique identifying variable for each marked mallard.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <udom>Unique identifier</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Sex</attrlabl>
+        <attrdef>Signifies the sex (female or male) of the marked bird.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>F</edomv>
+            <edomvd>Female.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>M</edomv>
+            <edomvd>Male.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Capture_yr</attrlabl>
+        <attrdef>Signifies calendar year of capture.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>2018</edomv>
+            <edomvd>Year 2018.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>2019</edomv>
+            <edomvd>Year 2019.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Area_id</attrlabl>
+        <attrdef>Unique identifying variable for each local use area used by mallards.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <udom>Unique identifier</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Move_type</attrlabl>
+        <attrdef>Signifies whether the movement was a regional or migration movement, identified by distance.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>M</edomv>
+            <edomvd>Migration movement (&gt;310 km)</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>R</edomv>
+            <edomvd>Regional movement (25-310 km).</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>First_M</attrlabl>
+        <attrdef>Signifies if the migration event was the first one of the autumn-winter season.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>1</edomv>
+            <edomvd>Signifies a first migration event.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>0</edomv>
+            <edomvd>Signifies a subsequent migration event if Move_type = M. For Move_type = R, ignore.</edomvd>
+            <edomvds>Originator defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Move_d</attrlabl>
+        <attrdef>Distance of movement (km).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>25.0</rdommin>
+            <rdommax>1779.4</rdommax>
+            <attrunit>kilometers</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Bearing</attrlabl>
+        <attrdef>Directional bearing of movement (0/360 = north, 180 = south).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>1</rdommin>
+            <rdommax>360</rdommax>
+            <attrunit>degrees</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>WSI3</attrlabl>
+        <attrdef>3-day cumulative weather severity index for the location during the exposure period (see process step for calculation and source citation).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-17.0</rdommin>
+            <rdommax>32.5</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>WSI5</attrlabl>
+        <attrdef>5-day cumulative weather severity index for the location during the exposure period (see process step for calculation and source citation).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-17.0</rdommin>
+            <rdommax>36.5</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>WSI7</attrlabl>
+        <attrdef>7-day cumulative weather severity index for the location during the exposure period (see process step for calculation and source citation).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-17.0</rdommin>
+            <rdommax>40.5</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Weekend</attrlabl>
+        <attrdef>Proportion of days in the exposure period identified as a weekend day (Saturday and Sunday).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>1</rdommax>
+            <attrunit>proportion</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Photoperiod</attrlabl>
+        <attrdef>Date- and location-specific number of hours of daylight.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>8.8</rdommin>
+            <rdommax>11.7</rdommax>
+            <attrunit>hours</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_mean</attrlabl>
+        <attrdef>Average daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-19.4</rdommin>
+            <rdommax>16.6</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_min</attrlabl>
+        <attrdef>Minimum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-25.4</rdommin>
+            <rdommax>12.2</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_max</attrlabl>
+        <attrdef>Maximum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-13.7</rdommin>
+            <rdommax>24.2</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Precipitation</attrlabl>
+        <attrdef>daily total precipitation accumulated at surface (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>4.1</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Cloud_cover</attrlabl>
+        <attrdef>Daily average percentage cloud cover from 3-hour maximum of high- (&gt;20,000 ft AGL), mid- (6,500–20,000 ft AGL), and low-level (&lt;6,500 ft AGL) cloud layers.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>100</rdommax>
+            <attrunit>percentage</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Wind_index</attrlabl>
+        <attrdef>Index of wind-aided movement (derivation details in processing step).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-0.601</rdommin>
+            <rdommax>0.964</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_mean3D</attrlabl>
+        <attrdef>3-day average of mean daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-20.8</rdommin>
+            <rdommax>22.6</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_mean5D</attrlabl>
+        <attrdef>5-day average of mean daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-18.4</rdommin>
+            <rdommax>21.9</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_mean7D</attrlabl>
+        <attrdef>7-day average of mean daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-17.9</rdommin>
+            <rdommax>18.9</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_min3D</attrlabl>
+        <attrdef>3-day average of minimum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-27.7</rdommin>
+            <rdommax>16.8</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_min5D</attrlabl>
+        <attrdef>5-day average of minimum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-24.4</rdommin>
+            <rdommax>15.7</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_min7D</attrlabl>
+        <attrdef>7-day average of minimum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-23.2</rdommin>
+            <rdommax>13.3</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_max3D</attrlabl>
+        <attrdef>3-day average of maximum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-14.9</rdommin>
+            <rdommax>31.3</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_max5D</attrlabl>
+        <attrdef>5-day average of maximum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-13.0</rdommin>
+            <rdommax>30.6</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Temp_max7D</attrlabl>
+        <attrdef>7-day average of maximum daily temperature.</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-12.5</rdommin>
+            <rdommax>26.7</rdommax>
+            <attrunit>degrees Celsius</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Snow_depth</attrlabl>
+        <attrdef>Daily maximum depth of snow cover (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>22.08</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Snow_depth3D</attrlabl>
+        <attrdef>3-day average daily maximum depth of snow cover (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>21.06</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Snow_depth5D</attrlabl>
+        <attrdef>5-day average daily maximum depth of snow cover (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>21.34</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Snow_depth7D</attrlabl>
+        <attrdef>7-day average daily maximum depth of snow cover (cm).</attrdef>
+        <attrdefs>Originator defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>20.26</rdommax>
+            <attrunit>centimeters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>U.S. Geological Survey - ScienceBase</cntorg>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>mailing address</addrtype>
+          <address>Denver Federal Center</address>
+          <address>Building 810, Mail Stop 302</address>
+          <city>Denver</city>
+          <state>CO</state>
+          <postal>80225</postal>
+          <country>United States</country>
+        </cntaddr>
+        <cntvoice>1-888-275-8747</cntvoice>
+        <cntemail>sciencebase@usgs.gov</cntemail>
+      </cntinfo>
+    </distrib>
+    <distliab>Any use of trade, firm, or product names is for descriptive purposes only and does not imply endorsement by the U.S. Government. Although this information product, for the most part, is in the public domain, it also contains copyrighted materials as noted in the text. Permission to reproduce copyrighted items must be secured from the copyright owner whenever applicable. Unless otherwise stated, all data, metadata and related materials are considered to satisfy the quality standards relative to the purpose for which the data were collected. Although these data and associated metadata have been reviewed for accuracy and completeness and approved for release by the U.S. Geological Survey (USGS), no warranty expressed or implied is made regarding the display or utility of the data on any other system or for general or scientific purposes, nor shall the act of distribution constitute any such warranty.</distliab>
+    <stdorder>
+      <digform>
+        <digtinfo>
+          <formname>ASCII</formname>
+          <formcont>MALL_timing.csv; MALL_dist_dir.csv</formcont>
+        </digtinfo>
+        <digtopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>https://doi.org/10.5066/P9GSUQUU</networkr>
+              </networka>
+            </computer>
+          </onlinopt>
+        </digtopt>
+      </digform>
+      <fees>None. No fees are applicable for obtaining the data set.</fees>
+    </stdorder>
+  </distinfo>
+  <metainfo>
+    <metd>20230911</metd>
+    <metc>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Northern Prairie Wildlife Research Center</cntorg>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>mailing and physical address</addrtype>
+          <address>8711 37th Street SE</address>
+          <city>Jamestown</city>
+          <state>North Dakota</state>
+          <postal>58401</postal>
+          <country>United States</country>
+        </cntaddr>
+        <cntvoice>1-701-253-5509</cntvoice>
+        <cntemail>npwrc_datamanager@usgs.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Biological Data Profile of the Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001.1-1999</metstdv>
+    <metac>It is strongly recommended that this metadata record is directly acquired from the distributor described above or from U.S. Geological Survey Science Data Catalog (http://data.usgs.gov/) or ScienceBase Catalog Service (https://www.sciencebase.gov).</metac>
+    <metuc>Acknowledgment of U.S. Geological Survey Northern Prairie Wildlife Research Center as the metadata source would be appreciated. Please cite the original metadata when using summarized data herein or when using portions of the metadata record to create a similar record of slightly altered data, such as re-projection.</metuc>
+  </metainfo>
+</metadata>

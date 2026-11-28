@@ -1,0 +1,4 @@
+Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, et al. eBird Status and Trends, Data Version: 2025. Cornell Lab of Ornithology, Ithaca, New York. Full author list, release year and DOI for this version: https://science.ebird.org/status-and-trends/data-access (the 2023 version is https://doi.org/10.2173/WZTW8903).
+Product: mallar3 weekly abundance (median), 9 km, 52 weeks; cropped to Montana bbox (-116.6, 43.8, -103.5, 49.5).
+Downloaded via st-download.ebird.org API. Model run: n/a.
+Terms: eBird Status & Trends data products — non-commercial use, attribution required.

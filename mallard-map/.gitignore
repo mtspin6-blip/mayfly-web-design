@@ -1,0 +1,8 @@
+.env
+.venv/
+data/ebird/raw/
+data/bbl/raw/
+reference/
+__pycache__/
+data/ebird/*.tif
+app/node_modules/

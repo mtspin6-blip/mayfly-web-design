@@ -1,0 +1,10 @@
+geopandas>=1.0
+folium>=0.17
+rasterio>=1.3
+matplotlib
+scipy
+pillow
+pandas
+numpy
+shapely>=2
+playwright
